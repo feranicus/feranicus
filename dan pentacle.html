@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Pentacles for Dan Olevski</title>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle, #0d0d0d, #1e1e2f);
+            color: #e8e8e8;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .glow {
+            text-shadow: 0 0 5px #ff5500, 0 0 10px #ff5500, 0 0 20px #ff5500;
+            color: #ffcc00;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ffcc00;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #000, inset 0 0 30px #ffcc00;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #ffcc00;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        /* Pentacle Styling */
+        .pentacle {
+            border: 1px solid #b89447;
+            padding: 15px;
+            margin: 20px 0;
+            background: linear-gradient(to right, #131313, #2c2c2c);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+            position: relative;
+        }
+
+        .pentacle img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffcc00, 0 0 30px #ffcc00;
+        }
+
+        .pentacle h3 {
+            color: #ffcc00;
+            text-shadow: 0 0 8px #ffcc00;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .pentacle p {
+            line-height: 1.6;
+        }
+
+        /* Tattoo and Rune Recommendations */
+        .recommendations {
+            background-color: #3a3a4e;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ffffff;
+            margin-top: 20px;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 10px 15px;
+            background: linear-gradient(45deg, #ffcc00, #ff5500);
+            color: #1e1e2f;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #ff5500, #ffcc00);
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 1);
+        }
+
+        /* Popup Styling */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            background: linear-gradient(135deg, #2e2e3e, #1e1e2f);
+            border: 1px solid #ffcc00;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+            border-radius: 12px;
+            z-index: 1000;
+        }
+
+        #popup h3 {
+            color: #d9534f;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px #ffcc00;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="glow">Mystic Pentacles for Dan Olevski</h1>
+
+        <div class="info">
+            <h2>Who is Dan Olevski?</h2>
+            <p>Born on <b>June 8, 1979</b>, in Korosten, Ukraine, at 7–8 AM, Dan carries the energy of Gemini (ruled by Mercury), making him adaptable and intellectually curious. His life path calls for balance, protection, and guidance. Here are tailored recommendations:</p>
+        </div>
+
+        <!-- Pentacle of Jupiter -->
+        <div class="pentacle">
+            <h2>Pentacle of Jupiter</h2>
+            <img src="path_to_jupiter_pentacle.png" alt="Pentacle of Jupiter">
+            <h3>Purpose:</h3>
+            <p>This pentacle attracts wealth and prosperity. Its Hebrew inscriptions read <b>יהוה, אדני, אלוהים</b> (YHVH, Adonai, Elohim).</p>
+            <p><b>Tattoo Placement:</b> Right forearm or near the heart to attract abundance.</p>
+        </div>
+
+        <!-- Pentacle of the Sun -->
+        <div class="pentacle">
+            <h2>Pentacle of the Sun</h2>
+            <img src="path_to_sun_pentacle.png" alt="Pentacle of the Sun">
+            <h3>Purpose:</h3>
+            <p>This pentacle promotes health and vitality. Hebrew inscriptions: <b>אֱלֹהִים, אֱלֹהֵי, אֲדֹנָי</b> (Elohim, Elohei, Adonai).</p>
+            <p><b>Tattoo Placement:</b> Center of the chest to embody vitality.</p>
+        </div>
+
+        <!-- Pentacle of Mars -->
+        <div class="pentacle">
+            <h2>Pentacle of Mars</h2>
+            <img src="path_to_mars_pentacle.png" alt="Pentacle of Mars">
+            <h3>Purpose:</h3>
+            <p>This pentacle is for protection against enemies and negative energies. Hebrew inscriptions: <b>שַׁדַּי, אֱלֹהִים, יְהֹוָה</b> (Shaddai, Elohim, YHVH).</p>
+            <p><b>Tattoo Placement:</b> Upper back or shoulders for shielding energy.</p>
+        </div>
+
+        <!-- Pentacle of Saturn -->
+        <div class="pentacle">
+            <h2>Pentacle of Saturn</h2>
+            <img src="path_to_saturn_pentacle.png" alt="Pentacle of Saturn">
+            <h3>Purpose:</h3>
+            <p>This pentacle binds negative influences and stabilizes spiritual energy. Hebrew inscriptions: <b>אֵל שַׁדַּי, אֱלֹהִים</b> (El Shaddai, Elohim).</p>
+            <p><b>Tattoo Placement:</b> Lower back or near the base of the spine to protect the root chakra.</p>
+        </div>
+
+        <!-- Tattoo and Rune Recommendations -->
+        <div class="recommendations">
+            <h2>Druid Rune Recommendations</h2>
+            <ul>
+                <li><b>Fehu (ᚠ):</b> Rune of wealth and financial growth. Placement: Right arm or near a workspace.</li>
+                <li><b>Algiz (ᛉ):</b> Rune of protection and shielding against dark forces. Placement: On the upper back.</li>
+                <li><b>Sowilo (ᛋ):</b> Rune of success and energy. Placement: On the chest or neck.</li>
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <a href="https://t.me/feranicus" class="btn">Telegram</a>
+            <a href="https://wa.me/4915785541545" class="btn">WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- Buttons at the bottom -->
+    <div class="buttons">
+        <a href="https://t.me/feranicus" class="btn">Telegram</a>
+        <a href="https://wa.me/4915785541545" class="btn">WhatsApp</a>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup">
+        <h3>This is a free demo</h3>
+        <p>Right-click is disabled. For any FAQ, please contact Jev:</p>
+        <div class="buttons">
+            <a href="https://t.me/feranicus" class="btn">Telegram</a>
+            <a href="https://wa.me/4915785541545" class="btn">WhatsApp</a>
+            <button class="btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+
+    <script>
+        // Prevent right-click and show popup
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+
+        // Close popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
