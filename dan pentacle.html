@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystic Pentacles for Dan Olevski</title>
     <style>
+
+<!-- CSS for Blocking Printing -->
+    <style>
+        /* Prevent Printing */
+        @media print {
+            body {
+                visibility: hidden;
+            }
+        }
         /* Body Styling */
         body {
             font-family: 'Cairo', sans-serif;
@@ -231,6 +240,13 @@
             document.getElementById('popup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
+    </script>
+    <!-- JavaScript for Blocking Printing -->
+    <script>
+        // Disable Printing
+        window.print = function() {
+            alert("Printing is disabled for this webpage.");
+        };
     </script>
 </body>
 </html>
