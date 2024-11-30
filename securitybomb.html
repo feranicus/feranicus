@@ -103,6 +103,35 @@
             color: #ffcc00;
             font-weight: bold;
         }
+         /* Disable Text Selection */
+    body {
+        user-select: none; /* Prevent text selection */
+    }
+
+    /* Disable Dragging */
+    img, a {
+        pointer-events: none;
+    }
+
+    /* Hide Page When Printing */
+    @media print {
+        body {
+            display: none;
+        }
+    }
+
+    /* Add Watermark */
+    body::before {
+        content: "Confidential - Do Not Copy";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        font-size: 3rem;
+        color: rgba(255, 0, 0, 0.1);
+        pointer-events: none;
+    }
     </style>
 </head>
 <body>
@@ -110,6 +139,33 @@
         <h1>🚨 Security Monitoring & Deployment Automation 🚨</h1>
         <p>Scalable Architecture for Remote Deployment, Monitoring, and Remediation</p>
     </header>
+    
+    <section id="summary">
+        <h2>🔍 Summary for Dummies</h2>
+        <p>Imagine you have a house, and you want to make sure no bad people or pests can get in. This product is like a super-smart security system for your house, but instead of protecting a house, it protects computers, websites, and the internet.</p>
+        <ul>
+            <li><strong>Keeps Bad Stuff Out:</strong> It checks everything that tries to come into your computer, like messages, files, or links, to make sure they are safe.</li>
+            <li><strong>Watches Everything:</strong> It has cameras (not real ones!) that watch your computer and the internet to find anything strange or dangerous.</li>
+            <li><strong>Fixes Problems Fast:</strong> If something bad happens, like a virus getting in, it quickly locks the doors and fixes the issue before it gets worse.</li>
+            <li><strong>Talks to the Team:</strong> It sends alerts to people who can help, just like a fire alarm tells firefighters.</li>
+        </ul>
+    </section>
+    
+    <section id="architecture">
+        <h2>🏗️ Architecture Overview</h2>
+        <p>The product uses a modern and scalable architecture built on open-source technologies. Here's how it's structured:</p>
+        <h3>1. Data Collection Layer</h3>
+        <p>Tools like <strong>Filebeat</strong> and <strong>Metricbeat</strong> gather information from all computers and containers.</p>
+        <h3>2. Processing Layer</h3>
+        <p><strong>Logstash</strong> organizes the data, and suspicious information is sent to VirusTotal for analysis.</p>
+        <h3>3. Storage Layer</h3>
+        <p><strong>Elasticsearch</strong> stores all the data in a searchable format, like a library for logs and metrics.</p>
+        <h3>4. Analysis and Alerting Layer</h3>
+        <p><strong>Kibana</strong> creates dashboards to visualize data, detect issues, and send alerts.</p>
+        <h3>5. Isolation and Remediation Layer</h3>
+        <p><strong>LXC Containers</strong> isolate risky activities in a sandbox, and automated scripts fix problems quickly.</p>
+    </section>
+    
     <div class="content">
         <div class="warning">
             Immediate action required! Prevent cyber attacks and malware by isolating browsing in LXC containers.
@@ -287,85 +343,9 @@
             </ul>
             <a class="cta-button" href="#contact-buttons">Contact Support</a>
         </section>
-        <section id="contact-buttons">
-            <h2>🔗 Contact Support</h2>
-            <div class="buttons">
-                <button class="cta-button" id="whatsappBtn">WhatsApp</button>
-                <button class="cta-button" id="telegramBtn">Telegram</button>
-                <button class="cta-button" id="emailBtn">Email</button>
-            </div>
-        </section>
+    
         
-        <!-- Popup for Right-click & Print Block -->
-        <div id="popup" style="display: none;">
-            <h3>This is a free demo</h3>
-            <p>Right-click and print are disabled. For any FAQ, please contact:</p>
-            <div class="buttons">
-                <a href="https://wa.me/4915785541545" class="cta-button">WhatsApp</a>
-                <a href="https://t.me/feranicus" class="cta-button">Telegram</a>
-                <a href="mailto:feranicus@s4biz.io" class="cta-button">Email</a>
-            </div>
-        </div>
-        <div id="overlay" style="display: none;"></div>
         
-        <script>
-            // Prevent right-click and show custom popup
-            document.addEventListener('contextmenu', function (e) {
-                e.preventDefault();
-                document.getElementById('popup').style.display = 'block';
-                document.getElementById('overlay').style.display = 'block';
-            });
-        
-            // Disable Ctrl+P (Print) and show the same buttons
-            document.addEventListener('keydown', function (e) {
-                if (e.ctrlKey && e.key === 'p') {
-                    e.preventDefault();
-                    document.getElementById('popup').style.display = 'block';
-                    document.getElementById('overlay').style.display = 'block';
-                }
-            });
-        
-            // Close popup
-            function closePopup() {
-                document.getElementById('popup').style.display = 'none';
-                document.getElementById('overlay').style.display = 'none';
-            }
-        
-            // WhatsApp and Telegram check and install redirection
-            document.getElementById('whatsappBtn').addEventListener('click', function() {
-                var userAgent = navigator.userAgent.toLowerCase();
-                var isWhatsAppAvailable = /whatsapp/.test(userAgent);
-        
-                if (!isWhatsAppAvailable) {
-                    if (navigator.platform.match(/iPhone|iPad|iPod/i)) {
-                        window.location.href = 'https://apps.apple.com/us/app/whatsapp-messenger/id310633997'; // iOS link
-                    } else {
-                        window.location.href = 'https://play.google.com/store/apps/details?id=com.whatsapp'; // Android link
-                    }
-                } else {
-                    window.location.href = 'https://wa.me/4915785541545'; // Open WhatsApp chat
-                }
-            });
-        
-            document.getElementById('telegramBtn').addEventListener('click', function() {
-                var userAgent = navigator.userAgent.toLowerCase();
-                var isTelegramAvailable = /telegram/.test(userAgent);
-        
-                if (!isTelegramAvailable) {
-                    if (navigator.platform.match(/iPhone|iPad|iPod/i)) {
-                        window.location.href = 'https://apps.apple.com/us/app/telegram-messenger/id686449807'; // iOS link
-                    } else {
-                        window.location.href = 'https://play.google.com/store/apps/details?id=org.telegram.messenger'; // Android link
-                    }
-                } else {
-                    window.location.href = 'https://t.me/feranicus'; // Open Telegram chat
-                }
-            });
-        
-            document.getElementById('emailBtn').addEventListener('click', function() {
-                window.location.href = 'mailto:feranicus@s4biz.io';
-            });
-        </script>
                                 
         <section id="monitoring">
             <h2>📊 Real-Time Monitoring and Alerts</h2>
@@ -455,76 +435,133 @@
             </div>
         </section>
         
-        <!-- Popup for Right-click & Print Block -->
-        <div id="popup" style="display: none;">
-            <h3>This is a free demo</h3>
-            <p>Right-click and print are disabled. For any FAQ, please contact:</p>
-            <div class="buttons">
-                <a href="https://wa.me/4915785541545" class="cta-button">WhatsApp</a>
-                <a href="https://t.me/feranicus" class="cta-button">Telegram</a>
-                <a href="mailto:feranicus@s4biz.io" class="cta-button">Email</a>
-            </div>
-        </div>
-        <div id="overlay" style="display: none;"></div>
+
+        
         
         <script>
-            // Prevent right-click and show custom popup
-            document.addEventListener('contextmenu', function (e) {
-                e.preventDefault();
-                document.getElementById('popup').style.display = 'block';
-                document.getElementById('overlay').style.display = 'block';
-            });
-        
-            // Disable Ctrl+P (Print) and show the same buttons
-            document.addEventListener('keydown', function (e) {
-                if (e.ctrlKey && e.key === 'p') {
-                    e.preventDefault();
-                    document.getElementById('popup').style.display = 'block';
-                    document.getElementById('overlay').style.display = 'block';
-                }
-            });
-        
-            // Close popup
-            function closePopup() {
-                document.getElementById('popup').style.display = 'none';
-                document.getElementById('overlay').style.display = 'none';
-            }
-        
-            // WhatsApp and Telegram check and install redirection
-            document.getElementById('whatsappBtn').addEventListener('click', function() {
-                var userAgent = navigator.userAgent.toLowerCase();
-                var isWhatsAppAvailable = /whatsapp/.test(userAgent);
-        
-                if (!isWhatsAppAvailable) {
-                    if (navigator.platform.match(/iPhone|iPad|iPod/i)) {
-                        window.location.href = 'https://apps.apple.com/us/app/whatsapp-messenger/id310633997'; // iOS link
-                    } else {
-                        window.location.href = 'https://play.google.com/store/apps/details?id=com.whatsapp'; // Android link
+            // WhatsApp Button Logic
+document.getElementById('whatsappBtn').addEventListener('click', function () {
+    const whatsappWebURL = 'https://web.whatsapp.com/send?phone=4915785541545';
+    const whatsappAppURL = 'whatsapp://send?phone=4915785541545';
+
+    // Open the app directly or fallback to web
+    if (navigator.userAgent.includes('Android') || navigator.userAgent.includes('iPhone')) {
+        window.location.href = whatsappAppURL;
+    } else {
+        window.location.href = whatsappWebURL;
+    }
+});
+
+// Telegram Button Logic
+document.getElementById('telegramBtn').addEventListener('click', function () {
+    const telegramWebURL = 'https://web.telegram.org/k/#@feranicus';
+    const telegramAppURL = 'tg://resolve?domain=feranicus';
+
+    // Open the app directly or fallback to web
+    if (navigator.userAgent.includes('Android') || navigator.userAgent.includes('iPhone')) {
+        window.location.href = telegramAppURL;
+    } else {
+        window.location.href = telegramWebURL;
+    }
+});
+
+// Email Button Logic
+document.getElementById('emailBtn').addEventListener('click', function () {
+    window.location.href = 'mailto:feranicus@s4biz.io';
+});
+
+// Right-Click Popup Logic
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+
+    // Open a new popup window
+    const popupWindow = window.open(
+        '',
+        '_blank',
+        'width=400,height=300,scrollbars=no,toolbar=no,location=no,resizable=no,status=no,menubar=no'
+    );
+
+    if (popupWindow) {
+        // Add popup content
+        popupWindow.document.write(`
+            <html>
+            <head>
+                <title>Contact Jev</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background: #1b1b2f;
+                        color: #f4f4f9;
+                        margin: 20px;
+                        padding: 0;
                     }
-                } else {
-                    window.location.href = 'https://wa.me/4915785541545'; // Open WhatsApp chat
-                }
-            });
-        
-            document.getElementById('telegramBtn').addEventListener('click', function() {
-                var userAgent = navigator.userAgent.toLowerCase();
-                var isTelegramAvailable = /telegram/.test(userAgent);
-        
-                if (!isTelegramAvailable) {
-                    if (navigator.platform.match(/iPhone|iPad|iPod/i)) {
-                        window.location.href = 'https://apps.apple.com/us/app/telegram-messenger/id686449807'; // iOS link
-                    } else {
-                        window.location.href = 'https://play.google.com/store/apps/details?id=org.telegram.messenger'; // Android link
+                    h3 {
+                        color: #ffcc00;
                     }
-                } else {
-                    window.location.href = 'https://t.me/feranicus'; // Open Telegram chat
-                }
-            });
+                    .cta-button {
+                        display: block;
+                        background: #ff0033;
+                        color: white;
+                        padding: 10px;
+                        margin: 10px 0;
+                        text-align: center;
+                        border-radius: 5px;
+                        text-decoration: none;
+                    }
+                    .cta-button:hover {
+                        background: #ff6600;
+                    }
+                </style>
+            </head>
+            <body>
+                <h3>This is an Open Source Demo</h3>
+                <p>Right-click is blocked. Please contact Jev:</p>
+                <a href="https://wa.me/4915785541545" class="cta-button" target="_blank">WhatsApp</a>
+                <a href="https://t.me/feranicus" class="cta-button" target="_blank">Telegram</a>
+                <a href="mailto:feranicus@s4biz.io" class="cta-button">Email</a>
+            </body>
+            </html>
+        `);
+        popupWindow.document.close();
+    } else {
+        alert('Popup blocked! Please allow popups for this website.');
+    }
+});
+
+// Disable Printing (Ctrl+P and PrintScreen)
+document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey && e.key === 'p') || (e.key === 'PrintScreen')) {
+        e.preventDefault();
+        alert('Printing is disabled on this page.');
+    }
+});
+
+// Disable Sharing on Mobile
+if (navigator.share) {
+    navigator.share = function () {
+        alert('Sharing is disabled on this page.');
+    };
+}
+
+// Disable Save and View Source
+document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && (e.key === 's' || e.key === 'u')) {
+        e.preventDefault();
+        alert('Save and view source are disabled on this page.');
+    }
+});
+
+// Disable Developer Tools Shortcut
+document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) {
+        e.preventDefault();
+        alert('Developer tools are disabled on this page.');
+    }
+});
+
+            </script>
+            
         
-            document.getElementById('emailBtn').addEventListener('click', function() {
-                window.location.href = 'mailto:feranicus@s4biz.io';
-            });
-        </script>
         
     </div>
     <footer>
