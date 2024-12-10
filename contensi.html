@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MITRE Details Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Fira Code', monospace;
+            background: #000;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 2px solid #00ff00;
+            background: #0a0a0a;
+        }
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        section {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: #111;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        ul li {
+            margin: 5px 0;
+            padding: 5px;
+            background: #222;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #00ff00;
+            background: #0a0a0a;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MITRE Details Report</h1>
+    </header>
+
+    <section>
+        <h2>Detections</h2>
+        <ul>
+            <li><strong>Status:</strong> NOT FOUND</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>MITRE Signatures</h2>
+        <ul>
+            <li>Execution (TA0002) - Command and Scripting Interpreter (T1059): Very long cmdline options detected, possibly indicating encryption or packing.</li>
+            <li>Persistence (TA0003) - DLL Side-Loading (T1574.002): Missing DLLs were loaded.</li>
+            <li>Privilege Escalation (TA0004) - DLL Side-Loading (T1574.002): Exploits to load missing DLLs.</li>
+            <li>Defense Evasion (TA0005) - Masquerading (T1036): Created directories in "C:\Program Files" to mimic legitimate processes.</li>
+            <li>Discovery (TA0007) - System Information Discovery (T1082): Software policies were accessed.</li>
+            <li>Command and Control (TA0011) - Application Layer Protocol (T1071): DNS lookups performed to communicate covertly.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>IDS and Sigma Rules</h2>
+        <ul>
+            <li><strong>IDS Rules:</strong> NOT FOUND</li>
+            <li><strong>Sigma Rules:</strong> NOT FOUND</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Dropped Files</h2>
+        <ul>
+            <li><strong>Status:</strong> NOT FOUND</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Network Communications</h2>
+        <ul>
+            <li>DNS Queries:</li>
+            <ul>
+                <li>business.bing.com</li>
+                <li>bzib.nelreports.net</li>
+                <li>contensi.com</li>
+                <li>edge-mobile-static.azureedge.net</li>
+                <li>www.contensi.com</li>
+                <li>www.google.com</li>
+            </ul>
+            <li>IP Communications:</li>
+            <ul>
+                <li>TCP 13.107.6.158:443 (business.bing.com)</li>
+                <li>TCP 23.220.206.43:443 (bzib.nelreports.net)</li>
+                <li>TCP 52.85.247.92:443 (www.contensi.com)</li>
+                <li>TCP 108.156.60.101:443</li>
+                <li>TCP 108.156.60.101:445</li>
+                <li>TCP 108.177.119.102:443 (redirector.gvt1.com)</li>
+                <li>TCP 172.217.218.84:443</li>
+            </ul>
+            <li>JA3 Fingerprints:</li>
+            <ul>
+                <li>2b4cfa2e1d6a586d20af15dde7e0d75</li>
+                <li>31a6ac32fbcc708f80ef073f3e8ebaa9</li>
+                <li>7dda330db1d8b695f3f125d461184089</li>
+                <li>9b71af08107674a4b0b8b2d845c90ba5</li>
+            </ul>
+        </ul>
+    </section>
+
+    <section>
+        <h2>File Details</h2>
+        <ul>
+            <li><strong>Filename:</strong> document.html</li>
+            <li><strong>File Type:</strong> HTML document, Unicode text</li>
+            <li><strong>File Size:</strong> 115958 bytes</li>
+            <li><strong>SHA256:</strong> f63117696e72c66f9b51feccff85005f1d66a9991a3e9739949d5e5587282896</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Behavioral Analysis</h2>
+        <ul>
+            <li>Attempts DLL Side-Loading</li>
+            <li>Very long cmdline options indicating possible obfuscation</li>
+            <li>Creates files in "C:\Program Files"</li>
+            <li>Communicates via HTTPS</li>
+            <li>Creates directories mimicking legitimate applications</li>
+            <li>Suspicious JavaScript identified in HTML</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Memory Pattern Analysis</h2>
+        <ul>
+            <li>Memory Pattern Domains:</li>
+            <ul>
+                <li>contensi.com</li>
+                <li>cookiedatabase.org</li>
+                <li>wordpress.org</li>
+                <li>www.bmi.bund.de</li>
+                <li>www.google.com</li>
+                <li>www.bundesdruckerei.de</li>
+            </ul>
+            <li>Memory Pattern URLs:</li>
+            <ul>
+                <li>https://contensi.com/</li>
+                <li>https://contensi.com/comments/feed/</li>
+                <li>https://contensi.com/karriere/</li>
+                <li>https://contensi.com/microsoft-azure/</li>
+                <li>https://www.bmi.bund.de/</li>
+                <li>https://wordpress.org/plugins/complianz-gdpr</li>
+            </ul>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Indicators of Malware</h2>
+        <ul>
+            <li>Classification: Suspicious</li>
+            <li>22/100 antivirus engines flagged as potentially malicious</li>
+            <li>HTML page contains hidden JavaScript code</li>
+            <li>Suspicious HTTP backdoor communication to contensi.com</li>
+            <li>Potential phishing links embedded in memory</li>
+            <li>Sample uses encrypted HTTPS channels</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>Generated by CyberGod LLC - Forensic Analysis Division</p>
+    </footer>
+</body>
+</html>
