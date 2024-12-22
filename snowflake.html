@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowflake Sales Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px;
+            background: #334155;
+            color: #38bdf8;
+            border-bottom: 4px solid #38bdf8;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0px 0px 10px #38bdf8, 0px 0px 20px #38bdf8;
+            }
+            100% {
+                text-shadow: 0px 0px 20px #7dd3fc, 0px 0px 40px #7dd3fc;
+            }
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: 30px auto;
+            background: #1e293b;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #38bdf8;
+            background-color: #273548;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 10px 20px rgba(56, 189, 248, 0.7);
+        }
+
+        .section h2 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #38bdf8;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin: 0;
+            line-height: 1.6;
+            font-size: 1.2em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #334155;
+            color: #38bdf8;
+            border-top: 4px solid #38bdf8;
+        }
+
+        .footer a {
+            color: #7dd3fc;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 60%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Top 5 Reasons I'm the Perfect Fit for Snowflake</h1>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>1. Mastery in SaaS Solutions</h2>
+            <p>Extensive experience in SaaS-based data platforms and a proven track record of driving technical wins in enterprise environments. 🚀</p>
+        </div>
+        <div class="section">
+            <h2>2. Expertise in Data Architecture</h2>
+            <p>Hands-on proficiency in SQL, Python, and modern data ecosystems, ensuring solutions tailored to customer needs. 💾</p>
+        </div>
+        <div class="section">
+            <h2>3. Exceptional Communication Skills</h2>
+            <p>Ability to connect with technical and executive audiences, presenting solutions effectively and building long-term trust. 🗣️</p>
+        </div>
+        <div class="section">
+            <h2>4. Leadership Beyond Accounts</h2>
+            <p>Strong leadership in team upliftment, knowledge sharing, and collaboration, ensuring continuous team growth. 🤝</p>
+        </div>
+        <div class="section">
+            <h2>5. Deep Understanding of Snowflake Ecosystem</h2>
+            <p>In-depth knowledge of Snowflake's cutting-edge technologies and its positioning within the modern data landscape. ❄️</p>
+        </div>
+    </div>
+
+    <canvas id="snowCanvas"></canvas>
+
+    <div class="footer">
+        <p>&copy; 2024 Designed for Snowflake Role | <a href="#">Contact</a></p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('snowCanvas');
+        const renderer = new THREE.WebGLRenderer({ canvas });
+        renderer.setSize(window.innerWidth * 0.6, window.innerHeight * 0.5);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        function createSnowflake() {
+            const geometry = new THREE.IcosahedronGeometry(0.2, 1);
+            const material = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true });
+            return new THREE.Mesh(geometry, material);
+        }
+
+        const snowflakes = Array.from({ length: 50 }, () => {
+            const snowflake = createSnowflake();
+            snowflake.position.set(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            );
+            scene.add(snowflake);
+            return snowflake;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            snowflakes.forEach(snowflake => {
+                snowflake.rotation.x += 0.01;
+                snowflake.rotation.y += 0.01;
+            });
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
