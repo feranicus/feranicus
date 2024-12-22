@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafana Observability Architect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+
+#grafana-logo-container {
+    margin: 20px auto;
+    width: 300px;
+    height: 300px;
+    position: relative;
+}
+
+        canvas {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px;
+            background: #334155;
+            color: #7dd3fc;
+            border-bottom: 4px solid #7dd3fc;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin: 0;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0px 0px 10px #7dd3fc, 0px 0px 20px #38bdf8;
+            }
+            100% {
+                text-shadow: 0px 0px 20px #bae6fd, 0px 0px 40px #7dd3fc;
+            }
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: 30px auto;
+            background: #1e293b;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #7dd3fc;
+            background-color: #273548;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 10px 20px rgba(125, 211, 252, 0.7);
+        }
+
+        .section h2 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #7dd3fc;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin: 0;
+            line-height: 1.6;
+            font-size: 1.2em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #334155;
+            color: #7dd3fc;
+            border-top: 4px solid #7dd3fc;
+        }
+
+        .footer a {
+            color: #bae6fd;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 80%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Top 5 Reasons I'm the Perfect Fit for Grafana Labs</h1> 
+        <div id="grafana-logo-container"></div>
+
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>1. Observability Expertise</h2>
+            <p>Deep knowledge of Grafana, Prometheus, and the observability ecosystem, ensuring strategic insights for customer success. 📊</p>
+        </div>
+        <div class="section">
+            <h2>2. Proven Technical Leadership</h2>
+            <p>Extensive experience leading observability maturity journeys, driving adoption, and ensuring ROI for enterprise clients. 🚀</p>
+        </div>
+        <div class="section">
+            <h2>3. Customer-Centric Approach</h2>
+            <p>Strong track record of building long-term client relationships, focusing on technical success and innovative solutions. 🤝</p>
+        </div>
+        <div class="section">
+            <h2>4. Multi-Stack Mastery</h2>
+            <p>Proficiency in Kubernetes, cloud-native architectures, and integrating Grafana’s LGTM stack with client infrastructures. ☁️</p>
+        </div>
+        <div class="section">
+            <h2>5. Passion for Innovation</h2>
+            <p>A natural problem-solver with a passion for crafting creative observability solutions that meet dynamic customer needs. 💡</p>
+        </div>
+    </div>
+
+    <canvas id="grafanaCanvas"></canvas>
+
+    <div class="footer">
+        <p>&copy; 2024 Designed for Grafana Labs Role | <a href="#">Contact</a></p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('grafanaCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth * 0.8;
+        canvas.height = 300;
+
+        let dataPoints = [];
+        for (let i = 0; i < canvas.width; i++) {
+            dataPoints.push(Math.random() * canvas.height);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#7dd3fc';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            dataPoints.forEach((point, index) => {
+                const x = index;
+                const y = point;
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+
+            ctx.stroke();
+
+            dataPoints = dataPoints.map(y => {
+                const shift = Math.random() * 4 - 2;
+                return Math.max(0, Math.min(canvas.height, y + shift));
+            });
+
+            requestAnimationFrame(draw);
+        }
+
+        // Adding 3D Rotating Grafana Logo
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 300, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(canvas.width, canvas.height);
+canvas.parentNode.insertBefore(renderer.domElement, canvas);
+
+const geometry = new THREE.TorusGeometry(1.2, 0.4, 16, 100);
+const material = new THREE.MeshBasicMaterial({ color: 0x7dd3fc, wireframe: true });
+const torus = new THREE.Mesh(geometry, material);
+scene.add(torus);
+
+camera.position.z = 5;
+
+function animateTorus() {
+    requestAnimationFrame(animateTorus);
+    torus.rotation.x += 0.01;
+    torus.rotation.y += 0.01;
+    renderer.render(scene, camera);
+}
+
+animateTorus();
+
+
+        draw();
+        // 3D Rotating Grafana Logo
+const logoContainer = document.getElementById('grafana-logo-container');
+const logoScene = new THREE.Scene();
+const logoCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+const logoRenderer = new THREE.WebGLRenderer({ alpha: true });
+logoRenderer.setSize(300, 300);
+logoContainer.appendChild(logoRenderer.domElement);
+
+// Texture for the logo
+const textureLoader = new THREE.TextureLoader();
+const grafanaTexture = textureLoader.load('pngwing.png'); // Add your base64 encoded image or URL here
+
+const logoGeometry = new THREE.PlaneGeometry(2, 2);
+const logoMaterial = new THREE.MeshBasicMaterial({ map: grafanaTexture, transparent: true });
+const logoMesh = new THREE.Mesh(logoGeometry, logoMaterial);
+logoScene.add(logoMesh);
+
+logoCamera.position.z = 5;
+
+function animateLogo() {
+    requestAnimationFrame(animateLogo);
+    logoMesh.rotation.y += 0.01; // Rotation animation
+    logoMesh.rotation.x += 0.005;
+    logoRenderer.render(logoScene, logoCamera);
+}
+
+animateLogo();
+
+    </script>
+</body>
+</html>
