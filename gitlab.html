@@ -3,47 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top 5 Reasons - Senior Technical Program Manager at GitLab</title>
+    <title>GitLab Senior Solutions Architect, Telco, DACH
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
-
         body {
-            font-family: 'Roboto Mono', monospace;
-            background: linear-gradient(to bottom, #212121, #1a1a1a);
-            color: #e0e0e0;
+            font-family: 'Source Sans Pro', sans-serif;
             margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e2e8f0;
+            overflow-y: scroll;
         }
 
         .header {
             text-align: center;
             padding: 50px;
-            background: #2c2c2c;
-            color: #fc6d26;
-            border-bottom: 5px solid #fc6d26;
-            text-shadow: 0px 4px 10px rgba(252, 109, 38, 0.7);
+            background: #1f2937;
+            border-bottom: 4px solid #ff5500;
+            color: #ffcc00;
         }
 
         .header h1 {
-            font-size: 3.5em;
-            margin: 0;
-            animation: pulse 2s infinite alternate;
+            font-size: 3em;
+            animation: glow 2s infinite alternate;
         }
 
-        @keyframes pulse {
+        .header h2 {
+            font-size: 1.5em;
+            color: #ff5500;
+            margin-top: 10px;
+        }
+
+        @keyframes glow {
             0% {
-                text-shadow: 0px 0px 10px #fc6d26, 0px 0px 20px #fc6d26;
+                text-shadow: 0px 0px 10px #ffcc00, 0px 0px 20px #ff5500;
             }
             100% {
-                text-shadow: 0px 0px 20px #ff9248, 0px 0px 30px #ff9248;
+                text-shadow: 0px 0px 20px #ffe066, 0px 0px 40px #ffcc00;
             }
         }
 
         .content {
-            padding: 20px;
             max-width: 900px;
             margin: 30px auto;
-            background: #282828;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
         }
@@ -51,78 +56,234 @@
         .section {
             margin-bottom: 20px;
             padding: 20px;
-            border-left: 5px solid #fc6d26;
-            background-color: #333333;
+            border-left: 5px solid #ffcc00;
+            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 5px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .section:hover {
             transform: scale(1.03);
-            box-shadow: 0px 10px 20px rgba(252, 109, 38, 0.7);
-        }
-
-        .section h2 {
-            margin: 0;
-            font-size: 1.8em;
-            color: #fc6d26;
-            margin-bottom: 10px;
-        }
-
-        .section p {
-            margin: 0;
-            line-height: 1.6;
-            font-size: 1.2em;
+            box-shadow: 0px 10px 20px rgba(255, 204, 0, 0.7);
         }
 
         .footer {
             text-align: center;
             padding: 20px;
-            background: #2c2c2c;
-            color: #fc6d26;
-            border-top: 5px solid #fc6d26;
+            background: #1f2937;
+            color: #ffcc00;
+            border-top: 4px solid #ff5500;
         }
 
-        .footer a {
-            color: #ff9248;
-            text-decoration: none;
+        .floating-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        .floating-buttons .btn {
+            background: #ff5500;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .floating-buttons .telegram {
+            background: #0088CC;
+        }
+
+        .floating-buttons .whatsapp {
+            background: #25D366;
+        }
+
+        #popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    background: linear-gradient(135deg, #2e2e3e, #1e1e2f);
+    border: 1px solid #ffcc00;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+    border-radius: 12px;
+    z-index: 1000;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.buttons .btn {
+    text-decoration: none;
+    padding: 10px 15px;
+    background: linear-gradient(45deg, #ffcc00, #ff5500);
+    color: #1e1e2f;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+    display: inline-block;
+    margin: 5px;
+}
+
+.buttons .btn:hover {
+    background: linear-gradient(45deg, #ff5500, #ffcc00);
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 1);
+}
+
+        .snowflake {
+            color: #fff;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            position: fixed;
+            top: -50px;
+            z-index: 1000;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Top 5 Reasons I'm Perfect for GitLab</h1>
+        <h2>Merry Christmas & Happy New Year!</h2>
+        <h1>Top 5 Reasons I'm the Perfect Fit for GitLab</h1>
+        <div class="floating-buttons">
+            <a href="mailto:your-email@example.com" class="btn" title="Jev Email">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://t.me/feranicus" class="btn telegram" title="Jev Telegram">
+                <img src="https://cdn-icons-png.flaticon.com/512/906/906377.png" alt="Telegram" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://wa.me/4915785541545" class="btn whatsapp" title="Jev WhatsApp">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://www.linkedin.com/in/feranicus/" class="btn" title="Jev LinkedIn">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 30px; height: 30px;">
+            </a>
+        </div>
     </div>
 
     <div class="content">
         <div class="section">
-            <h2>1. Proven DevSecOps Expertise</h2>
-            <p>With years of hands-on experience managing cross-functional DevSecOps initiatives, I have successfully optimized software delivery pipelines, ensuring secure and efficient product lifecycles. My focus on AI-powered solutions aligns perfectly with GitLab's vision.</p>
+            <h2>1. Expertise in Cloud Computing and Telco Transformations</h2>
+            <p>With over a 20 years of experience in cloud computing, DevSecOps, and telecommunications, I have led transformation projects across Openstack, Openshift, AWS, Azure, and GCP, including large-scale implementations for Telco clients.</p>
         </div>
         <div class="section">
-            <h2>2. Strategic Leadership</h2>
-            <p>Having led diverse technical teams, I excel at aligning program goals with business outcomes. My ability to influence without direct authority has driven impactful results across engineering, sales, and security divisions.</p>
+            <h2>2. Proficiency in CI/CD and Regulatory Frameworks</h2>
+            <p>My expertise in CI/CD pipelines, Kubernetes, and regulatory frameworks like GDPR has supported secure and efficient cloud transitions for Telco customers (Vodafone, Telefonica Germany & DT).</p>
         </div>
         <div class="section">
-            <h2>3. Exceptional Communication</h2>
-            <p>My strong written and verbal communication skills allow me to effectively collaborate with stakeholders at all levels. I am adept at employing both synchronous and asynchronous techniques to ensure project alignment and transparency.</p>
+            <h2>3. Advanced Solutions Architecture</h2>
+            <p>As a Solutions Architect, I’ve successfully designed and implemented Telco solutions, leveraging tools like Ansible, OpenShift, and Terraform to enhance operational efficiency.</p>
         </div>
         <div class="section">
-            <h2>4. Proactive Problem-Solving</h2>
-            <p>I thrive in identifying gaps in processes and execution. My proactive approach ensures the development of scalable, repeatable strategies that enhance operational efficiency and achieve long-term success.</p>
+            <h2>4. Multilingual Communication and Stakeholder Engagement</h2>
+            <p>Fluent in German and English, Hebrew, Russian, I excel in engaging stakeholders, delivering technical presentations, and providing tailored solutions for complex customer requirements.</p>
         </div>
         <div class="section">
-            <h2>5. Deep Understanding of SaaS and Market Trends</h2>
-            <p>With a solid background in SaaS platform management, I bring valuable insights into product strategy and roadmap planning. My expertise in leveraging analytics to steer initiatives makes me a valuable asset for GitLab's growth.</p>
+            <h2>5. Alignment with GitLab’s Vision</h2>
+            <p>My proven ability to integrate modern software development practices with customer-centric strategies aligns perfectly with GitLab’s mission to empower innovation through collaboration.
+                I look forward to contributing to GitLab’s success in transforming the Telco industry.</p>
         </div>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2024 Crafted for GitLab Role | <a href="#">Contact</a></p>
+    <!-- Popup -->
+<div id="popup">
+    <h3>This is a free demo</h3>
+    <p>Right-click is disabled. For any FAQ, please contact Jev:</p>
+    <div class="buttons">
+        <a href="https://t.me/feranicus" class="btn">Telegram</a>
+        <a href="https://wa.me/4915785541545" class="btn">WhatsApp</a>
+        <button class="btn" onclick="closePopup()">Close</button>
     </div>
+</div>
+<div id="overlay"></div>
+
+
+    <div class="footer">
+        <p>&copy; 2024 Designed by JV, All Rights Reserved | Contact: feranicus@s4biz.io</p>
+    </div>
+
+    <script>
+        // Snowflake generator
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200);
+
+        // Right-click Popup Logic
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        document.getElementById('overlay').addEventListener('click', closePopup);
+
+                function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Initialize snowflake animation
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200);
+    </script>
 </body>
 </html>
+
