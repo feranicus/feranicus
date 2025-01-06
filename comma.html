@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior IT cyber Consultant Security</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e2e8f0;
+            overflow-y: scroll;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px;
+            background: #1f2937;
+            border-bottom: 4px solid #ff5500;
+            color: #ffcc00;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            animation: glow 2s infinite alternate;
+        }
+
+        .header h2 {
+            font-size: 1.5em;
+            color: #ff5500;
+            margin-top: 10px;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0px 0px 10px #ffcc00, 0px 0px 20px #ff5500;
+            }
+            100% {
+                text-shadow: 0px 0px 20px #ffe066, 0px 0px 40px #ffcc00;
+            }
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 5px solid #ffcc00;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 10px 20px rgba(255, 204, 0, 0.7);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #1f2937;
+            color: #ffcc00;
+            border-top: 4px solid #ff5500;
+        }
+
+        .floating-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .floating-buttons .btn {
+            background: #ff5500;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .floating-buttons .telegram {
+            background: #0088CC;
+        }
+
+        .floating-buttons .whatsapp {
+            background: #25D366;
+        }
+
+        #popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    background: linear-gradient(135deg, #2e2e3e, #1e1e2f);
+    border: 1px solid #ffcc00;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.8);
+    border-radius: 12px;
+    z-index: 1000;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.buttons .btn {
+    text-decoration: none;
+    padding: 10px 15px;
+    background: linear-gradient(45deg, #ffcc00, #ff5500);
+    color: #1e1e2f;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+    display: inline-block;
+    margin: 5px;
+}
+
+.buttons .btn:hover {
+    background: linear-gradient(45deg, #ff5500, #ffcc00);
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 1);
+}
+
+        .snowflake {
+            color: #fff;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+            position: fixed;
+            top: -50px;
+            z-index: 1000;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Merry Christmas & Happy New Year!</h2>
+        <h1>Top 5 Reasons I'm the Perfect Fit for Comma Soft</h1>
+        <div class="floating-buttons">
+            <a href="mailto:your-email@example.com" class="btn" title="Jev Email">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://t.me/feranicus" class="btn telegram" title="Jev Telegram">
+                <img src="https://cdn-icons-png.flaticon.com/512/906/906377.png" alt="Telegram" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://wa.me/4915785541545" class="btn whatsapp" title="Jev WhatsApp">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" style="width: 30px; height: 30px;">
+            </a>
+            <a href="https://www.linkedin.com/in/feranicus/" class="btn" title="Jev LinkedIn">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width: 30px; height: 30px;">
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>1. Cloud and Digital Transformation Leadership</h2>
+            <p> My background includes managing large-scale cloud transformations using Microsoft Azure, AWS, OpenStack, and GCP. I’ve successfully designed and implemented secure, scalable, and high-performing infrastructures aligned with customer goals and business value.</p>
+        </div>
+        <div class="section">
+            <h2>2. Cloud and Digital Transformation Leadership</h2>
+            <p>I have managed large-scale cloud transformations utilizing Microsoft Azure, AWS, OpenStack, and GCP. These projects ranged from designing secure infrastructures to enabling business innovation while aligning with customer objectives and regulatory requirements</p>
+        </div>
+        <div class="section">
+            <h2>3. Extensive Pre-Sales and Engagement Experience</h2>
+            <p>Over 18 years as a senior pre-sales professional for companies like Huawei and Cogent Communications, I have designed proofs of concept (POCs), conducted roadshows, and presented at major customer events such as Cebit and MWC. I excel at translating customer requirements into minimum viable products, sparking interest, and working backwards from their business objectives to deliver tailored solutions.</p>
+        </div>
+        <div class="section">
+            <h2>4. Holistic Cybersecurity Vision</h2>
+            <p>I bring a unique perspective by understanding cybersecurity from all angles—Blue Team, Red Team, and even Black Hat. This allows me to pinpoint vulnerabilities and predict potential attack vectors. My approach ensures resources are allocated efficiently to comply with EU regulations such as DORA, NIS2, and CRA, creating a robust business continuity framework aligned with customer objectives.</p>
+        </div>
+        <div class="section">
+            <h2>5. Commercial Acumen and Trusted Advisor Approach</h2>
+            <p>I am highly commercially oriented, adept at creating the "Sell me the Pen" factor to inspire customer trust. My focus is on translating their business objectives into measurable KPIs and actionable engagements for solutions, professional services, or consulting. This ensures both satisfaction and tangible results.</p>
+        </div>
+    </div>
+
+    <!-- Popup -->
+<div id="popup">
+    <h3>This is a free demo</h3>
+    <p>Right-click is disabled. For any FAQ, please contact Jev:</p>
+    <div class="buttons">
+        <a href="https://t.me/feranicus" class="btn">Telegram</a>
+        <a href="https://wa.me/4915785541545" class="btn">WhatsApp</a>
+        <button class="btn" onclick="closePopup()">Close</button>
+    </div>
+</div>
+<div id="overlay"></div>
+
+
+    <div class="footer">
+        <p>&copy; 2024 Designed by JV, All Rights Reserved | Contact: feranicus@s4biz.io</p>
+    </div>
+
+    <script>
+        // Snowflake generator
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200);
+
+        // Right-click Popup Logic
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        document.getElementById('overlay').addEventListener('click', closePopup);
+
+                function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Initialize snowflake animation
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200);
+    </script>
+</body>
+</html>
+
