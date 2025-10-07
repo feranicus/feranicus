@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evgeny Vainshtein - Principal Architect & Developer | Presales | Cybersecurity</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7fa; /* A slightly cooler, professional light gray */
+            color: #334155; /* Slate gray for text */
+        }
+
+        /* --- Animations & Effects --- */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .scroll-animate.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .skill-bar-fill {
+            width: 0;
+            transition: width 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        /* --- Component Styles --- */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03), 0 2px 4px -2px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+        .section-title {
+            color: #1e293b;
+            padding-bottom: 0.75rem;
+            border-bottom: 4px solid #3b82f6;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        .tag {
+            background-color: #eef2ff;
+            color: #312e81;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0.25rem;
+            border: 1px solid #c7d2fe;
+        }
+
+        /* --- Timeline Styling --- */
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem; /* Space for line and dots */
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            bottom: 5px;
+            width: 3px;
+            background-color: #dbeafe; /* Light blue line */
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -2.2rem;
+            top: 5px;
+            height: 1.25rem;
+            width: 1.25rem;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            border: 3px solid #dbeafe;
+        }
+
+        /* --- Print Specific Styles --- */
+        @media print {
+            body {
+                background-color: #ffffff;
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .card {
+                box-shadow: none;
+                border: 1px solid #d1d5db;
+                break-inside: avoid;
+            }
+            .grid {
+               display: block !important;
+            }
+            aside, main {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+             .max-w-7xl {
+                padding: 0 !important;
+            }
+            .scroll-animate {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+            .skill-bar-fill {
+                transition: none !important; /* Remove animation for printing */
+            }
+             .timeline::before {
+                background-color: #e5e7eb;
+            }
+            .timeline-dot {
+                background-color: #3b82f6;
+                border-color: #e5e7eb;
+            }
+            h1, h2, h3, h4, a, p, li {
+                color: #000 !important;
+            }
+            .tag {
+                background-color: #f3f4f6 !important;
+                color: #1f2937 !important;
+                border: 1px solid #d1d5db !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            <aside class="lg:col-span-1 space-y-8">
+                <div class="card p-8 text-center scroll-animate">
+                    <img src="https://cybergod.ai/photo_2025-10-01_11-50-05.jpg" alt="Evgeny Vainshtein" class="w-36 h-36 rounded-full mx-auto mb-4 border-4 border-blue-200 shadow-xl">
+                    <h1 class="text-4xl font-extrabold text-slate-800">EVGENY VAINSHTEIN</h1>
+                    <p class="text-blue-600 mt-2 text-lg font-medium">Principal Architect & Developer | Presales | Cybersecurity</p>
+                </div>
+
+                <div class="card p-6 scroll-animate">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-id-card w-6 mr-3 text-blue-500"></i>Contact</h3>
+                    <ul class="space-y-3 text-slate-600">
+                        <li><i class="fas fa-map-marker-alt w-5 mr-3 text-blue-500"></i>Kiriyat Ono, Israel</li>
+                        <li><i class="fas fa-phone w-5 mr-3 text-blue-500"></i>0528218704</li>
+                        <li><i class="fas fa-envelope w-5 mr-3 text-blue-500"></i><a href="mailto:feranicus@s4biz.io" class="hover:text-blue-700">feranicus@s4biz.io</a></li>
+                        <li><i class="fab fa-linkedin w-5 mr-3 text-blue-500"></i><a href="https://linkedin.com/in/feranicus/" target="_blank" class="hover:text-blue-700">/in/feranicus</a></li>
+                        <li><i class="fas fa-globe w-5 mr-3 text-blue-500"></i><a href="https://www.s4biz.io/" target="_blank" class="hover:text-blue-700">s4biz.io</a></li>
+                    </ul>
+                </div>
+
+                <div class="card p-6 scroll-animate">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-lightbulb w-6 mr-3 text-blue-500"></i>Core Competencies</h3>
+                    <div id="skills-container" class="space-y-4">
+                        <div class="skill" data-level="95%"><span class="font-medium">Cybersecurity & Offensive Cyber</span></div>
+                        <div class="skill" data-level="90%"><span class="font-medium">Cloud & Solution Architecture</span></div>
+                        <div class="skill" data-level="85%"><span class="font-medium">Presales & Technical Evangelism</span></div>
+                        <div class="skill" data-level="95%"><span class="font-medium">Program Management</span></div>
+                        <div class="skill" data-level="80%"><span class="font-medium">Software Development & DevOps</span></div>
+                        <div class="skill" data-level="90%"><span class="font-medium">Generative AI & Automation</span></div>
+                    </div>
+                </div>
+
+                <div class="card p-6 scroll-animate">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-graduation-cap w-6 mr-3 text-blue-500"></i>Education</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-semibold text-slate-800">AWS Certified Cloud Practitioner</p>
+                            <p class="text-sm text-slate-500">Amazon Web Services (2021 - 2022)</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-800">B.Sc in Computer Science</p>
+                            <p class="text-sm text-slate-500">Champlain College (2000 - 2003)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6 scroll-animate">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-comments w-6 mr-3 text-blue-500"></i>Languages</h3>
+                    <p>English, Russian, Hebrew, German (All Fluent)</p>
+                </div>
+            </aside>
+
+            <main class="lg:col-span-2 space-y-12">
+                <div class="card p-8 scroll-animate">
+                    <div class="flex justify-between items-start mb-6">
+                        <h2 class="section-title text-3xl mb-0 border-b-0 pb-0">Executive Summary</h2>
+                        <button onclick="window.print()" class="no-print bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center shadow-md">
+                           <i class="fas fa-download mr-2"></i>Download PDF
+                        </button>
+                    </div>
+                    <p class="text-lg leading-relaxed">
+                        A results-driven Principal Architect and Developer with deep expertise in cybersecurity, cloud infrastructure, and software development. Adept at translating complex business needs into robust, secure, and scalable technical solutions. Proven success in leading high-stakes projects, from architecting offensive cyber capabilities for government clients to spearheading the global deployment of edge computing solutions for automotive giants like Volkswagen. A passionate technologist and leader who excels at building client relationships, evangelizing new technologies, and directing cross-functional teams to deliver excellence.
+                    </p>
+                </div>
+
+                <div class="card p-8 scroll-animate">
+                    <h2 class="section-title text-3xl">Professional Experience</h2>
+                    <div class="timeline">
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <p class="text-sm text-slate-500 mb-1">2016 - Present</p>
+                            <h3 class="text-xl font-bold text-slate-800">Principal Architect & Principal Developer</h3>
+                            <p class="text-md font-semibold text-blue-600">Stars4Business OÜ (S4biz)</p>
+                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
+                                <li><strong>Automotive:</strong> As a program leader, directed the global rollout of the Volkswagen D³ Edge Box solution to over 10,000 dealerships across 140+ countries. Responsibilities included architecture design and overseeing the deployment of a tech stack comprising Fortinet Virtual Firewalls, K3s Rancher, and various containerized applications on an edge cloud platform.</li>
+                                <li><strong>Cybersecurity:</strong> Architected and led the development of "Cybergod," an open-source endpoint cybersecurity product. Tech stack included Python, C#, Scala, and the Akka Framework, running on Linux with serverless cloud components.</li>
+                                <li><strong>Offensive Cyber:</strong> Managed advanced, confidential offensive cybersecurity projects for government agencies, deploying sophisticated tactics including 1-click methods and managing nationwide Deep Packet Inspection (DPI) initiatives.</li>
+                                <li><strong>Generative AI:</strong> Served as Technical Support lead for the viral "AIHAWK" GENAI project, leading community support for 280k+ users and managing the product roadmap with developers across multiple LLMs (OpenAI, Gemini, Anthropic).</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <p class="text-sm text-slate-500 mb-1">Concurrent with S4biz</p>
+                            <h3 class="text-xl font-bold text-slate-800">Principal Architect (Cloud & Transformation)</h3>
+                            <p class="text-md font-semibold text-blue-600">Amazon Web Services (AWS) for Telefónica Germany</p>
+                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
+                                <li>Oversaw the architecture and execution of 20+ digital transformation programs with a scope exceeding €100M.</li>
+                                <li>Led solutions design for major initiatives including AWS migrations, Oracle exits, DC exits, Kubernetes and FinOps optimization, and the implementation of GenAI and Big Data platforms.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                           <div class="timeline-dot"></div>
+                            <h3 class="text-xl font-bold text-slate-800">Principal Architect (Post M&A Integration)</h3>
+                            <p class="text-md font-semibold text-blue-600">TOSCA LTD</p>
+                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
+                                 <li>Architected and led the post-merger technological integration of three distinct company IT landscapes into a unified system on Microsoft Azure, consolidating ERP systems and deploying automated Windows 11 imaging for 7,000 PCs.</li>
+                            </ul>
+                        </div>
+                        
+                         <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <h3 class="text-xl font-bold text-slate-800">Earlier Roles (Selected)</h3>
+                            <p class="text-md font-semibold text-blue-600">Huawei, Red Hat, Canonical, Verint, Cogent Communications</p>
+                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
+                                 <li>Held progressively senior roles focused on presales, architecture, and technology leadership. As **IT Solutions Sales lead at Huawei**, designed and sold complex DC, Cloud, and NFV solutions. At **Verint**, managed the delivery of Cyber SIGINT projects. At **Red Hat & Canonical**, directed large-scale digital transformation and open-source strategy for major telco clients.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-8 scroll-animate">
+                    <h2 class="section-title text-3xl">Technical Expertise</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800 mb-2">Cybersecurity</h4>
+                            <div class="flex flex-wrap"><span class="tag">Offensive Cyber</span><span class="tag">SASE & Zero Trust</span><span class="tag">DevSecOps</span><span class="tag">SIEM & XDR</span><span class="tag">Cloud Security (CSPM)</span><span class="tag">MITRE ATT&CK</span><span class="tag">Network Firewalls (Palo Alto, Fortinet)</span><span class="tag">IAM</span><span class="tag">DORA & NIS2</span></div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800 mb-2">Cloud & Architecture</h4>
+                            <div class="flex flex-wrap"><span class="tag">AWS</span><span class="tag">Microsoft Azure</span><span class="tag">GCP</span><span class="tag">Kubernetes (K3s, EKS, AKS)</span><span class="tag">OpenStack</span><span class="tag">Rancher</span><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Microservices</span><span class="tag">Serverless</span></div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-slate-800 mb-2">AI & Development</h4>
+                            <div class="flex flex-wrap"><span class="tag">Python</span><span class="tag">C#</span><span class="tag">Rust</span><span class="tag">Java</span><span class="tag">React JS</span><span class="tag">Go</span><span class="tag">Scala</span><span class="tag">GenAI (OpenAI, Gemini)</span><span class="tag">LLM Integration</span><span class="tag">AWS Bedrock</span><span class="tag">API Development</span><span class="tag">CI/CD</span><span class="tag">PowerShell & Bash</span><span class="tag">GitHub</span></div>
+                        </div>
+                   </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Intersection Observer for animations ---
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+            animatedElements.forEach(element => observer.observe(element));
+
+            // --- Skill bar creation and animation ---
+            const skillsContainer = document.getElementById('skills-container');
+            const skills = skillsContainer.querySelectorAll('.skill');
+            
+            skills.forEach(skill => {
+                const level = skill.getAttribute('data-level');
+                const skillContent = skill.innerHTML; // save original content
+                
+                skill.innerHTML = `
+                    <div class="flex justify-between items-center mb-1">
+                        ${skillContent}
+                        <span class="text-sm font-semibold text-slate-500">${level}</span>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div class="skill-bar-fill bg-blue-500 h-2.5 rounded-full"></div>
+                    </div>
+                `;
+            });
+
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillBars = entry.target.querySelectorAll('.skill-bar-fill');
+                        skillBars.forEach(bar => {
+                            const level = bar.closest('.skill').getAttribute('data-level');
+                            bar.style.width = level;
+                        });
+                        skillObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            skillObserver.observe(skillsContainer);
+        });
+    </script>
+</body>
+</html>
