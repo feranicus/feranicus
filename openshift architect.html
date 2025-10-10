@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume and Cover Letter - Evgeny Vainshtein</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none; }
+            .print-break-inside-avoid { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl bg-white shadow-lg">
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-bold text-blue-900">Evgeny Vainshtein</h1>
+            <h2 class="text-2xl font-semibold text-gray-600 mt-2">Senior OpenShift & Kubernetes Architect</h2>
+            <div class="mt-4 text-gray-500 flex justify-center items-center flex-wrap gap-x-4 gap-y-2">
+                <span><i class="fas fa-envelope mr-2"></i>feranicus@s4biz.io</span>
+                <span><i class="fas fa-phone mr-2"></i>+49 157 8554 1545</span>
+                <span><a href="https://linkedin.com/in/feranicus/" class="hover:text-blue-700"><i class="fab fa-linkedin mr-2"></i>linkedin.com/in/feranicus</a></span>
+                 <span><i class="fas fa-map-marker-alt mr-2"></i>Friedberg, Germany</span>
+            </div>
+        </header>
+
+        <!-- Cover Letter Section -->
+        <section id="cover-letter" class="mb-12 p-6 border-2 border-dashed border-gray-300 rounded-lg print-break-inside-avoid">
+             <h3 class="text-2xl font-bold text-center text-blue-800 mb-6">RE: Application for Senior OpenShift Architect</h3>
+            <p class="mb-4">
+                Dear Hiring Team,
+            </p>
+            <p class="mb-4">
+                With extensive, hands-on leadership experience gained directly from directorial roles involving  Red Hat  and  Canonical , I am writing to express my keen interest in the Senior OpenShift Architect position. My background is defined by acting as the technical owner for large-scale OpenShift and Kubernetes deployments, from initial design (HLD/LLD) to hands-on implementation and cross-functional leadership. The opportunity to lead your OpenShift Tower aligns perfectly with my expertise in architecting and delivering robust container platforms for major global enterprises.
+            </p>
+            <p class="mb-4">
+               I am confident that my deep technical expertise and proven leadership in the Kubernetes ecosystem make me the ideal candidate to drive your project's success. Here are the top five reasons I am an excellent fit:
+            </p>
+            <div class="space-y-4 my-6">
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <h4 class="font-bold text-blue-700">1. Direct Leadership Experience with Red Hat and Canonical</h4>
+                    <p class="text-sm">I have served in directorial roles involving both of the world's leading enterprise open-source companies. At  Red Hat , I was responsible for multiple  OpenShift  projects for the  Orange Group , giving me direct expertise in the platform you are building. At  Canonical , I led numerous  Kubernetes  projects for FSI and Defence customers using Juju, solidifying my expertise in enterprise-grade container orchestration.</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <h4 class="font-bold text-blue-700">2. Proven Technical Ownership of Massive-Scale Kubernetes Deployments</h4>
+                    <p class="text-sm">I have a track record of architecting and managing container platforms at an immense scale. A key example is my work with  Volkswagen (VW) , where I was responsible for a Kubernetes platform comprising over  10,000 k3s clusters managed by Rancher . This demonstrates my ability to handle the complexity, design, and operational ownership required for a critical infrastructure tower.</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <h4 class="font-bold text-blue-700">3. Hands-On Expertise in OpenShift Architecture and Security</h4>
+                    <p class="text-sm">My experience goes beyond strategy to hands-on implementation. I am highly proficient in creating detailed Low-Level Designs (LLD) and possess practical skills in the specific technologies you require, including setting up RBAC, implementing CSI Drivers for storage, and securing clusters with  Advanced Cluster Security (ACS)  and policy engines like  Kyverno .</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <h4 class="font-bold text-blue-700">4. Strong Leadership and Cross-Tower Collaboration Skills</h4>
+                    <p class="text-sm">As a Transformation Director, I have consistently acted as the bridge between technical teams, project management, and stakeholders. I excel in leading customer-facing design discussions, resolving cross-functional issues, and providing the mentorship needed to ensure project alignment and successful delivery, as this role demands.</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-md">
+                    <h4 class="font-bold text-blue-700">5. Deep Hybrid Cloud and DevOps Proficiency</h4>
+                    <p class="text-sm">I possess strong knowledge of hybrid cloud environments (AWS, Azure, GCP) and the DevOps practices essential for a modern container platform. My proficiency in containerization, CI/CD pipelines, and infrastructure-as-code ensures I can deliver a comprehensive and automated OpenShift solution.</p>
+                </div>
+            </div>
+            <p>
+                I am eager to bring my technical ownership and hands-on architectural experience to your team. Thank you for your consideration.
+            </p>
+            <p class="mt-4">Sincerely,<br><strong>Evgeny Vainshtein</strong></p>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="print-break-inside-avoid">
+             <!-- Summary -->
+            <div class="mb-8 text-center">
+                 <h3 class="text-3xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">Summary</h3>
+                <p class="text-lg">A seasoned Senior Architect with deep, hands-on expertise in OpenShift and Kubernetes, gained through leadership roles with  Red Hat  and  Canonical . Proven experience acting as the technical owner for massive-scale container platforms, including a 10,000-cluster environment for Volkswagen. Expert in creating HLD/LLD, leading cross-functional teams, and implementing enterprise-grade security (ACS, Kyverno) and storage (CSI) solutions in complex hybrid cloud environments.</p>
+            </div>
+
+
+            <!-- Experience -->
+            <div class="mb-8">
+                <h3 class="text-3xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-6">Professional Experience</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-xl font-bold">Principal Architect & Freelance Director</h4>
+                        <p class="text-md font-semibold text-gray-600">Stars4Business OU | 2016 - Present</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                            <li>As a consulting director for  Red Hat , led multiple enterprise  OpenShift  platform projects for the  Orange Group , overseeing architecture, design, and implementation.</li>
+                            <li>Engaged by  Canonical , served as the lead architect for large-scale  Kubernetes  deployments for Financial Services and Defence clients, utilizing  Juju  for orchestration.</li>
+                            <li>For  Volkswagen (VW) , held responsibility for a massive IoT Kubernetes platform, architecting and managing over  10,000 k3s clusters with Rancher .</li>
+                            <li>Served as Transformation Director for cloud and open-source projects at  Amazon Web Services (AWS) , leading strategy and technical initiatives for enterprise clients.</li>
+                            <li>Designed and implemented detailed High-Level (HLD) and Low-Level (LLD) design documents for complex infrastructure projects.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold">IT Solutions Sales Director</h4>
+                        <p class="text-md font-semibold text-gray-600">Huawei | 2014 - 2016</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                             <li>Designed complex IT solutions including OpenStack Cloud, NFV, and Big Data platforms.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold">Founder & Transformation Leader</h4>
+                        <p class="text-md font-semibold text-gray-600">SIA Enterfreelance | 2009 - 2014</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                             <li>Founded a consultancy leading ERP transformation and managing infrastructure projects across EMEA.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <section class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 print-break-inside-avoid">
+                <div class="p-6 border rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">OpenShift & Kubernetes</h3>
+                     <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fas fa-cogs text-blue-500 mr-3"></i><strong>Platforms:</strong> Red Hat OpenShift, Rancher (k3s), Canonical Kubernetes</li>
+                        <li class="flex items-center"><i class="fas fa-shield-alt text-blue-500 mr-3"></i><strong>Security:</strong> Advanced Cluster Security (ACS), Kyverno, RBAC</li>
+                        <li class="flex items-center"><i class="fas fa-hdd text-blue-500 mr-3"></i><strong>Storage:</strong> Container Storage Interface (CSI) Drivers</li>
+                        <li class="flex items-center"><i class="fas fa-file-alt text-blue-500 mr-3"></i><strong>Design:</strong> HLD & LLD Creation</li>
+                        <li class="flex items-center"><i class="fab fa-docker text-blue-500 mr-3"></i><strong>Core Tech:</strong> Kubernetes, Docker, Containerization</li>
+                    </ul>
+                </div>
+                <div class="p-6 border rounded-lg">
+                    <h3 class="text-2xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">Cloud & DevOps</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><i class="fas fa-cloud text-green-500 mr-3"></i><strong>Cloud:</strong> AWS, Azure, GCP (Hybrid Environments)</li>
+                        <li class="flex items-center"><i class="fas fa-sync-alt text-green-500 mr-3"></i><strong>CI/CD:</strong> Jenkins, GitHub Actions, GitLab CI</li>
+                        <li class="flex items-center"><i class="fas fa-code text-green-500 mr-3"></i><strong>IaC & Automation:</strong> Terraform, Ansible, Juju</li>
+                        <li class="flex items-center"><i class="fas fa-users-cog text-green-500 mr-3"></i><strong>Leadership:</strong> Agile, Scrum, Technical Mentorship</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section class="mt-12 print-break-inside-avoid">
+                <h3 class="text-2xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">Education</h3>
+                <div>
+                    <h4 class="text-lg font-semibold">B.Sc in Computer Science</h4>
+                    <p class="text-gray-600">Champlain College (2000-2003)</p>
+                </div>
+            </section>
+
+        </section>
+    </div>
+</body>
+</html>
+

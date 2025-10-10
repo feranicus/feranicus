@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evgeny Vainshtein | Project Support Engineer Application</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#004b7c;
+      --secondary:#06a0c4;
+      --bg:#f5faff;
+      --text:#333;
+      --card:#fff;
+      --radius:14px;
+      --shadow:0 4px 14px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
+    body{background:var(--bg);color:var(--text);line-height:1.6;padding:2rem;}
+    header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:3rem;}
+    header h1{font-size:2.4rem;color:var(--primary);}
+    header p{margin-top:.5rem;font-weight:500;}
+    nav{margin-top:1.5rem;}
+    nav a{color:var(--secondary);margin:0 .5rem;font-weight:600;text-decoration:none;}
+    nav a:hover{text-decoration:underline;}
+    section{max-width:900px;margin:0 auto 3rem auto;background:var(--card);padding:2rem;border-radius:var(--radius);box-shadow:var(--shadow);}
+    h2{font-size:1.6rem;color:var(--primary);margin-bottom:1rem;}
+    article{margin-bottom:1.5rem;}
+    .reason{font-weight:600;margin-bottom:.25rem;}
+    ul{margin-left:1.25rem;}
+    .job{margin-bottom:1.5rem;}
+    .job-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+    .job-header h3{font-size:1.1rem;color:var(--secondary);}  
+    .job-header span{font-size:.9rem;color:#666;}
+    .job-body{padding-top:.5rem;display:none;}
+    .skills{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0;}
+    .tag{background:var(--secondary);color:#fff;padding:.25rem .75rem;border-radius:20px;font-size:.8rem;}
+    footer{text-align:center;font-size:.85rem;color:#666;margin-top:4rem;}
+    /* Toggle button */
+    #toggleBtn{position:fixed;bottom:20px;right:20px;background:var(--primary);color:#fff;border:none;padding:.75rem 1.25rem;border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;font-weight:600;}
+    #toggleBtn:hover{background:var(--secondary);}  
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Evgeny Vainshtein</h1>
+    <p>Executive Cybersecurity & Cloud Program Leader<br>Friedberg, Germany · +49 157 855 415 45 · feranicus@s4biz.io · linkedin.com/in/feranicus</p>
+    <nav>
+      <a href="#cover">Cover Letter</a>·
+      <a href="#resume">Résumé</a>
+    </nav>
+  </header>
+
+  <!-- COVER LETTER -->
+  <section id="cover">
+    <h2>Cover Letter – Why I’m the Ideal Project Support Engineer</h2>
+    <article>
+      <p>Dear Hiring Manager,</p>
+      <p>With two decades at the intersection of <strong>cyber‑resilience, cloud engineering, and regulated‑industry governance</strong>, I am excited to bring my expertise to GSK’s OT Security BAU team. Below are five clear reasons I will create value from day one:</p>
+      <ol>
+        <li class="reason">Proven regulator‑grade governance &amp; documentation</li>
+        <p>I built comprehensive NIS&nbsp;2, DORA, GDPR and Cyber Resilience Act (CRA) compliance programs for a Top‑10 EU bank, a global Top‑5 insurer, and multiple national Law‑Enforcement Agencies—authoring policies, SOPs, and <em>CSIRPs</em> in systems such as Veeva, Confluence and ServiceNow.</p>
+        <li class="reason">Deep cybersecurity architecture across OT/IT &amp; cloud</li>
+        <p>I have led secure segmentation projects blending IEC&nbsp;62443 guidance with cloud‑native controls (AWS IoT Greengrass, Kubernetes Edge), and maintained asset inventories that satisfy both GMP and ISO 27001 requirements.</p>
+        <li class="reason">Hands‑on tooling &amp; technical breadth</li>
+        <p>Linux hardening, Docker/Kubernetes runtime security, Python/Bash automation, MIRAI test framework, SIEM/SOAR pipelines, SDWAN/NFV traffic isolation, MITRE ATT&amp;CK mapping—my day‑to‑day toolkit supports threat modelling, baselining and continuous control assessment.</p>
+        <li class="reason">Stakeholder influence &amp; change acceleration</li>
+        <p>As Principal Program Manager at AWS and Stars4business OU I orchestrated 20+ transformation work‑streams (€100 M+), aligning Quality, OT, IT and C‑suite stakeholders across Europe, Africa and APAC.</p>
+        <li class="reason">Relentless focus on continuous improvement</li>
+        <p>I introduced risk‑based KPI dashboards that cut policy‑update lead‑time by 45 % and increased audit‑readiness scores from 78 % to 96 % within a year.</p>
+      </ol>
+      <p>GSK’s commitment to safe, trustworthy manufacturing resonates with my passion for translating cybersecurity into measurable business value. I look forward to discussing how my blend of technical depth and regulatory leadership can elevate your OT security posture.</p>
+      <p>Sincerely,<br>Evgeny Vainshtein</p>
+    </article>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <h2>Résumé</h2>
+
+    <!-- Professional Summary -->
+    <article>
+      <h3>Professional Summary</h3>
+      <p>Executive‑level program and project leader with <strong>20+ years delivering cybersecurity, cloud and network solutions</strong> for finance, telecom, healthcare and public‑sector clients. Expert in security architecture, regulatory frameworks (NIS2, DORA, GDPR, CRA) and documentation processes within GMP and other highly regulated environments. Fluent in English, Russian, Hebrew; German C1.</p>
+    </article>
+
+    <!-- Core Skills -->
+    <article>
+      <h3>Core Competencies &amp; Tooling</h3>
+      <div class="skills">
+        <span class="tag">Cloud Security Arch.</span><span class="tag">AWS / Azure</span><span class="tag">Linux Admin</span><span class="tag">Docker & K8s</span><span class="tag">VMware</span><span class="tag">Python / Bash</span><span class="tag">MIRAI Framework</span><span class="tag">Offensive Security</span><span class="tag">Social Engineering</span><span class="tag">Red Teaming</span><span class="tag">BAS / MITRE ATT&amp;CK</span><span class="tag">SIEM &amp; SOAR</span><span class="tag">DPI / SDWAN</span><span class="tag">NFV</span><span class="tag">Network Security</span><span class="tag">Technical Sales</span><span class="tag">Veeva GxP</span><span class="tag">IEC 62443</span><span class="tag">NIS2 / DORA</span><span class="tag">GDPR / CRA</span>
+      </div>
+    </article>
+
+    <!-- Experience -->
+    <article>
+      <h3>Professional Experience</h3>
+
+      <!-- job template replicated for each role -->
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Principal Technical Cybersecurity Program Manager · Stars4business OU</h3><span>2023 – Present | Remote (EU)</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Designed and executed enterprise‑wide <strong>Cyber­‑Resilience Strategy</strong> for a Top‑10 EU bank aligned with NIS2 and DORA; reduced material risk exposure by 32 %.</li>
+            <li>Developed GDPR remediation roadmap for a Top‑5 global insurance firm, delivering compliance ahead of regulatory audit.</li>
+            <li>Authored CSIRP, backup &amp; disaster‑recovery SOPs in Veeva; integrated KPI dashboards into ServiceNow GRC.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Senior Program Manager (Telecom & Cloud) · Amazon Web Services</h3><span>2021 – 2023 | Munich, DE</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Led >20 digital‑transformation programs (€100 M +) for Telefonica DE, including 5G Core and Edge Kubernetes workloads with stringent security baselines.</li>
+            <li>Implemented FinOps + security controls that cut cloud spend by 28 % while improving CIS Benchmark adherence to 95 %.</li>
+            <li>Championed OT/IT convergence PoC using AWS IoT Greengrass and industrial gateways, accelerating secure data ingestion from factory lines.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Senior R&amp;D Project Manager · ENEA</h3><span>2020 – 2021 | München, DE</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Managed SDLC for carrier‑grade DPI and NFV solutions; embedded MITRE ATT&amp;CK mappings into testing pipelines.</li>
+            <li>Drove move‑to‑containers strategy (Docker → Kubernetes, Helm) with automated SAST/DAST gates.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Principal Customer Success Manager · Red Hat</h3><span>2019 – 2020 | EMEA Remote</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Portfolio of 26 NFV/Kubernetes projects for DT Group and Orange; implemented <strong>Red Team / BAS</strong> feedback loops improving security scoring by 40 %.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Business Development Manager · Canonical (Ubuntu)</h3><span>2016 – 2019 | EMEA</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Drove adoption of Ubuntu Core &amp; Snaps in industrial IoT; positioned secure boot and confinement features for OT environments.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>IT Solutions Sales Manager · Huawei</h3><span>2014 – 2016 | DACH & CEE</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Sold and designed NFV telco clouds with integrated SIEM &amp; SOC services.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Founder / Transition & Transformation Leader · SIA Enterfreelance</h3><span>2009 – 2014 | Global</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Directed $60 M spectrum‑monitoring cyber program for Ministry of Telecom Angola; delivered secure WiMAX ISP rollout.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-header" onclick="toggleJob(this)">
+          <h3>Earlier Technical &amp; Managerial Roles</h3><span>2003 – 2009</span>
+        </div>
+        <div class="job-body">
+          <ul>
+            <li>Senior Delivery Project Manager · LR Group – Led infrastructure build‑out in Africa.</li>
+            <li>Technical Manager (Verint SIGINT) – Managed cyber intelligence integration for LEAs.</li>
+            <li>Country CTO · D‑Link – Oversaw network‑security product portfolio.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- Education & Certs -->
+    <article>
+      <h3>Education & Certifications</h3>
+      <ul>
+        <li>AWS Certified Cloud Practitioner, AWS – 2022</li>
+        <li>B.Sc. Computer Science, Champlain College (USA) – 2003</li>
+        <li>Navy Officer Practical Engineering (Marine Electricity), ORT Ashdod – 2000</li>
+      </ul>
+    </article>
+
+    <!-- Languages -->
+    <article>
+      <h3>Languages</h3>
+      <p>English (Fluent) · Russian (Fluent) · Hebrew (Fluent) · German (C1)</p>
+    </article>
+  </section>
+
+  <button id="toggleBtn" onclick="toggleAll()">Expand All</button>
+
+  <footer>
+    © 2025 Evgeny Vainshtein · This document is an interactive HTML résumé &amp; cover‑letter. Toggle job sections to explore details.
+  </footer>
+
+  <script>
+    function toggleJob(header){
+      const body = header.nextElementSibling;
+      body.style.display = body.style.display === 'block' ? 'none' : 'block';
+    }
+    let allOpen = false;
+    function toggleAll(){
+      const bodies = document.querySelectorAll('.job-body');
+      bodies.forEach(b=>b.style.display = allOpen ? 'none' : 'block');
+      allOpen = !allOpen;
+      document.getElementById('toggleBtn').innerText = allOpen?'Collapse All':'Expand All';
+    }
+  </script>
+</body>
+</html>

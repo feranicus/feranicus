@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evgeny Vainshtein - Executive Director | Cloud, Cyber, AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0077B5; /* LinkedIn Blue */
+            --secondary-color: #0A66C2;
+            --background-color: #f3f2ef;
+            --text-color: #333;
+            --card-background: #ffffff;
+            --header-text: #ffffff;
+            --accent-color: #313335;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-container.left {
+            left: 0;
+        }
+
+        .timeline-container.right {
+            left: 50%;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-container.right::after {
+            left: -16px;
+        }
+        
+        .timeline-container.left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent white;
+        }
+
+        .timeline-container.right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        
+        .skill-bar {
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-container::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+            .timeline-container.left::after, .timeline-container.right::after {
+                left: 15px;
+            }
+            .timeline-container.right {
+                left: 0%;
+            }
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none;
+            }
+            .timeline::after {
+                display: none;
+            }
+            .timeline-container, .timeline-container.left, .timeline-container.right {
+                width: 100%;
+                left: auto;
+                padding: 10px 0;
+            }
+            .timeline-container::after, .timeline-container::before {
+                display: none;
+            }
+            .fade-in-section {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .header-gradient {
+                 background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <!-- Header Section -->
+        <header class="header-gradient text-white p-8 rounded-xl shadow-lg text-center fade-in-section">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold">EVGENY VAINSHTEIN</h1>
+                    <h2 class="text-xl md:text-2xl font-light mt-2">Executive Project & Presales Director | Technological Evangelist | T&T Director</h2>
+                </div>
+                <div class="mt-6 md:mt-0 text-right text-sm">
+                    <div class="flex items-center justify-center md:justify-end mb-2">
+                        <i class="fas fa-map-marker-alt w-5 mr-2"></i> <span>Hermann-J.-Bach-Weg 16, 61169 Friedberg (Hessen)</span>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-end mb-2">
+                        <i class="fas fa-phone w-5 mr-2"></i> <span>+4915785541545</span>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-end mb-2">
+                        <i class="fas fa-envelope w-5 mr-2"></i> <a href="mailto:feranicus@s4biz.io" class="hover:underline">feranicus@s4biz.io</a>
+                    </div>
+                    <div class="flex items-center justify-center md:justify-end">
+                        <i class="fab fa-linkedin w-5 mr-2"></i> <a href="https://linkedin.com/in/feranicus/" target="_blank" class="hover:underline">linkedin.com/in/feranicus/</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="mt-8">
+            <!-- Professional Summary -->
+            <section class="bg-white p-8 rounded-xl shadow-lg fade-in-section">
+                <h3 class="text-2xl font-bold text-primary-color border-b-2 border-gray-200 pb-2 mb-4">Professional Summary</h3>
+                <p class="text-lg leading-relaxed">
+                    A results-driven and visionary Technology Director with over 20 years of experience leading multi-million-dollar Digital Transformation, Cloud, and Cybersecurity projects across EMEA. Expert in steering complex Transition & Transformation (T&T) programs for Fortune 500 companies in the Telecom, FSI, and Automotive sectors. Proven ability to build and mentor high-performing international teams, drive innovation in AI and Open Source, and forge strong C-level relationships to achieve strategic business objectives. Fluent in English, Russian, Hebrew, and German.
+                </p>
+            </section>
+            
+            <!-- Work Experience -->
+            <section class="mt-8 fade-in-section">
+                <h3 class="text-2xl font-bold text-primary-color border-b-2 border-gray-200 pb-2 mb-12 text-center">Work Experience</h3>
+                <div class="timeline">
+                    <!-- S4Biz -->
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">Director T&T, Founder</h4>
+                            <p class="text-md font-semibold text-gray-600">Stars4business OU (S4biz)</p>
+                            <p class="text-sm text-gray-500 mb-4">2016 - Present</p>
+                            <p>Founded and lead a boutique IT consulting firm specializing in large-scale Digital Transformation, Cloud (AWS, Azure, GCP), and Cybersecurity. Serve as a freelance Executive Director for enterprise clients, architecting and managing complex, multi-million-euro programs.</p>
+                        </div>
+                    </div>
+                    <!-- AWS -->
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">Transition & Transformation Director</h4>
+                            <p class="text-md font-semibold text-gray-600">AWS (via S4biz for Telefónica Germany)</p>
+                            <p class="text-sm text-gray-500 mb-4"></p>
+                            <p>Led 20+ digital transformation programs for Telefónica Germany with a budget over €100M. Key achievements include migrating 400+ applications to AWS, executing Oracle exits, optimizing FinOps, and integrating GenAI and Big Data solutions.</p>
+                        </div>
+                    </div>
+                    <!-- Red Hat -->
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">Technological Transition & Transformation Director</h4>
+                            <p class="text-md font-semibold text-gray-600">Red Hat</p>
+                            <p class="text-sm text-gray-500 mb-4"></p>
+                            <p>Directed 26 high-profile open-source projects for Deutsche Telekom and Orange, focusing on vEPC, vIMS, SDN/SD-WAN, and private clouds using OpenShift and OpenStack.</p>
+                        </div>
+                    </div>
+                    <!-- Canonical -->
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">Director of Partnerships, Sales & BD</h4>
+                            <p class="text-md font-semibold text-gray-600">Canonical (Ubuntu)</p>
+                            <p class="text-sm text-gray-500 mb-4"></p>
+                            <p>Responsible for technological partnerships and business development with Telcos, MSPs, Defense, and Enterprise clients, driving adoption of Ubuntu-based cloud solutions.</p>
+                        </div>
+                    </div>
+                    <!-- Huawei -->
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">IT Solutions Sales Director</h4>
+                            <p class="text-md font-semibold text-gray-600">Huawei</p>
+                            <p class="text-sm text-gray-500 mb-4">2014 - 2016</p>
+                            <p>Designed and sold IT/Datacenter, OpenStack Cloud, NFV, and Big Data solutions to key carrier and Telco customers, specializing in the virtualization of mobile and fixed telecom networks.</p>
+                        </div>
+                    </div>
+                    <!-- Earlier Career -->
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">Founder & Senior Delivery Manager</h4>
+                            <p class="text-md font-semibold text-gray-600">SIA Enterfreelance, Cogent, LR Group</p>
+                            <p class="text-sm text-gray-500 mb-4">2007 - 2014</p>
+                            <p>Held progressive roles including Sales Engineer at a Tier-1 ISP (Cogent), and T&T Director for multi-million dollar projects in Africa, including building a WiMAX ISP and a national RF monitoring system in Angola.</p>
+                        </div>
+                    </div>
+                     <!-- Verint/D-Link -->
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4 class="text-xl font-bold">Technical Manager & Country CTO</h4>
+                            <p class="text-md font-semibold text-gray-600">Verint Systems & D-Link</p>
+                            <p class="text-sm text-gray-500 mb-4">2003 - 2007</p>
+                            <p>Managed SIGINT project delivery for law enforcement agencies at Verint. Built the technical and presales departments from scratch for D-Link Israel, scaling the local business significantly.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Key Projects Portfolio -->
+            <section class="mt-8 fade-in-section">
+                <h3 class="text-2xl font-bold text-primary-color border-b-2 border-gray-200 pb-2 mb-4 text-center">Key Projects Portfolio</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-bold">Automotive Global Edge Platform (Volkswagen)</h4>
+                        <p class="mt-2">Managed the global rollout of the VW D³ Edge Box to 10,000+ dealerships in 140+ countries. This state-of-the-art platform for vehicle diagnostics included 10k Fortinet vFirewalls, K3s Rancher, and ZEDEDA Edge Cloud.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-bold">Strategic Project Delivery & Presale Leadership in Africa</h4>
+                        <p class="mt-2">Led multiple high-stakes, multi-million euro projects across Africa. This includes a two-year relocation to Angola to build a national WiMAX ISP and a country-wide RF spectrum monitoring solution. Managed a two-year lawful interception project in Botswana and led presale activities for Huawei in Zimbabwe and delivered advanced DPI & Offensive Cyber solutions in DR Congo.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-bold">GenAI Automation & Support (AIHAWK)</h4>
+                        <p class="mt-2">Served as Technical Support Director for a viral LinkedIn automation tool with 280k+ users. Managed community support for GenAI models (Google Gemini, OpenAI, Llama) and led technical project management with development and product teams.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-bold">Cloud Transformation & Oracle Exit (Telefónica)</h4>
+                        <p class="mt-2">Directed the migration of 400+ applications from 3 data centers to AWS, including a complex exit from Oracle to PostgreSQL. Implemented robust cybersecurity frameworks and CI/CD pipelines for a €200M+ program.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-bold">Cybersecurity Product Development (BNP Paribas)</h4>
+                        <p class="mt-2">Led the architecture and design of "Cybergod," a new open-source endpoint cybersecurity product. Developed on C# & Python for Windows, with a cloud backend using serverless and Scala, as part of a major DORA compliance initiative.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-bold">Post-M&A IT Transformation (Tosca Services)</h4>
+                        <p class="mt-2">Managed the IT T&T for Tosca Services after an acquisition tripled its IT landscape. Migrated ERPs to MS Dynamics, shifted the application stack to Azure, and implemented DevSecOps with offshore teams.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Technical Skills -->
+                <div class="bg-white p-8 rounded-xl shadow-lg fade-in-section">
+                    <h3 class="text-2xl font-bold text-primary-color border-b-2 border-gray-200 pb-2 mb-6">Technical Expertise</h3>
+                    <div>
+                        <p class="font-semibold">Cloud Platforms</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mt-2 mb-4">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full skill-bar" data-width="95%"></div>
+                        </div>
+                        <p class="text-sm -mt-3 mb-4">AWS, Microsoft Azure, GCP, OpenStack, OpenShift, Kubernetes, Rancher</p>
+                    </div>
+                     <div>
+                        <p class="font-semibold">Cybersecurity</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mt-2 mb-4">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full skill-bar" data-width="90%"></div>
+                        </div>
+                        <p class="text-sm -mt-3 mb-4">Zero Trust, SASE, XDR, SIEM, Offensive Cyber, DevSecOps, DORA, CISSP areas</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Artificial Intelligence</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mt-2 mb-4">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full skill-bar" data-width="85%"></div>
+                        </div>
+                         <p class="text-sm -mt-3 mb-4">OpenAI, Google Gemini, Anthropic, Llama, AWS Bedrock, API Integration</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">DevOps & Automation</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4 mt-2 mb-4">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full skill-bar" data-width="90%"></div>
+                        </div>
+                         <p class="text-sm -mt-3 mb-4">Ansible, Terraform, CI/CD, GitLab, Azure DevOps</p>
+                    </div>
+                </div>
+
+                <!-- Professional Skills -->
+                <div class="bg-white p-8 rounded-xl shadow-lg fade-in-section">
+                    <h3 class="text-2xl font-bold text-primary-color border-b-2 border-gray-200 pb-2 mb-6">Professional Skills</h3>
+                     <ul class="space-y-4 text-lg">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Technological Leadership & Strategy</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Digital Transformation & Change Management</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Agile & Scrum Project Management</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Team Leadership & Mentoring</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>C-Level Engagement & Presales</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Budgeting & Financial Oversight (€100M+)</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Education and Certifications -->
+            <section class="mt-8 bg-white p-8 rounded-xl shadow-lg fade-in-section">
+                 <h3 class="text-2xl font-bold text-primary-color border-b-2 border-gray-200 pb-2 mb-4">Education & Certifications</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-semibold">B.Sc in Computer Science</h4>
+                        <p class="text-gray-600">Champlain College (2000-2003)</p>
+                    </div>
+                     <div>
+                        <h4 class="text-lg font-semibold">Practical Engineering Degree, Marine Electricity</h4>
+                        <p class="text-gray-600">The ORT Ashdod Technological School for Naval Officers (1995-2000)</p>
+                    </div>
+                     <div>
+                        <h4 class="text-lg font-semibold">AWS Certified Cloud Practitioner</h4>
+                        <p class="text-gray-600">Amazon Web Services (2021-2022)</p>
+                    </div>
+                 </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.fade-in-section');
+            const skillBars = document.querySelectorAll('.skill-bar');
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            const skillBarObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bar = entry.target;
+                        bar.style.width = bar.dataset.width;
+                        observer.unobserve(bar);
+                    }
+                });
+            }, { threshold: 0.8 });
+
+            skillBars.forEach(bar => {
+                skillBarObserver.observe(bar);
+            });
+        });
+    </script>
+</body>
+</html>
+
