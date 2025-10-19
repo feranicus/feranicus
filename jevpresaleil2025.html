@@ -1,333 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evgeny Vainshtein - Principal Architect & Developer | Presales | Cybersecurity</title>
-    
+    <title>יבגני ויינשטיין - קורות חיים ומכתב מקדים</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Base styles */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f7fa; /* A slightly cooler, professional light gray */
-            color: #334155; /* Slate gray for text */
+            font-family: 'Assistant', sans-serif;
         }
-
-        /* --- Animations & Effects --- */
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .scroll-animate.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .skill-bar-fill {
-            width: 0;
-            transition: width 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        
-        /* --- Component Styles --- */
-        .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03), 0 2px 4px -2px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-        }
-        .section-title {
-            color: #1e293b;
-            padding-bottom: 0.75rem;
-            border-bottom: 4px solid #3b82f6;
-            display: inline-block;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-        .tag {
-            background-color: #eef2ff;
-            color: #312e81;
-            padding: 0.35rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: inline-block;
-            margin: 0.25rem;
-            border: 1px solid #c7d2fe;
-        }
-
-        /* --- Timeline Styling --- */
-        .timeline {
-            position: relative;
-            padding-left: 2.5rem; /* Space for line and dots */
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 5px;
-            bottom: 5px;
-            width: 3px;
-            background-color: #dbeafe; /* Light blue line */
-        }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: -2.2rem;
-            top: 5px;
-            height: 1.25rem;
-            width: 1.25rem;
-            background-color: #3b82f6;
-            border-radius: 50%;
-            border: 3px solid #dbeafe;
-        }
-
-        /* --- Print Specific Styles --- */
         @media print {
-            body {
-                background-color: #ffffff;
-                -webkit-print-color-adjust: exact; 
-                print-color-adjust: exact;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .card {
-                box-shadow: none;
-                border: 1px solid #d1d5db;
-                break-inside: avoid;
-            }
-            .grid {
-               display: block !important;
-            }
-            aside, main {
-                width: 100%;
-                margin: 0;
-                padding: 0;
-            }
-             .max-w-7xl {
-                padding: 0 !important;
-            }
-            .scroll-animate {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-            }
-            .skill-bar-fill {
-                transition: none !important; /* Remove animation for printing */
-            }
-             .timeline::before {
-                background-color: #e5e7eb;
-            }
-            .timeline-dot {
-                background-color: #3b82f6;
-                border-color: #e5e7eb;
-            }
-            h1, h2, h3, h4, a, p, li {
-                color: #000 !important;
-            }
-            .tag {
-                background-color: #f3f4f6 !important;
-                color: #1f2937 !important;
-                border: 1px solid #d1d5db !important;
-            }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none; }
+            .print-break-inside-avoid { break-inside: avoid; }
         }
     </style>
 </head>
-<body class="text-slate-700">
+<body class="bg-gray-100">
 
-    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl bg-white shadow-lg">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-bold text-blue-900">יבגני ויינשטיין</h1>
+            <h2 class="text-2xl font-semibold text-gray-600 mt-2">Principal Technology Leader | Cyber, Software, DevOps & Strategy</h2>
+            <div class="mt-4 text-gray-500 flex justify-center items-center flex-wrap gap-x-4 gap-y-2">
+                <span>feranicus@s4biz.io</span>
+                <span>052-8218704</span>
+                <span><a href="https://linkedin.com/in/feranicus/" class="hover:text-blue-700">linkedin.com/in/feranicus</a></span>
+                 <span>אשדוד, ישראל</span>
+            </div>
+        </header>
+
+        <!-- Cover Letter Section -->
+        <section id="cover-letter" class="mb-12 p-6 border-2 border-dashed border-gray-300 rounded-lg print-break-inside-avoid">
+            <h3 class="text-2xl font-bold text-center text-blue-800 mb-6">מכתב מקדים כללי</h3>
             
-            <aside class="lg:col-span-1 space-y-8">
-                <div class="card p-8 text-center scroll-animate">
-                    <img src="https://cybergod.ai/photo_2025-10-01_11-50-05.jpg" alt="Evgeny Vainshtein" class="w-36 h-36 rounded-full mx-auto mb-4 border-4 border-blue-200 shadow-xl">
-                    <h1 class="text-4xl font-extrabold text-slate-800">EVGENY VAINSHTEIN</h1>
-                    <p class="text-blue-600 mt-2 text-lg font-medium">Principal Architect & Developer | Presales | Cybersecurity</p>
-                </div>
+            <div class="mb-6 p-3 bg-amber-100 border-l-4 border-amber-500 rounded-r-lg">
+                <h4 class="font-bold text-amber-800">בדיחה קטנה כדי לפתוח את היום בחיוך:</h4>
+                <p class="mt-1 text-sm text-amber-700 italic">למה מומחה סייבר הוא גנן גרוע? כי הוא כל הזמן חושש מהתקפות "Rootkit"!</p>
+            </div>
 
-                <div class="card p-6 scroll-animate">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-id-card w-6 mr-3 text-blue-500"></i>Contact</h3>
-                    <ul class="space-y-3 text-slate-600">
-                        <li><i class="fas fa-map-marker-alt w-5 mr-3 text-blue-500"></i>Kiriyat Ono, Israel</li>
-                        <li><i class="fas fa-phone w-5 mr-3 text-blue-500"></i>0528218704</li>
-                        <li><i class="fas fa-envelope w-5 mr-3 text-blue-500"></i><a href="mailto:feranicus@s4biz.io" class="hover:text-blue-700">feranicus@s4biz.io</a></li>
-                        <li><i class="fab fa-linkedin w-5 mr-3 text-blue-500"></i><a href="https://linkedin.com/in/feranicus/" target="_blank" class="hover:text-blue-700">/in/feranicus</a></li>
-                        <li><i class="fas fa-globe w-5 mr-3 text-blue-500"></i><a href="https://www.s4biz.io/" target="_blank" class="hover:text-blue-700">s4biz.io</a></li>
-                    </ul>
-                </div>
+            <p class="mb-4">
+                לכל מאן דבעי,
+            </p>
+            <p class="mb-4">
+                לאחר 15 שנות רילוקיישן בגרמניה ובפורטוגל, במהלכן הובלתי יוזמות טכנולוגיות מורכבות עבור תאגידים מהגדולים בעולם, חזרתי לישראל עם מטרה ברורה: להביא את הניסיון הרב-תחומי והייחודי שצברתי אל קדמת הטכנולוגיה הישראלית. אני מציע שילוב נדיר של מומחיות ברמת Principal בחמישה תחומים מרכזיים: <strong>אבטחת סייבר, פיתוח תוכנה, DevSecOps, ניהול פרויקטים ו-Presale.</strong>
+            </p>
+            <p class="mb-4">
+               אני "אולר שוויצרי" טכנולוגי – מנהל בכיר שיודע לנוע בצורה חלקה בין תכנון ארכיטקטורת סייבר הגנתית והתקפית, דרך כתיבת קוד Hands-on בשפות מרובות והטמעת תהליכי CI/CD מאובטחים, ועד להובלת תוכניות טרנספורמציה דיגיטלית במאות מיליוני יורו וגיבוש הפתרון הטכני המנצח עבור הלקוח.
+            </p>
+             <p class="mb-4">
+                היכולת שלי "לחבוש כובעים רבים" בו-זמנית מאפשרת לי לגשר על פערים בין מחלקות, להבין את התמונה המלאה ולספק פתרונות הוליסטיים המשלבים חדשנות טכנולוגית עם אסטרטגיה עסקית ואבטחה בלתי מתפשרת. אני מחפש את האתגר הבא בו אוכל למנף את הניסיון הגלובלי שלי כדי להוביל, לחדש ולהשפיע.
+            </p>
+            <p class="mt-4">בכבוד רב,<br><strong>יבגני ויינשטיין</strong></p>
+        </section>
 
-                <div class="card p-6 scroll-animate">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-lightbulb w-6 mr-3 text-blue-500"></i>Core Competencies</h3>
-                    <div id="skills-container" class="space-y-4">
-                        <div class="skill" data-level="95%"><span class="font-medium">Cybersecurity & Offensive Cyber</span></div>
-                        <div class="skill" data-level="90%"><span class="font-medium">Cloud & Solution Architecture</span></div>
-                        <div class="skill" data-level="85%"><span class="font-medium">Presales & Technical Evangelism</span></div>
-                        <div class="skill" data-level="95%"><span class="font-medium">Program Management</span></div>
-                        <div class="skill" data-level="80%"><span class="font-medium">Software Development & DevOps</span></div>
-                        <div class="skill" data-level="90%"><span class="font-medium">Generative AI & Automation</span></div>
+        <!-- Resume Section -->
+        <section id="resume" class="print-break-inside-avoid">
+             <!-- Summary -->
+            <div class="mb-8 text-center">
+                 <h3 class="text-3xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">פרופיל מקצועי</h3>
+                <p class="text-lg">מנהיג טכנולוגי בכיר (Principal) עם ניסיון של 20+ שנה, המשלב מומחיות ייחודית ורב-תחומית כ-"אולר שוויצרי" בארכיטקטורה, פיתוח וניהול. מומחה בהובלת תוכניות מורכבות בתחומי <strong>אבטחת סייבר (התקפי והגנתי), פיתוח תוכנה (Hands-on), ארכיטקטורת DevSecOps וענן, ניהול תוכניות גלובליות (Agile/SAFe) ואסטרטגיית Presale.</strong> בעל רקורד מוכח בהובלת טרנספורמציות דיגיטליות ופרויקטי ענק עבור תאגידים בינלאומיים (VW, Telefonica, BNP Paribas). חזר לאחרונה לישראל לאחר 15 שנות ניסיון ניהולי בכיר באירופה, ומביא עמו חשיבה אסטרטגית, יכולות ביצוע יוצאות דופן, ותשוקה לפתרון אתגרים טכנולוגיים ועסקיים מורכבים.</p>
+            </div>
+
+
+            <!-- Experience -->
+            <div class="mb-8">
+                <h3 class="text-3xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-6">ניסיון מקצועי (כרונולוגי מלא)</h3>
+                <div class="space-y-8">
+                    <div>
+                        <h4 class="text-xl font-bold">מייסד, Principal Architect ויועץ טכנולוגי בכיר</h4>
+                        <p class="text-md font-semibold text-gray-600">Stars4business OU | 2016 - היום</p>
+                        <p class="mt-2 text-gray-700">הובלת חברת ייעוץ המספקת שירותי ארכיטקטורה, ניהול תוכניות, סייבר ופיתוח לתאגידים גלובליים. אחריות על כלל ההיבטים: פיתוח עסקי, Presale, ניהול צוותים, וביצוע Hands-on.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2 text-gray-700">
+                            <li><strong>לקוחות מובילים:</strong> Volkswagen, Telefonica Germany, BNP Paribas, NetApp, Red Hat, Canonical, ENEA (עבור Deutsche Telekom), LuxAir, Tosca Services, Intellexa.</li>
+                            <li><strong>תחומי אחריות:</strong> ניהול תוכניות טרנספורמציה דיגיטלית וענן (בשווי 100+ מיליון אירו); תכנון והובלת פרויקטי סייבר התקפיים; ארכיטקטורה והובלת פיתוח של פלטפורמות אבטחה מבוססות AI (תחת רגולציית DORA); פיתוח Hands-on (C#, Python, Scala, Go, Rust); הובלת אסטרטגיית ענן ו-IAM; ניהול תוכניות SAFe גלובליות.</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h4 class="text-xl font-bold">דירקטור פתרונות IT בכיר</h4>
+                        <p class="text-md font-semibold text-gray-600">Huawei | 2014 - 2016</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                           <li>הובלת מכירות ו-Presale של פתרונות IT, Datacenter, OpenStack, Cloud ו-BigData ללקוחות Telco אסטרטגיים. תכנון פרויקטים של וירטואליזציה של רשתות (NFV).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold">מייסד ומוביל טרנספורמציה</h4>
+                        <p class="text-md font-semibold text-gray-600">SIA Enterfreelance | 2009 - 2014</p>
+                         <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                           <li>הקמת וניהול חברת ייעוץ שייצגה ספקים טכנולוגיים (Kofax, Mobotix, Elbit Cyberbit) באזור EMEA. הובלת Presale, ניהול פרויקטים ופיתוח עסקי. התמחות בפרויקטי טרנספורמציה של מערכות ERP (Oracle, SAP).</li>
+                       </ul>
+                    </div>
+                     <div>
+                        <h4 class="text-xl font-bold">מהנדס מכירות (Sales Engineering)</h4>
+                        <p class="text-md font-semibold text-gray-600">Cogent Communications | 2011 - 2013</p>
+                         <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                           <li>תכנון פתרונות תקשורת מורכבים עבור לקוחות אנטרפרייז גלובליים בספקית האינטרנט Tier-1 (מה-TOP3 בעולם). אחריות על פתרונות DWDM, IP Transit, MPLS, וקישוריות למעל 100 Data Centers.</li>
+                       </ul>
+                    </div>
+                     <div>
+                        <h4 class="text-xl font-bold">מנהל פרויקטים בכיר ומנהל Presale</h4>
+                        <p class="text-md font-semibold text-gray-600">LR Group | 2007 - 2009 (אנגולה, אפריקה)</p>
+                         <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                           <li>ניהול והובלה של פרויקטי טרנספורמציה טכנולוגית רחבי היקף באפריקה, כולל הקמת ספק אינטרנט Wimax (בשווי 50 מיליון דולר) ופרויקט ניטור ספקטרום עבור משרד התקשורת האנגולי (בשווי 60 מיליון דולר).</li>
+                       </ul>
+                    </div>
+                     <div>
+                        <h4 class="text-xl font-bold">מנהל טכני, סייבר SIGINT</h4>
+                        <p class="text-md font-semibold text-gray-600">Verint Systems | 2005 - 2007</p>
+                         <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                           <li>ניהול צוותי אינטגרציה ומהנדסי Site Reliability (SRE) בפרויקטי Cyber SIGINT מורכבים עבור גופי אכיפת חוק וביטחון.</li>
+                       </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold">מנהל טכני ארצי (CTO מקומי)</h4>
+                        <p class="text-md font-semibold text-gray-600">D-Link | 2003 - 2005</p>
+                         <ul class="list-disc list-inside mt-2 space-y-1 text-gray-700">
+                           <li>הקמת המערך הטכני של הסניף הישראלי מאפס. בנייה וניהול של מחלקות ה-Presale וה-Customer Success, והובלת הצמיחה העסקית מהצד הטכנולוגי.</li>
+                       </ul>
                     </div>
                 </div>
+            </div>
 
-                <div class="card p-6 scroll-animate">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-graduation-cap w-6 mr-3 text-blue-500"></i>Education</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <p class="font-semibold text-slate-800">AWS Certified Cloud Practitioner</p>
-                            <p class="text-sm text-slate-500">Amazon Web Services (2021 - 2022)</p>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-slate-800">B.Sc in Computer Science</p>
-                            <p class="text-sm text-slate-500">Champlain College (2000 - 2003)</p>
-                        </div>
+            <!-- Skills Section -->
+            <section class="mt-12 print-break-inside-avoid">
+                 <h3 class="text-3xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">תחומי התמחות מרכזיים</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-6 border rounded-lg bg-slate-50">
+                        <h4 class="text-2xl font-semibold text-blue-800 pb-2 mb-4 border-b">Cyber Security & DevSecOps</h4>
+                         <ul class="space-y-2">
+                            <li>ארכיטקטורת Zero Trust, SASE, PAM</li>
+                            <li>סייבר התקפי (Offensive), ניתוח איומים</li>
+                            <li>תקנות ורגולציות (DORA, NIS2, GDPR)</li>
+                            <li>אבטחת ענן (CSPM) וקונטיינרים</li>
+                            <li>תהליכי CI/CD מאובטחים, "Shift Left"</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 border rounded-lg bg-slate-50">
+                        <h4 class="text-2xl font-semibold text-blue-800 pb-2 mb-4 border-b">Software Development</h4>
+                        <ul class="space-y-2">
+                             <li>Polyglot Programming (Hands-on)</li>
+                             <li>שפות: C#, Python, Go, Scala, Rust, Java</li>
+                             <li>ארכיטקטורת Microservices ו-Event-Driven</li>
+                             <li>פיתוח מערכות מבוזרות ו-High-Scale</li>
+                             <li>אינטגרציה עם APIs ומערכות צד-שלישי</li>
+                        </ul>
+                    </div>
+                     <div class="p-6 border rounded-lg bg-slate-50">
+                        <h4 class="text-2xl font-semibold text-blue-800 pb-2 mb-4 border-b">Project Management</h4>
+                         <ul class="space-y-2">
+                            <li>ניהול תוכניות R&D ופרויקטים גלובליים</li>
+                            <li>מתודולוגיות: Agile, Scrum, Kanban, SAFe</li>
+                            <li>ניהול סיכונים, תקציב ובעלי עניין</li>
+                            <li>כלי ניהול: Jira, Confluence, Azure DevOps</li>
+                            <li>הובלת טרנספורמציות ארגוניות</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 border rounded-lg bg-slate-50">
+                        <h4 class="text-2xl font-semibold text-blue-800 pb-2 mb-4 border-b">Presale & Architecture</h4>
+                        <ul class="space-y-2">
+                             <li>ארכיטקטורת פתרונות Enterprise</li>
+                             <li>Multi-Cloud: AWS, Azure, GCP, OpenStack</li>
+                             <li>תכנון פתרונות מורכבים מקצה לקצה</li>
+                             <li>ייעוץ טכנולוגי ואסטרטגי להנהלות</li>
+                             <li>מצגות, Demos, והובלת PoCs</li>
+                        </ul>
                     </div>
                 </div>
+            </section>
 
-                <div class="card p-6 scroll-animate">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center"><i class="fas fa-comments w-6 mr-3 text-blue-500"></i>Languages</h3>
-                    <p>English, Russian, Hebrew, German (All Fluent)</p>
-                </div>
-            </aside>
-
-            <main class="lg:col-span-2 space-y-12">
-                <div class="card p-8 scroll-animate">
-                    <div class="flex justify-between items-start mb-6">
-                        <h2 class="section-title text-3xl mb-0 border-b-0 pb-0">Executive Summary</h2>
-                        <button onclick="window.print()" class="no-print bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center shadow-md">
-                           <i class="fas fa-download mr-2"></i>Download PDF
-                        </button>
+            <!-- Education Section -->
+            <section class="mt-12 print-break-inside-avoid">
+                <h3 class="text-3xl font-bold text-blue-900 border-b-2 border-gray-200 pb-2 mb-4">השכלה ושפות</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="text-lg font-semibold">B.Sc במדעי המחשב</h4>
+                        <p class="text-gray-600">Champlain College (2000-2003)</p>
                     </div>
-                    <p class="text-lg leading-relaxed">
-                        A results-driven Principal Architect and Developer with deep expertise in cybersecurity, cloud infrastructure, and software development. Adept at translating complex business needs into robust, secure, and scalable technical solutions. Proven success in leading high-stakes projects, from architecting offensive cyber capabilities for government clients to spearheading the global deployment of edge computing solutions for automotive giants like Volkswagen. A passionate technologist and leader who excels at building client relationships, evangelizing new technologies, and directing cross-functional teams to deliver excellence.
-                    </p>
-                </div>
-
-                <div class="card p-8 scroll-animate">
-                    <h2 class="section-title text-3xl">Professional Experience</h2>
-                    <div class="timeline">
-                        
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <p class="text-sm text-slate-500 mb-1">2016 - Present</p>
-                            <h3 class="text-xl font-bold text-slate-800">Principal Architect & Principal Developer</h3>
-                            <p class="text-md font-semibold text-blue-600">Stars4Business OÜ (S4biz)</p>
-                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
-                                <li><strong>Automotive:</strong> As a program leader, directed the global rollout of the Volkswagen D³ Edge Box solution to over 10,000 dealerships across 140+ countries. Responsibilities included architecture design and overseeing the deployment of a tech stack comprising Fortinet Virtual Firewalls, K3s Rancher, and various containerized applications on an edge cloud platform.</li>
-                                <li><strong>Cybersecurity:</strong> Architected and led the development of "Cybergod," an open-source endpoint cybersecurity product. Tech stack included Python, C#, Scala, and the Akka Framework, running on Linux with serverless cloud components.</li>
-                                <li><strong>Offensive Cyber:</strong> Managed advanced, confidential offensive cybersecurity projects for government agencies, deploying sophisticated tactics including 1-click methods and managing nationwide Deep Packet Inspection (DPI) initiatives.</li>
-                                <li><strong>Generative AI:</strong> Served as Technical Support lead for the viral "AIHAWK" GENAI project, leading community support for 280k+ users and managing the product roadmap with developers across multiple LLMs (OpenAI, Gemini, Anthropic).</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <p class="text-sm text-slate-500 mb-1">Concurrent with S4biz</p>
-                            <h3 class="text-xl font-bold text-slate-800">Principal Architect (Cloud & Transformation)</h3>
-                            <p class="text-md font-semibold text-blue-600">Amazon Web Services (AWS) for Telefónica Germany</p>
-                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
-                                <li>Oversaw the architecture and execution of 20+ digital transformation programs with a scope exceeding €100M.</li>
-                                <li>Led solutions design for major initiatives including AWS migrations, Oracle exits, DC exits, Kubernetes and FinOps optimization, and the implementation of GenAI and Big Data platforms.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="timeline-item">
-                           <div class="timeline-dot"></div>
-                            <h3 class="text-xl font-bold text-slate-800">Principal Architect (Post M&A Integration)</h3>
-                            <p class="text-md font-semibold text-blue-600">TOSCA LTD</p>
-                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
-                                 <li>Architected and led the post-merger technological integration of three distinct company IT landscapes into a unified system on Microsoft Azure, consolidating ERP systems and deploying automated Windows 11 imaging for 7,000 PCs.</li>
-                            </ul>
-                        </div>
-                        
-                         <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <h3 class="text-xl font-bold text-slate-800">Earlier Roles (Selected)</h3>
-                            <p class="text-md font-semibold text-blue-600">Huawei, Red Hat, Canonical, Verint, Cogent Communications</p>
-                            <ul class="list-disc list-inside mt-2 space-y-2 text-slate-600">
-                                 <li>Held progressively senior roles focused on presales, architecture, and technology leadership. As **IT Solutions Sales lead at Huawei**, designed and sold complex DC, Cloud, and NFV solutions. At **Verint**, managed the delivery of Cyber SIGINT projects. At **Red Hat & Canonical**, directed large-scale digital transformation and open-source strategy for major telco clients.</li>
-                            </ul>
-                        </div>
+                    <div>
+                        <h4 class="text-lg font-semibold">הנדסאי חשמל (קצין ימי)</h4>
+                        <p class="text-gray-600">בית הספר לקציני ים אורט אשדוד (1995-2000)</p>
+                    </div>
+                    <div class="md:col-span-2">
+                         <h4 class="text-lg font-semibold">שפות</h4>
+                         <p class="text-gray-600">עברית (שפת אם), אנגלית (שפת אם), רוסית (שפת אם), גרמנית (שוטף)</p>
                     </div>
                 </div>
+            </section>
 
-                <div class="card p-8 scroll-animate">
-                    <h2 class="section-title text-3xl">Technical Expertise</h2>
-                    <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-lg text-slate-800 mb-2">Cybersecurity</h4>
-                            <div class="flex flex-wrap"><span class="tag">Offensive Cyber</span><span class="tag">SASE & Zero Trust</span><span class="tag">DevSecOps</span><span class="tag">SIEM & XDR</span><span class="tag">Cloud Security (CSPM)</span><span class="tag">MITRE ATT&CK</span><span class="tag">Network Firewalls (Palo Alto, Fortinet)</span><span class="tag">IAM</span><span class="tag">DORA & NIS2</span></div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg text-slate-800 mb-2">Cloud & Architecture</h4>
-                            <div class="flex flex-wrap"><span class="tag">AWS</span><span class="tag">Microsoft Azure</span><span class="tag">GCP</span><span class="tag">Kubernetes (K3s, EKS, AKS)</span><span class="tag">OpenStack</span><span class="tag">Rancher</span><span class="tag">Terraform</span><span class="tag">Ansible</span><span class="tag">Microservices</span><span class="tag">Serverless</span></div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg text-slate-800 mb-2">AI & Development</h4>
-                            <div class="flex flex-wrap"><span class="tag">Python</span><span class="tag">C#</span><span class="tag">Rust</span><span class="tag">Java</span><span class="tag">React JS</span><span class="tag">Go</span><span class="tag">Scala</span><span class="tag">GenAI (OpenAI, Gemini)</span><span class="tag">LLM Integration</span><span class="tag">AWS Bedrock</span><span class="tag">API Development</span><span class="tag">CI/CD</span><span class="tag">PowerShell & Bash</span><span class="tag">GitHub</span></div>
-                        </div>
-                   </div>
-                </div>
-            </main>
-        </div>
+        </section>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Intersection Observer for animations ---
-            const animatedElements = document.querySelectorAll('.scroll-animate');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                    }
-                });
-            }, { threshold: 0.1 });
-            animatedElements.forEach(element => observer.observe(element));
-
-            // --- Skill bar creation and animation ---
-            const skillsContainer = document.getElementById('skills-container');
-            const skills = skillsContainer.querySelectorAll('.skill');
-            
-            skills.forEach(skill => {
-                const level = skill.getAttribute('data-level');
-                const skillContent = skill.innerHTML; // save original content
-                
-                skill.innerHTML = `
-                    <div class="flex justify-between items-center mb-1">
-                        ${skillContent}
-                        <span class="text-sm font-semibold text-slate-500">${level}</span>
-                    </div>
-                    <div class="w-full bg-slate-200 rounded-full h-2.5">
-                        <div class="skill-bar-fill bg-blue-500 h-2.5 rounded-full"></div>
-                    </div>
-                `;
-            });
-
-            const skillObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const skillBars = entry.target.querySelectorAll('.skill-bar-fill');
-                        skillBars.forEach(bar => {
-                            const level = bar.closest('.skill').getAttribute('data-level');
-                            bar.style.width = level;
-                        });
-                        skillObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            skillObserver.observe(skillsContainer);
-        });
-    </script>
 </body>
 </html>
