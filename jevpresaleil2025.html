@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>יבגני ויינשטיין - קורות חיים ומכתב מקדים</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
@@ -34,6 +35,14 @@
                  <span>אשדוד, ישראל</span>
             </div>
         </header>
+
+        <!-- Download/Print Button Section -->
+        <div class="text-center mb-10 no-print">
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                הורדה כ-PDF או הדפסה
+                <i class="fas fa-download mr-2"></i>
+            </button>
+        </div>
 
         <!-- Cover Letter Section -->
         <section id="cover-letter" class="mb-12 p-6 border-2 border-dashed border-gray-300 rounded-lg print-break-inside-avoid">
@@ -196,3 +205,4 @@
     </div>
 </body>
 </html>
+
