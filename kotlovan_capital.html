@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOTLOVAN CAPITAL — AI outreach for Batumi off-plan, live</title>
+<meta name="description" content="Find retail investors in Hong Kong, Singapore and China to buy foundation-stage (kotlovan) apartments in Batumi — for living or rental. Outreach runs on AI, end to end. Live, working demo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#080a10;--bg2:#0c0f17;--ink:#f2f1ea;--muted:#8a8f9e;
+    --gold:#f3c14e;--teal:#27d3c1;--sky:#5aa2ff;--violet:#a98bff;--coral:#ff7a6b;
+    --card:#0f131d;--line:rgba(243,193,78,.16);--r:18px;--ease:cubic-bezier(.16,1,.3,1)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--gold);color:#1a1403}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .grain{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .cur,.ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;mix-blend-mode:difference}
+  .cur{width:7px;height:7px;background:var(--gold);transform:translate(-50%,-50%)}
+  .ring{width:38px;height:38px;border:1.5px solid var(--gold);transform:translate(-50%,-50%);transition:width .25s,height .25s}
+  .ring.grow{width:64px;height:64px}
+  @media (hover:none){.cur,.ring{display:none}body{cursor:auto}}
+  @media (hover:hover){body{cursor:none}a,button,input,.node,.chip,.slot,.pay{cursor:none}}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:9000;transition:.4s var(--ease)}
+  header.s{background:rgba(8,10,16,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{font-family:'Space Grotesk';font-weight:700;font-size:19px;display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
+  .brand .mk{width:22px;height:22px;display:grid;place-items:center}
+  .brand .mk svg{width:22px;height:22px}
+  .brand b{color:var(--gold)}
+  .menu{display:flex;gap:22px}
+  .menu a{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);transition:.3s}
+  .menu a:hover{color:var(--gold)}
+  @media(max-width:960px){.menu{display:none}}
+
+  .hero{min-height:100svh;display:flex;align-items:center;padding-top:80px;position:relative;overflow:hidden}
+  #spark{position:absolute;inset:0;z-index:0;opacity:.85}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:
+    radial-gradient(55% 55% at 82% 14%,rgba(90,162,255,.14),transparent 60%),
+    radial-gradient(60% 60% at 8% 92%,rgba(243,193,78,.12),transparent 60%),
+    radial-gradient(50% 50% at 55% 60%,rgba(39,211,193,.07),transparent 60%),var(--bg)}
+  .skyline{position:absolute;left:0;right:0;bottom:0;z-index:1;width:100%;height:32vh;opacity:.6}
+  .skyline .grid line{stroke:rgba(243,193,78,.07);stroke-width:1}
+  .skyline .trace{fill:none;stroke:var(--gold);stroke-width:2.4;filter:drop-shadow(0 0 6px rgba(243,193,78,.7))}
+  .skyline .scan{fill:var(--gold);filter:drop-shadow(0 0 8px var(--gold))}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'Space Grotesk';font-weight:600;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--gold);border:1px solid var(--line);padding:8px 16px;border-radius:100px;background:rgba(243,193,78,.04)}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  h1{font-family:'Space Grotesk';font-weight:700;line-height:.95;letter-spacing:-.03em;text-transform:uppercase;font-size:clamp(38px,8.4vw,104px);margin:22px 0 18px}
+  h1 .ln{display:block;overflow:hidden}
+  h1 .ln span{display:block;transform:translateY(106%);animation:rise .9s var(--ease) forwards}
+  h1 .ln:nth-child(2) span{animation-delay:.12s}h1 .ln:nth-child(3) span{animation-delay:.24s}
+  @keyframes rise{to{transform:translateY(0)}}
+  .stroke{-webkit-text-stroke:2px var(--gold);color:transparent}.fill{color:var(--gold)}
+  .lead{max-width:580px;font-size:clamp(16px,2vw,19px);color:#bcc1cf;line-height:1.6;opacity:0;animation:fade .8s .5s var(--ease) forwards}
+  @keyframes fade{to{opacity:1}}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;opacity:0;animation:fade .8s .65s var(--ease) forwards}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;font-family:'Space Grotesk';font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;background:var(--gold);color:#1a1403;border:none;border-radius:100px;transition:.2s}
+  .btn:hover{box-shadow:0 14px 40px rgba(243,193,78,.25)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--gold)}
+  .hstats{display:flex;gap:30px;flex-wrap:wrap;margin-top:40px;opacity:0;animation:fade .8s .8s var(--ease) forwards}
+  .hstats .st b{display:block;font-family:'Space Grotesk';font-weight:700;font-size:clamp(22px,3vw,30px);color:var(--gold);line-height:1}
+  .hstats .st span{font-size:12.5px;color:var(--muted);font-weight:600}
+
+  section{position:relative;z-index:2}
+  .sec{padding:92px 0}
+  .sec-tag{font-family:'Space Grotesk';font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--sky)}
+  .sec-title{font-family:'Space Grotesk';font-weight:700;font-size:clamp(30px,5.4vw,60px);line-height:1;text-transform:uppercase;letter-spacing:-.02em;margin:12px 0 14px}
+  .sec-title em{font-style:normal;color:var(--gold)}
+  .sec-desc{max-width:640px;color:#bcc1cf;font-size:16px;line-height:1.6}
+  .reveal{opacity:0;transform:translateY(38px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* chat demo */
+  .tgwrap{display:grid;grid-template-columns:340px 1fr;gap:40px;align-items:center;margin-top:30px}
+  @media(max-width:840px){.tgwrap{grid-template-columns:1fr;justify-items:center}}
+  .phone{width:340px;max-width:100%;background:#0d111a;border:1px solid var(--line);border-radius:34px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .phone .scr{background:#0a0f17;border-radius:24px;overflow:hidden;height:580px;display:flex;flex-direction:column}
+  .tgtop{background:#141a26;padding:14px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .tgav{width:38px;height:38px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-size:19px;flex:none}
+  .tgtop .nm{font-weight:700;font-size:14.5px}.tgtop .on{font-size:12px;color:#5fd3b0}
+  .tgbody{flex:1;overflow:hidden;padding:16px 14px;display:flex;flex-direction:column;gap:9px}
+  .msg{max-width:84%;padding:10px 13px;border-radius:15px;font-size:13.5px;line-height:1.42;opacity:0;transform:translateY(8px);animation:msgin .35s var(--ease) forwards}
+  @keyframes msgin{to{opacity:1;transform:none}}
+  .msg.them{align-self:flex-start;background:#1a2230;border-bottom-left-radius:5px}
+  .msg.me{align-self:flex-end;background:var(--gold);color:#1a1403;border-bottom-right-radius:5px;font-weight:600}
+  .msg .zh{display:block;font-size:11.5px;opacity:.7;margin-top:4px;font-style:italic}
+  .typing{align-self:flex-start;background:#1a2230;border-radius:15px;border-bottom-left-radius:5px;padding:13px 15px;display:flex;gap:5px}
+  .typing i{width:7px;height:7px;border-radius:50%;background:#6f7790;animation:bb 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes bb{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+  .tgcap{max-width:440px}
+  .tgcap h3{font-family:'Space Grotesk';font-weight:700;font-size:clamp(22px,3vw,30px);text-transform:uppercase;line-height:1.05}
+  .tgcap p{color:#bcc1cf;font-size:16px;line-height:1.6;margin-top:14px}
+  .tgcap .mini{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .tgcap .mini span{font-size:13px;font-weight:600;padding:8px 13px;border:1px solid var(--line);border-radius:100px;color:#bcc1cf}
+
+  .legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:22px 0 2px}
+  .legend span{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:#bcc1cf}
+  .legend i{width:24px;height:5px;border-radius:3px}
+  .tourbar{display:flex;gap:12px;align-items:center;justify-content:center;margin:18px 0 6px;flex-wrap:wrap}
+  .tbtn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:'Space Grotesk';font-weight:700;font-size:13px;text-transform:uppercase;
+    background:var(--gold);color:#1a1403;border:none;border-radius:100px;transition:.2s}
+  .tbtn.off{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .cap{min-height:24px;text-align:center;color:var(--gold);font-weight:600;font-size:15px;transition:.3s;opacity:0}
+  .cap.show{opacity:1}
+
+  .stage{margin:14px 0 8px;border:1px solid var(--line);border-radius:24px;padding:8px;overflow:hidden;background:
+    radial-gradient(70% 80% at 28% 0%,rgba(243,193,78,.06),transparent 60%),
+    radial-gradient(60% 80% at 96% 100%,rgba(90,162,255,.06),transparent 60%),var(--bg2)}
+  .scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border-radius:18px}
+  svg.map{display:block;width:100%;min-width:920px;height:auto}
+  .swipe{display:none;text-align:center;color:var(--muted);font-size:12px;padding:5px 0 8px;font-weight:600}
+  @media(max-width:900px){.swipe{display:block}}
+  .node{cursor:pointer}.node rect.box{transition:filter .25s}
+  .node:hover rect.box{filter:brightness(1.3)}
+  text{font-family:'Inter',sans-serif}
+
+  .tl{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:30px}
+  @media(max-width:880px){.tl{grid-template-columns:1fr 1fr}}@media(max-width:520px){.tl{grid-template-columns:1fr}}
+  .ti{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 16px;position:relative;overflow:hidden}
+  .ti .bar{position:absolute;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;animation:fillb 1.6s var(--ease) infinite}
+  .ti:nth-child(2) .bar{animation-delay:.25s}.ti:nth-child(3) .bar{animation-delay:.5s}.ti:nth-child(4) .bar{animation-delay:.75s}.ti:nth-child(5) .bar{animation-delay:1s}.ti:nth-child(6) .bar{animation-delay:1.25s}
+  @keyframes fillb{0%{transform:scaleX(0)}40%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:.25}}
+  .ti .ico{font-size:24px}.ti b{display:block;font-family:'Space Grotesk';font-weight:700;font-size:13px;text-transform:uppercase;margin:10px 0 6px}.ti p{font-size:13px;color:#aab0bf;line-height:1.45}
+
+  .dd{display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;margin-top:20px;scroll-margin-top:90px;transition:.4s}
+  .dd:hover{border-color:rgba(243,193,78,.45)}.dd.flash{box-shadow:0 0 0 3px rgba(243,193,78,.25);border-color:var(--gold)}
+  .dd .num{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:20px;color:#1a1403}
+  .dd h3{font-family:'Space Grotesk';font-weight:700;font-size:clamp(19px,2.6vw,26px);text-transform:uppercase;line-height:1.05;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .dd h3 .ic{font-size:26px}
+  .dd .plain{color:#cdd1da;font-size:16px;line-height:1.6;margin:14px 0 18px}.dd .plain b{color:var(--gold)}
+  .hood{border-top:1px dashed var(--line);padding-top:16px}
+  .hood .h{font-family:'Space Grotesk';font-weight:600;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .hood ul{list-style:none;display:grid;gap:8px}
+  .hood li{font-size:13.5px;color:#9aa1b2;padding-left:18px;position:relative;line-height:1.45}
+  .hood li::before{content:"▸";position:absolute;left:0;color:var(--gold)}
+  .hood code{background:rgba(243,193,78,.1);color:var(--gold);padding:1px 6px;border-radius:5px;font-size:12.5px}
+  .flowstrip{height:6px;border-radius:4px;margin-top:18px;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+  .flowstrip i{position:absolute;top:0;height:100%;width:30%;border-radius:4px;background:linear-gradient(90deg,transparent,var(--c,var(--gold)),transparent);animation:slide 2.2s linear infinite}
+  @keyframes slide{from{left:-30%}to{left:100%}}
+
+  .bgrid{display:grid;grid-template-columns:1.4fr .9fr;gap:22px;margin-top:26px;align-items:start}
+  @media(max-width:900px){.bgrid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+  .lbl{font-family:'Space Grotesk';font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:20px 0 12px}.lbl:first-child{margin-top:0}
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{padding:11px 15px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.02);font-weight:600;font-size:14px;transition:.18s;user-select:none}
+  .chip small{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+  .chip:hover{border-color:rgba(243,193,78,.5)}.chip.on{background:var(--gold);color:#1a1403;border-color:var(--gold)}.chip.on small{color:#1a1403cc}
+  .pays{display:grid;gap:10px}
+  .pay{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 16px;border-radius:12px;border:1px solid var(--line);transition:.18s}
+  .pay:hover{border-color:rgba(243,193,78,.5)}.pay.on{border-color:var(--gold);background:rgba(243,193,78,.06)}
+  .pay .t{font-weight:600;font-size:15px}.pay .d{font-size:12.5px;color:var(--muted);margin-top:2px}.pay .v{font-family:'Space Grotesk';font-weight:700;color:var(--gold);font-size:16px;white-space:nowrap}
+  .sum{position:sticky;top:88px}
+  .sum .row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(243,193,78,.08);font-size:14.5px}
+  .sum .row span:first-child{color:var(--muted)}
+  .sum .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px}.sum .total .v{font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--gold)}
+  .ppill{display:inline-block;background:rgba(90,162,255,.12);border:1px solid rgba(90,162,255,.3);color:var(--sky);font-size:12px;font-weight:600;padding:4px 10px;border-radius:100px;margin-bottom:14px}
+  .note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.5;text-align:center}
+  .note code{background:rgba(243,193,78,.1);color:var(--gold);padding:1px 5px;border-radius:4px}
+  .sched{margin-top:20px;border:1px solid rgba(90,162,255,.25);border-radius:20px;padding:22px;background:linear-gradient(135deg,rgba(90,162,255,.08),transparent)}
+  .sched h4{font-family:'Space Grotesk';font-weight:700;font-size:14px;text-transform:uppercase;display:flex;gap:9px;align-items:center}
+  .sched .capn{color:#bcd2f5;font-size:12.5px;margin:6px 0 14px}
+  .jrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(90,162,255,.12)}
+  .jrow .time{font-family:'Space Grotesk';font-weight:700;font-size:13px;color:var(--sky);min-width:118px}
+  .jrow .who{font-weight:600;font-size:14px}.jrow .meta{font-size:12px;color:var(--muted)}
+  .jrow .tag{margin-left:auto;font-family:'Space Grotesk';font-size:13px;font-weight:700;color:var(--gold);white-space:nowrap}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .mc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .mc .ic{font-size:26px}.mc h4{font-family:'Space Grotesk';font-weight:700;font-size:17px;text-transform:uppercase;margin:12px 0 6px}
+  .mc .v{font-family:'Space Grotesk';font-weight:700;font-size:24px;color:var(--gold);line-height:1}.mc p{color:#aab0bf;font-size:13.5px;line-height:1.5;margin-top:8px}
+  .mc .src{display:block;font-size:11px;color:var(--muted);margin-top:10px}
+  .mc .src a{color:var(--sky);text-decoration:underline}
+
+  /* partner cards */
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  @media(max-width:860px){.pgrid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.pgrid{grid-template-columns:1fr}}
+  .pc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;transition:.25s}
+  .pc:hover{border-color:rgba(243,193,78,.45);transform:translateY(-3px)}
+  .pc .tag{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+  .pc h4{font-family:'Space Grotesk';font-weight:700;font-size:17px;margin:8px 0 6px}
+  .pc p{font-size:13px;color:#aab0bf;line-height:1.5}
+  .checklist{display:grid;gap:10px;margin-top:24px}
+  .ck{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .ck .x{flex:none;width:26px;height:26px;border-radius:8px;background:rgba(39,211,193,.14);color:var(--teal);display:grid;place-items:center;font-weight:700;font-size:14px}
+  .ck b{font-family:'Space Grotesk';font-size:14.5px}.ck p{font-size:13px;color:#aab0bf;line-height:1.5;margin-top:3px}
+
+  .calls{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+  @media(max-width:860px){.calls{grid-template-columns:1fr}}
+  .call{border-radius:18px;padding:26px;border:1px solid var(--line)}
+  .call.g{background:linear-gradient(135deg,rgba(243,193,78,.12),rgba(243,193,78,.03))}.call.b{background:linear-gradient(135deg,rgba(90,162,255,.12),rgba(90,162,255,.03))}.call.o{background:linear-gradient(135deg,rgba(255,122,107,.12),rgba(255,122,107,.03))}.call.t{background:linear-gradient(135deg,rgba(39,211,193,.12),rgba(39,211,193,.03))}
+  .call .big{font-family:'Space Grotesk';font-weight:700;font-size:clamp(22px,4vw,34px);line-height:1}
+  .call.g .big{color:var(--gold)}.call.b .big{color:var(--sky)}.call.o .big{color:var(--coral)}.call.t .big{color:var(--teal)}
+  .call h4{font-family:'Space Grotesk';font-weight:700;text-transform:uppercase;font-size:15px;margin:12px 0 8px}.call p{color:#bcc1cf;font-size:14px;line-height:1.55}
+
+  .disc{margin-top:30px;border:1px solid rgba(255,122,107,.3);background:rgba(255,122,107,.05);border-radius:16px;padding:20px 24px;font-size:13px;color:#cdd1da;line-height:1.6}
+  .disc b{color:var(--coral)}
+
+  footer{border-top:1px solid var(--line);padding:50px 0 40px;background:var(--bg2);text-align:center}
+  footer .brand{justify-content:center;font-size:26px}footer p{color:var(--muted);margin-top:14px;font-size:14px}footer .cp{margin-top:26px;color:var(--muted);font-size:12.5px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="grain"></div><div class="cur"></div><div class="ring"></div>
+
+<header id="hd"><div class="wrap nav">
+  <a href="#top" class="brand"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6" stroke="#f3c14e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>KOTLOVAN<b>&nbsp;CAPITAL</b></a>
+  <nav class="menu"><a href="#outreach">Outreach</a><a href="#map">System</a><a href="#case">Business&nbsp;case</a><a href="#calc">ROI</a><a href="#batumi">Batumi&nbsp;side</a><a href="#china">China&nbsp;side</a><a href="#safe">Compliance</a></nav>
+</div></header>
+
+<section class="hero" id="top">
+  <div class="hero-bg"></div><canvas id="spark"></canvas>
+  <svg class="skyline" viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <g class="grid" id="skyGrid"></g>
+    <path class="trace" id="skyTrace" d=""/>
+    <circle class="scan" id="skyScan" r="5" cx="0" cy="220"/>
+  </svg>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>AI deal engine · Batumi off-plan · live demonstration</span>
+    <h1><span class="ln"><span>Buy at the</span></span><span class="ln"><span class="stroke">foundation</span></span><span class="ln"><span>sell <span class="fill">the view</span></span></span></h1>
+    <p class="lead">We find retail investors in Hong Kong, Singapore and mainland China and bring them into vetted <b>kotlovan-stage</b> apartments in Batumi — to live in or to rent. Every step of the outreach runs on AI. Everything below works right on this page: watch the agent message a live lead, run the system tour, and try the ROI calculator.</p>
+    <div class="hero-cta"><a href="#outreach" class="btn">See the AI work →</a><a href="#calc" class="btn ghost">Try the ROI calculator</a></div>
+    <div class="hstats">
+      <div class="st"><b>$50–70k</b><span>entry 1-bed, off-plan</span></div>
+      <div class="st"><b>+30%/yr</b><span>best coastal projects, 5-yr avg</span></div>
+      <div class="st"><b>10–25%</b><span>seafront short-let yield</span></div>
+      <div class="st"><b>0%</b><span>purchase tax for foreigners</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTREACH CHAT DEMO -->
+<section class="sec wrap" id="outreach">
+  <div class="reveal">
+    <div class="sec-tag">/ How it looks to the investor</div>
+    <h2 class="sec-title">One agent — <em>the whole pitch</em></h2>
+    <p class="sec-desc">The AI agent opens the conversation in the investor's own language, qualifies budget and intent, sends the right project, and books a call — politely, on a real channel (WeChat, WhatsApp, Telegram). A human only steps in when there's a hot lead to close.</p>
+  </div>
+  <div class="tgwrap reveal">
+    <div class="phone"><div class="scr">
+      <div class="tgtop"><div class="tgav">🏗️</div><div><div class="nm">Kotlovan · Investor Desk</div><div class="on">online · auto-translate on</div></div></div>
+      <div class="tgbody" id="tgbody"></div>
+    </div></div>
+    <div class="tgcap">
+      <h3>No cold-call team. The agent does the first 95%.</h3>
+      <p>It works a list of pre-qualified Asian property investors, writes in fluent English or 中文, answers questions about price, yield and ownership rights, and hands a warm, booked lead to your closer. Tireless, consistent, on-brand — and it never forgets to follow up.</p>
+      <div class="mini"><span>🌐 Auto-translate</span><span>🎯 Qualifies budget</span><span>📄 Sends the right project</span><span>📅 Books the call</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM MAP -->
+<section class="sec wrap" id="map">
+  <div class="reveal">
+    <div class="sec-tag">/ The whole machine on one screen</div>
+    <h2 class="sec-title">From <em>signal</em> to <em>keys</em></h2>
+    <p class="sec-desc">Dots travelling the lines are real traffic — leads, messages, money and documents moving through the system. Hover a block (or hit "Tour") to light up its flows. Click a block to jump to the detail.</p>
+    <div class="legend">
+      <span><i style="background:var(--gold)"></i>Leads · outreach · deals</span>
+      <span><i style="background:var(--sky)"></i>Investor · ownership</span>
+      <span><i style="background:var(--teal)"></i>Developer · escrow · title</span>
+      <span><i style="background:var(--violet)"></i>AI reasoning</span>
+      <span><i style="background:var(--coral)"></i>Rental returns</span>
+    </div>
+    <div class="tourbar"><button class="tbtn" id="tour">▶ Tour the system</button></div>
+    <div class="cap" id="cap"></div>
+    <div class="stage">
+      <div class="scroller">
+        <svg class="map" viewBox="0 0 1200 760" id="svgmap" aria-label="Full system diagram">
+          <defs><filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g id="edges"></g><g id="nodes"></g>
+        </svg>
+      </div>
+      <div class="swipe">← swipe to see the whole diagram →</div>
+    </div>
+  </div>
+</section>
+
+<!-- 30 SECONDS TIMELINE -->
+<section class="sec wrap" id="flow">
+  <div class="reveal">
+    <div class="sec-tag">/ One lead — the whole journey</div>
+    <h2 class="sec-title">What happens <em>automatically</em></h2>
+    <div class="tl">
+      <div class="ti"><div class="bar"></div><div class="ico">📡</div><b>1 · Sourced</b><p>Investor signal pulled from Juwai, WeChat groups & lists</p></div>
+      <div class="ti"><div class="bar"></div><div class="ico">🤖</div><b>2 · Reached</b><p>Agent opens in their language, on their channel</p></div>
+      <div class="ti"><div class="bar"></div><div class="ico">🎯</div><b>3 · Qualified</b><p>Budget, intent (live vs rent), residency interest</p></div>
+      <div class="ti"><div class="bar"></div><div class="ico">🏗️</div><b>4 · Matched</b><p>Right Batumi project & unit, with numbers</p></div>
+      <div class="ti"><div class="bar"></div><div class="ico">🤝</div><b>5 · Handed off</b><p>Booked call → human closer takes the warm lead</p></div>
+      <div class="ti"><div class="bar"></div><div class="ico">🔑</div><b>6 · Closed safe</b><p>Escrow, notary, NAPR title → keys & rental</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS CASE DEEP DIVE -->
+<section class="sec wrap" id="case">
+  <div class="reveal">
+    <div class="sec-tag">/ The business case · in plain words</div>
+    <h2 class="sec-title">Every block — <em>broken down</em></h2>
+    <p class="sec-desc">On top, plain English for the deal team. Below, "under the hood" — the mechanics, the numbers and the rules that make it real.</p>
+  </div>
+  <div id="ddwrap"></div>
+</section>
+
+<!-- ROI CALCULATOR -->
+<section class="sec wrap" id="calc">
+  <div class="reveal">
+    <div class="sec-tag">/ Live widget · try it now</div>
+    <h2 class="sec-title">The <em>investor's</em> maths</h2>
+    <p class="sec-desc">This is the number the agent walks the investor through. Pick a unit size, the stage you buy at, how you pay, and how you'll rent it. The summary shows entry price, the uplift to completion, annual rent and a 5-year return — plus the developer's installment schedule on the right.</p>
+  </div>
+  <div class="bgrid reveal">
+    <div class="panel">
+      <div class="lbl">1 · Unit size</div><div class="chips" id="cSize"></div>
+      <div class="lbl">2 · Buy at which stage <small style="display:inline;color:var(--muted)">(earlier = cheaper)</small></div><div class="chips" id="cStage"></div>
+      <div class="lbl">3 · How to pay</div><div class="pays" id="cPay"></div>
+      <div class="lbl">4 · How you'll rent it</div><div class="chips" id="cRent"></div>
+    </div>
+    <div>
+      <div class="panel sum">
+        <span class="ppill">Illustrative · USD · not financial advice</span>
+        <div class="row"><span>Unit</span><b id="sUnit">—</b></div>
+        <div class="row"><span>Entry price (at stage)</span><b id="sEntry">—</b></div>
+        <div class="row"><span>Value at completion</span><b id="sDone">—</b></div>
+        <div class="row"><span>Built-in uplift</span><b id="sUp" style="color:var(--teal)">—</b></div>
+        <div class="row"><span>Net rent / year</span><b id="sRent">—</b></div>
+        <div class="row"><span>Net rental yield</span><b id="sYield" style="color:var(--sky)">—</b></div>
+        <div class="total"><span>5-yr total return*</span><span class="v" id="sRoi">—</span></div>
+        <div class="row" style="border:none;margin-top:6px"><span id="sNowLbl">Due to reserve</span><b id="sNow" style="color:var(--sky)">—</b></div>
+        <div class="note">*Uplift to completion + 5 years of net rent on completed value, before taxes & fees. Georgia: <code>0%</code> purchase tax, rental tax can be as low as <code>5%</code>. Figures illustrate the model — verify each project independently.</div>
+      </div>
+      <div class="sched">
+        <h4>🏗️ Developer payment schedule</h4>
+        <div class="capn">Typical interest-free installment plan to completion — what the investor actually pays, when.</div>
+        <div id="cJournal"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATUMI SIDE -->
+<section class="sec wrap" id="batumi">
+  <div class="reveal">
+    <div class="sec-tag">/ The Batumi side · who to work with to stay safe</div>
+    <h2 class="sec-title">Build on <em>solid ground</em></h2>
+    <p class="sec-desc">The single biggest risk in off-plan is the developer not finishing. Work only with established names that have delivered, register title through the state agency, and put a lawyer between you and the contract. Names below are well-known Batumi developers — research and verify each one independently before committing a cent.</p>
+  </div>
+  <div class="pgrid reveal">
+    <div class="pc"><div class="tag">Developer · since 1998</div><h4>Gumbati Group</h4><p>First company to start large-scale construction in Batumi; ~500,000 m² of residential & commercial delivered.</p></div>
+    <div class="pc"><div class="tag">Developer · large portfolio</div><h4>Metropol</h4><p>Major projects — Metropol Parallel, Cube (with a 5-star hotel) and Oval. Multiple new launches.</p></div>
+    <div class="pc"><div class="tag">Developer · low-rise leader</div><h4>Polo (Polo Villas)</h4><p>Largest low-rise developer in Georgia — Polo One, Parklane, Garden, Greenfield, Avenue townhouse complexes.</p></div>
+    <div class="pc"><div class="tag">Developer · since 2018</div><h4>One Development</h4><p>Highly liquid Batumi projects; recognised at the European Property Awards 2025–26.</p></div>
+    <div class="pc"><div class="tag">Developer · 300,000+ m²</div><h4>ELT Group</h4><p>"ELT Quarter" Batumi and new launches across Batumi & Tbilisi.</p></div>
+    <div class="pc"><div class="tag">Developer · premium / contractor</div><h4>Mardi Holding · Next Group</h4><p>Mardi — a leading Batumi contractor; Next Group focuses on the premium segment.</p></div>
+  </div>
+
+  <div class="reveal">
+    <h3 style="font-family:'Space Grotesk';font-weight:700;text-transform:uppercase;font-size:20px;margin:40px 0 4px">How the safe purchase actually works</h3>
+    <div class="checklist">
+      <div class="ck"><div class="x">1</div><div><b>Use an independent Georgian lawyer — not the developer's</b><p>Title-history & encumbrance check via the House of Justice, contract drafting, document translation. Registration fees are tiny (GEL 50–200 at NAPR; notary up to GEL 200).</p></div></div>
+      <div class="ck"><div class="x">2</div><div><b>Register ownership at NAPR (National Agency of Public Registry)</b><p>The notarized deed is filed electronically and title is registered — usually within a day. A buyer needn't even be present; an authorised representative can file with a notarised power of attorney.</p></div></div>
+      <div class="ck"><div class="x">3</div><div><b>Stage payments to construction milestones</b><p>Tie installments to delivered stages (signing → frame → roof → keys). For extra safety, route funds through a bank-held / escrow arrangement (Bank of Georgia, TBC) rather than direct developer transfers.</p></div></div>
+      <div class="ck"><div class="x">4</div><div><b>Vet the developer like an underwriter</b><p>Past delivered projects, financial standing, permits and zoning. Foreigners can fully own non-agricultural property — no residence permit needed to buy, and no purchase tax or stamp duty.</p></div></div>
+      <div class="ck"><div class="x">5</div><div><b>Residency, if the investor wants it</b><p>A property-based residence permit is available — but the threshold rose to <b>$150,000</b> from 1 March 2026 (was $100,000). Position it as an upside, never a guarantee.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHINA SIDE -->
+<section class="sec wrap" id="china">
+  <div class="reveal">
+    <div class="sec-tag">/ The China / HK / Singapore side</div>
+    <h2 class="sec-title">Where the <em>buyers</em> are</h2>
+    <p class="sec-desc">Reach Asian retail property investors where they already look for overseas homes, and partner with the agent networks that already have their trust. The hard part isn't interest — it's qualification and getting money out cleanly. Build the funnel around both.</p>
+  </div>
+  <div class="pgrid reveal">
+    <div class="pc"><div class="tag">Portal · since 2011</div><h4>Juwai.com</h4><p>Largest Chinese portal for international real estate. Lists overseas projects to mainland buyers — a primary lead source for Batumi.</p></div>
+    <div class="pc"><div class="tag">Portal · pan-Asian</div><h4>Juwai.asia</h4><p>Global portal for non-China Asian buyers (HK, Singapore, Malaysia). ~3.3M monthly users across the two portals.</p></div>
+    <div class="pc"><div class="tag">Agent network · 8,000+</div><h4>Juwai IQI</h4><p>Largest network of real estate agents in Asia. Co-list and co-broke Batumi stock through their salespeople.</p></div>
+    <div class="pc"><div class="tag">Channel · social</div><h4>WeChat · Xiaohongshu</h4><p>Official accounts + KOL/agent groups are where mainland investors actually research and ask questions. The AI agent lives here.</p></div>
+    <div class="pc"><div class="tag">HK / SG · licensed agencies</div><h4>Local estate agencies & migration advisers</h4><p>Hong Kong & Singapore brokers and immigration consultants already sell overseas property + residency packages to this exact client.</p></div>
+    <div class="pc"><div class="tag">Events</div><h4>Overseas-property expos</h4><p>HK & Shenzhen international property shows feed the top of the funnel; the AI works the leads afterwards.</p></div>
+  </div>
+
+  <div class="reveal">
+    <h3 style="font-family:'Space Grotesk';font-weight:700;text-transform:uppercase;font-size:20px;margin:40px 0 4px">The money-movement reality (handle it openly)</h3>
+    <div class="checklist">
+      <div class="ck"><div class="x">¥</div><div><b>The $50,000 SAFE limit</b><p>Mainland individuals can freely convert/remit only ~US$50,000 per person per year, and FX rules formally bar using that quota for overseas housing. Above it needs SAFE approval. This is the #1 practical constraint — design around it.</p></div></div>
+      <div class="ck"><div class="x">✓</div><div><b>Legitimate routes investors use</b><p>Hong Kong / Singapore bank accounts and existing offshore funds, family pooling across several relatives' quotas, and capital already held abroad. Pair the buyer with cross-border tax/legal advisers — never coach anyone to break currency law.</p></div></div>
+      <div class="ck"><div class="x">!</div><div><b>Tighter KYC from 2026</b><p>From 1 Jan 2026, stricter verification applies to outbound transfers over ~RMB 5,000 / US$1,000. Build compliance and proof-of-funds into the funnel from the first message.</p></div></div>
+      <div class="ck"><div class="x">★</div><div><b>HK & Singapore are the easier audiences</b><p>No mainland FX cap — they can move capital freely. Often the fastest closers, and the right place to start the campaign while the mainland funnel matures.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE / AI SAFETY -->
+<section class="sec wrap" id="safe">
+  <div class="reveal">
+    <div class="sec-tag">/ Compliant by design</div>
+    <h2 class="sec-title">A human always <em>signs the deal</em></h2>
+    <div class="calls">
+      <div class="call b"><div class="big">Human-in-the-loop</div><h4>The AI opens; people close</h4><p>The agent sources, messages, qualifies and books. It never signs contracts, never moves money and never gives investment advice. A licensed human reviews every hot lead before anything binding happens.</p></div>
+      <div class="call t"><div class="big">Channel rules respected</div><h4>Opt-in, not spam</h4><p>Outreach runs on platforms' own terms — WeChat, WhatsApp Business, Telegram — with consent, rate limits and easy opt-out. Reputation is the asset; the system protects it.</p></div>
+    </div>
+    <div class="cards">
+      <div class="mc"><div class="ic">🔐</div><h4>Data & KYC</h4><p>Lead data encrypted; proof-of-funds and identity checks built into the pipeline before any deal progresses.</p></div>
+      <div class="mc"><div class="ic">⚖️</div><h4>Local counsel</h4><p>Georgian lawyer + cross-border tax adviser on every transaction. Title via NAPR, funds via escrow.</p></div>
+      <div class="mc"><div class="ic">🧑‍💼</div><h4>No promises</h4><p>Yields and appreciation are shown as ranges with sources — illustrations, never guarantees.</p></div>
+    </div>
+    <div class="disc">
+      <b>Important.</b> This page is a working product demonstration and business-case illustration — not financial, legal, tax or investment advice, and not an offer or solicitation. Company names are well-known market participants shown for reference only; their inclusion is not an endorsement or any statement about their current status — verify every developer, agent and adviser independently before acting. Property values and rental yields are historical/illustrative ranges and can fall as well as rise. Chinese, Hong Kong, Singaporean and Georgian residents must follow their own jurisdictions' currency-control, tax and securities laws. Always engage licensed local professionals.
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div class="brand"><span class="mk"><svg viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6" stroke="#f3c14e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>KOTLOVAN<b>&nbsp;CAPITAL</b></div>
+  <p>AI deal engine · Batumi off-plan · investor outreach · HK · Singapore · China</p>
+  <div class="cp">© 2026 KOTLOVAN CAPITAL · demonstration for illustration only · not financial, legal or tax advice<br>Data points: TBC Capital / market reports 2025–26, NAPR, SAFE, Juwai IQI. Verify independently.</div>
+</div></footer>
+
+<script>
+/* cursor */
+if(matchMedia('(hover:hover)').matches){const cur=document.querySelector('.cur'),ring=document.querySelector('.ring');let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+  (function l(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(l)})();
+  addEventListener('mouseover',e=>{if(e.target.closest('a,button,input,.node,.chip,.slot,.pay'))ring.classList.add('grow')});
+  addEventListener('mouseout',e=>{if(e.target.closest('a,button,input,.node,.chip,.slot,.pay'))ring.classList.remove('grow')});}
+const hd=document.getElementById('hd');addEventListener('scroll',()=>hd.classList.toggle('s',scrollY>40));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* floating sparks/particles */
+const cv=document.getElementById('spark'),ctx=cv.getContext('2d');let W,H,ps=[];
+function sz(){W=cv.width=innerWidth;H=cv.height=cv.parentElement.offsetHeight}sz();addEventListener('resize',sz);
+function sp(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.6+.5,vx:Math.random()*.4-.2,vy:-Math.random()*.45-.08,a:Math.random()*.5+.12,c:Math.random()>.8?'90,162,255':'243,193,78'}}
+for(let i=0;i<80;i++)ps.push(sp());
+(function dr(){ctx.clearRect(0,0,W,H);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a-=.0015;if(p.a<=0||p.y<-10){Object.assign(p,sp());p.y=H+5}ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle=`rgba(${p.c},${p.a})`;ctx.fill()});requestAnimationFrame(dr)})();
+
+/* rising "growth" signature line */
+(function sky(){
+  const grid=document.getElementById('skyGrid');let g='';
+  for(let x=0;x<=1440;x+=48)g+=`<line x1="${x}" y1="0" x2="${x}" y2="320"/>`;
+  for(let y=0;y<=320;y+=40)g+=`<line x1="0" y1="${y}" x2="1440" y2="${y}"/>`;
+  grid.innerHTML=g;
+  // a jagged-but-rising price line across the width
+  let d='M 0 300';let y=300;
+  for(let x=40;x<=1440;x+=40){const step=(Math.random()*30-8);y=Math.max(40,Math.min(300,y-step+ (40-step*0)/0+ -6));d+=` L ${x} ${y}`}
+  const trace=document.getElementById('skyTrace');trace.setAttribute('d',d);
+  const len=trace.getTotalLength();trace.style.strokeDasharray=len;trace.style.strokeDashoffset=len;
+  trace.style.transition='stroke-dashoffset 3.6s linear';requestAnimationFrame(()=>trace.style.strokeDashoffset=0);
+  const scan=document.getElementById('skyScan');let t=0;
+  (function ride(){t=(t+1.7)%len;const pt=trace.getPointAtLength(t);scan.setAttribute('cx',pt.x);scan.setAttribute('cy',pt.y);requestAnimationFrame(ride)})();
+})();
+
+/* OUTREACH chat demo */
+const CONV=[
+  {s:'me',t:'Hi James 👋 I help Hong Kong investors buy new-build apartments on the Black Sea in Batumi, Georgia. Sea-view 1-beds from about US$55k. Open to a quick look?'},
+  {s:'them',typ:1100,t:'Interesting. Is it safe for a foreigner to own there?'},
+  {s:'them',typ:900,t:'外国人买房安全吗？',zh:'(auto-detected: 中文 — switching)'},
+  {s:'me',t:'完全可以 ✅ Foreigners get full freehold, no residence permit needed, 0% purchase tax. Title registers at the state registry in ~1 day. Are you buying to rent out, or to use yourself?',zh:'Yes — full ownership, registered title, no purchase tax.'},
+  {s:'them',typ:1200,t:'To rent. What kind of return?'},
+  {s:'me',t:'Seafront short-let runs ~10–25% gross; long-let ~8%. Buying at the foundation stage you also capture ~30%/yr appreciation to completion in the best projects. Budget around US$60–80k?'},
+  {s:'them',typ:1000,t:'Yes, roughly. Send me a project.'},
+  {s:'me',t:'On it 📄 Sending a vetted seafront project + the exact ROI sheet. I\'ll book you a 15-min call with our Batumi closer — would Thursday 18:00 HKT work?'},
+  {s:'them',typ:900,t:'Thursday works 👍'},
+  {s:'me',t:'Booked ✅ Calendar invite + project PDF sent. A human takes it from here. 谢谢, James!',zh:'Booked — handing to a human closer.'},
+];
+const tb=document.getElementById('tgbody');
+function tgRun(){tb.innerHTML='';let d=400;
+  CONV.forEach(m=>{
+    if(m.typ){ setTimeout(()=>{const t=document.createElement('div');t.className='typing';t.id='typing';t.innerHTML='<i></i><i></i><i></i>';tb.appendChild(t);tb.scrollTop=tb.scrollHeight;},d); d+=m.typ; }
+    setTimeout(()=>{const tp=document.getElementById('typing');if(tp)tp.remove();const b=document.createElement('div');b.className='msg '+m.s;b.innerHTML=m.t+(m.zh?`<span class="zh">${m.zh}</span>`:'');tb.appendChild(b);tb.scrollTop=tb.scrollHeight;},d);
+    d+=950;
+  });
+  setTimeout(tgRun,d+3600);
+}
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){tgRun();o.disconnect()}},{threshold:.4}).observe(tb);
+
+/* SYSTEM MAP */
+const C={gold:'#f3c14e',teal:'#27d3c1',sky:'#5aa2ff',violet:'#a98bff',coral:'#ff7a6b'};
+const NODES=[
+  {id:'sig',x:150,y:160,ico:'📡',t:'SIGNALS',s:'Juwai · WeChat · lists',c:C.gold,n:'1',dd:'d1'},
+  {id:'eng',x:470,y:120,ico:'🧠',t:'AI ENGINE',s:'Score · translate',c:C.violet,n:'2',dd:'d2'},
+  {id:'ai', x:470,y:360,ico:'🤖',t:'AI OUTREACH',s:'Agent · 24/7',c:C.gold,n:'2',dd:'d2',big:true},
+  {id:'inv',x:800,y:150,ico:'👤',t:'INVESTOR',s:'HK · SG · China',c:C.sky,n:'3',dd:'d3'},
+  {id:'crm',x:800,y:360,ico:'🗂️',t:'PIPELINE',s:'CRM · nurture',c:C.gold,n:'3',dd:'d3'},
+  {id:'dev',x:470,y:600,ico:'🏗️',t:'DEVELOPER',s:'Batumi · vetted',c:C.teal,n:'4',dd:'d4'},
+  {id:'esc',x:800,y:600,ico:'🔐',t:'ESCROW · NOTARY',s:'NAPR title',c:C.teal,n:'5',dd:'d5'},
+  {id:'own',x:1060,y:340,ico:'🔑',t:'OWNERSHIP',s:'Freehold · keys',c:C.sky,n:'5',dd:'d5'},
+  {id:'ret',x:1060,y:600,ico:'💸',t:'RETURNS',s:'Rent · resale',c:C.coral,n:'6',dd:'d6'},
+];
+const EDGES=[
+  {a:'sig',b:'ai',c:C.gold},{a:'eng',b:'ai',c:C.violet,two:true},{a:'ai',b:'inv',c:C.gold},
+  {a:'inv',b:'crm',c:C.sky,two:true},{a:'ai',b:'crm',c:C.gold,bow:40},{a:'eng',b:'crm',c:C.violet,bow:-40},
+  {a:'crm',b:'dev',c:C.gold},{a:'dev',b:'esc',c:C.teal},{a:'esc',b:'own',c:C.teal,bow:40},
+  {a:'own',b:'ret',c:C.sky},{a:'ret',b:'inv',c:C.coral,bow:-90},
+];
+const NS='http://www.w3.org/2000/svg',byId=Object.fromEntries(NODES.map(n=>[n.id,n]));
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const pathD=(a,b,bow)=>{const mx=(a.x+b.x)/2,my=(a.y+b.y)/2-(bow||0);return `M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`};
+const eg=document.getElementById('edges'),ng=document.getElementById('nodes');
+const E=[],Ngr={};
+EDGES.forEach((e,i)=>{const a=byId[e.a],b=byId[e.b],d=pathD(a,b,e.bow);
+  const p=el('path',{d,fill:'none',stroke:e.c,'stroke-width':2,'stroke-opacity':.2,'stroke-dasharray':'2 9','stroke-linecap':'round'});eg.appendChild(p);
+  const dots=[];for(let k=0;k<3;k++){const dot=el('circle',{r:4.4,fill:e.c,filter:'url(#glow)'});
+    const m=el('animateMotion',{dur:(3.5+i*.12)+'s',repeatCount:'indefinite',begin:(-(k*1.16))+'s',path:d,calcMode:'linear'});
+    if(e.two&&k===1){m.setAttribute('keyPoints','1;0');m.setAttribute('keyTimes','0;1')}dot.appendChild(m);eg.appendChild(dot);dots.push(dot)}
+  E.push({path:p,dots,from:e.a,to:e.b})});
+NODES.forEach(n=>{const w=n.big?184:158,h=n.big?96:88,x=n.x-w/2,y=n.y-h/2;
+  const g=el('g',{class:'node'});
+  g.appendChild(el('rect',{x:x-1,y:y-1,width:w+2,height:h+2,rx:18,fill:'none',stroke:n.c,'stroke-opacity':.5,'stroke-width':1.5}));
+  const box=el('rect',{class:'box',x,y,width:w,height:h,rx:17,fill:n.big?'#141008':'#0f131d',stroke:n.c,'stroke-opacity':.35,'stroke-width':1.2});g.appendChild(box);
+  const ic=el('text',{x:n.x,y:y+34,'text-anchor':'middle','font-size':n.big?34:28});ic.textContent=n.ico;g.appendChild(ic);
+  const t=el('text',{x:n.x,y:y+(n.big?64:58),'text-anchor':'middle','font-size':14,'font-weight':700,fill:'#f2f1ea','font-family':'Space Grotesk'});t.textContent=n.t;g.appendChild(t);
+  const s=el('text',{x:n.x,y:y+(n.big?82:75),'text-anchor':'middle','font-size':10.5,'font-weight':600,fill:'#9aa1b2'});s.textContent=n.s;g.appendChild(s);
+  const bx=x+15;g.appendChild(el('circle',{cx:bx,cy:y,r:13,fill:n.c,filter:'url(#glow)'}));
+  const num=el('text',{x:bx,y:y+5,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#1a1403','font-family':'Space Grotesk'});num.textContent=n.n;g.appendChild(num);
+  g.addEventListener('click',()=>flash(n.dd));
+  g.addEventListener('mouseenter',()=>{if(!touring)hl([n.id])});
+  g.addEventListener('mouseleave',()=>{if(!touring)hl(null)});
+  ng.appendChild(g);Ngr[n.id]=g});
+function hl(ids){E.forEach(e=>{const on=!ids||ids.includes(e.from)||ids.includes(e.to);
+    e.path.style.strokeOpacity=ids?(on?.6:.04):.2;e.dots.forEach(d=>d.style.opacity=ids?(on?1:.1):1)});
+  NODES.forEach(n=>{Ngr[n.id].style.opacity=ids?(ids.includes(n.id)?1:.32):1;Ngr[n.id].style.transition='opacity .3s'})}
+
+/* TOUR */
+const STEPS=[
+  {ids:['sig','ai'],t:'1 · Investor signals are pulled from Juwai, WeChat groups and curated lists.'},
+  {ids:['eng','ai','inv'],t:'2 · The AI engine scores & translates; the agent opens the conversation in their language.'},
+  {ids:['inv','crm','ai'],t:'3 · It qualifies budget & intent; everything is logged and nurtured in the pipeline.'},
+  {ids:['crm','dev'],t:'4 · A warm lead is matched to a vetted Batumi developer and the right unit.'},
+  {ids:['dev','esc','own'],t:'5 · Escrow + notary + NAPR registration → clean freehold title and the keys.'},
+  {ids:['own','ret','inv'],t:'6 · The unit rents out; returns flow back to the investor — who refers the next one.'},
+];
+let touring=false,ti=0,timer=null;const cap=document.getElementById('cap'),tbtn=document.getElementById('tour');
+function step(){const s=STEPS[ti];hl(s.ids);cap.textContent=s.t;cap.classList.add('show');ti=(ti+1)%STEPS.length;timer=setTimeout(step,2800)}
+tbtn.onclick=()=>{if(touring){touring=false;clearTimeout(timer);hl(null);cap.classList.remove('show');tbtn.textContent='▶ Tour the system';tbtn.classList.remove('off')}
+  else{touring=true;ti=0;step();tbtn.textContent='⏸ Stop tour';tbtn.classList.add('off');document.getElementById('map').scrollIntoView({behavior:'smooth',block:'start'})}};
+
+/* BUSINESS CASE DEEP DIVE */
+const DD=[
+  {id:'d1',n:'1',ic:'📡',h:'The opportunity & the lead source',plain:'Batumi is a fast-growing Black Sea resort city where new-build prices rose ~13–17% in 2025 and entry 1-beds still start around <b>$50–70k</b>. Buying at the <b>kotlovan (foundation) stage</b> is the cheapest entry — and the biggest built-in upside. We source investors where they already shop for overseas property.',hood:['Avg new-build ≈ <code>$1,427/m²</code> in 2025 (+13.5% YoY)','Best coastal off-plan projects: <code>+30%/yr</code> avg over 5 yrs','Lead sources: Juwai.com, Juwai.asia, WeChat groups, expos, lists','Target: retail investors in HK, Singapore, mainland China'],c:C.gold},
+  {id:'d2',n:'2',ic:'🤖',h:'AI outreach engine',plain:'An AI agent does the first-touch and qualification at scale: it writes in the investor\'s language, answers the standard questions, sends the right project and books the call. <b>It never closes, signs or moves money</b> — it just gets a warm, qualified, booked lead to a human.',hood:['LLM agent on a server, multilingual (EN / 中文)','Auto-translate, lead scoring, follow-up sequences','Runs on owned/rented models — cheap per message at volume','Channels: WeChat, WhatsApp Business, Telegram — with opt-out'],c:C.violet},
+  {id:'d3',n:'3',ic:'🎯',h:'Qualify the investor (and the money)',plain:'Not every lead can buy. The agent checks <b>budget, intent (live vs rent), residency interest</b> — and flags the money-movement path early. Mainland China\'s <b>$50k/yr</b> currency limit is the key constraint; HK & Singapore investors move capital freely and usually close fastest.',hood:['China SAFE limit: ~<code>$50,000</code>/person/yr; FX not for housing','Legit routes: HK/SG accounts, offshore funds, family pooling','Stricter KYC on outbound transfers from 1 Jan 2026','Pair buyer with cross-border tax/legal adviser — no law-bending'],c:C.sky},
+  {id:'d4',n:'4',ic:'🏗️',h:'Match to a vetted Batumi developer',plain:'The warm lead is matched to a <b>delivered, reputable developer</b> and a specific unit, with real numbers. The whole point is to take off-plan risk off the table by only ever working with names that have finished what they started.',hood:['Established names: Gumbati, Metropol, Polo, One Development, ELT, Mardi, Next','Check: delivered projects, financials, permits, zoning','Stage payments tied to construction milestones','Interest-free installment plans to completion are standard'],c:C.teal},
+  {id:'d5',n:'5',ic:'🔐',h:'Close it safely — escrow, notary, title',plain:'An independent Georgian lawyer drafts the contract and verifies title; funds route through escrow; ownership registers at <b>NAPR</b> (the state registry) — usually within a day. Foreigners get full freehold, <b>0% purchase tax</b>, and can buy via power of attorney without flying in.',hood:['Title & encumbrance check via House of Justice','NAPR e-registration ≈ 1 day; reg fees GEL 50–200','Escrow via Bank of Georgia / TBC rather than direct transfer','Optional residence permit — threshold $150k from 1 Mar 2026'],c:C.teal},
+  {id:'d6',n:'6',ic:'💸',h:'Rent it, return it, refer it',plain:'On completion the unit earns: <b>~8%</b> long-let or <b>10–25%</b> gross on seafront short-lets, managed for the owner. Happy investors become the cheapest lead source of all — referrals feed the AI engine the next set of names, and the flywheel turns.',hood:['Short-let management (Airbnb/Booking) handled for the owner','Georgia rental tax can be as low as <code>5%</code>','Resale captures the off-plan→completed uplift','Referral loop = lowest-cost, highest-trust leads'],c:C.coral},
+];
+const dw=document.getElementById('ddwrap');
+DD.forEach(d=>{const s=document.createElement('div');s.className='dd reveal';s.id=d.id;
+  s.innerHTML=`<div class="num" style="background:${d.c}">${d.n}</div><div><h3><span class="ic">${d.ic}</span>${d.h}</h3><p class="plain">${d.plain}</p><div class="flowstrip" style="--c:${d.c}"><i></i></div><div class="hood"><div class="h">⚙ Under the hood — the mechanics</div><ul>${d.hood.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`;
+  dw.appendChild(s);io.observe(s)});
+function flash(id){const c=document.getElementById(id);if(!c)return;c.scrollIntoView({behavior:'smooth',block:'center'});c.classList.add('flash');setTimeout(()=>c.classList.remove('flash'),1400)}
+
+/* ROI CALCULATOR */
+const SIZES=[{id:25,n:'Studio · 25 m²'},{id:35,n:'1-bed · 35 m²'},{id:50,n:'2-bed · 50 m²'},{id:70,n:'3-bed · 70 m²'}];
+const STAGES=[{id:'kot',n:'Foundation (kotlovan)',ppm:950,sub:'cheapest entry'},{id:'frame',n:'Frame up',ppm:1150,sub:'mid'},{id:'done',n:'Finished',ppm:1450,sub:'no uplift left'}];
+const DONE_PPM=1450; // completed value reference
+const PAYS=[{id:'inst',t:'Installments to completion',d:'Interest-free, tied to stages',reserve:.20},{id:'full',t:'Pay in full now',d:'Best price, fastest title',reserve:1}];
+const RENTS=[{id:'long',n:'Long-let',net:.07,sub:'~7% net'},{id:'short',n:'Short-let / Airbnb',net:.11,sub:'~11% net'}];
+const MILE=[{k:'On signing',p:.20},{k:'Frame complete',p:.30},{k:'Roof / facade',p:.30},{k:'Keys / handover',p:.20}];
+let cs={size:SIZES[1],stage:STAGES[0],pay:PAYS[0],rent:RENTS[1]};
+const $=id=>document.getElementById(id);
+const money=v=>'$'+Math.round(v).toLocaleString('en-US');
+function rSize(){$('cSize').innerHTML=SIZES.map(s=>`<div class="chip ${s.id===cs.size.id?'on':''}" data-v="${s.id}">${s.n}</div>`).join('');$('cSize').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{cs.size=SIZES.find(s=>s.id==c.dataset.v);rSize();sync()})}
+function rStage(){$('cStage').innerHTML=STAGES.map(s=>`<div class="chip ${s.id===cs.stage.id?'on':''}" data-v="${s.id}">${s.n}<small>${money(s.ppm)}/m² · ${s.sub}</small></div>`).join('');$('cStage').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{cs.stage=STAGES.find(s=>s.id==c.dataset.v);rStage();sync()})}
+function rPay(){$('cPay').innerHTML=PAYS.map(p=>`<div class="pay ${p.id===cs.pay.id?'on':''}" data-v="${p.id}"><div><div class="t">${p.t}</div><div class="d">${p.d}</div></div><div class="v">${p.id==='inst'?'20% to start':'100%'}</div></div>`).join('');$('cPay').querySelectorAll('.pay').forEach(c=>c.onclick=()=>{cs.pay=PAYS.find(p=>p.id==c.dataset.v);rPay();sync()})}
+function rRent(){$('cRent').innerHTML=RENTS.map(r=>`<div class="chip ${r.id===cs.rent.id?'on':''}" data-v="${r.id}">${r.n}<small>${r.sub}</small></div>`).join('');$('cRent').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{cs.rent=RENTS.find(r=>r.id==c.dataset.v);rRent();sync()})}
+function rJournal(){const entry=cs.size.id*cs.stage.ppm;
+  if(cs.pay.id==='full'){$('cJournal').innerHTML=`<div class="jrow"><div class="time">Now · in full</div><div><div class="who">Single payment</div><div class="meta">Title registers fastest</div></div><div class="tag">${money(entry)}</div></div>`;return}
+  $('cJournal').innerHTML=MILE.map(m=>`<div class="jrow"><div class="time">${m.k}</div><div><div class="who">${Math.round(m.p*100)}% installment</div><div class="meta">interest-free</div></div><div class="tag">${money(entry*m.p)}</div></div>`).join('')}
+function sync(){
+  const entry=cs.size.id*cs.stage.ppm;
+  const done=cs.size.id*DONE_PPM;
+  const uplift=Math.max(0,done-entry);
+  const rent=done*cs.rent.net;
+  const yld=rent/entry*100;
+  const roi=(uplift+rent*5)/entry*100;
+  const reserve=cs.pay.id==='full'?entry:entry*cs.pay.reserve;
+  $('sUnit').textContent=cs.size.n+' · '+cs.stage.n;
+  $('sEntry').textContent=money(entry);
+  $('sDone').textContent=money(done);
+  $('sUp').textContent=uplift>0?('+'+money(uplift)):'$0 (already finished)';
+  $('sRent').textContent=money(rent)+' ('+cs.rent.n+')';
+  $('sYield').textContent=yld.toFixed(1)+'%';
+  $('sRoi').textContent='+'+roi.toFixed(0)+'%';
+  $('sNowLbl').textContent=cs.pay.id==='full'?'Due now (100%)':'Due to reserve (20%)';
+  $('sNow').textContent=money(reserve);
+  rJournal();
+}
+rSize();rStage();rPay();rRent();sync();
+</script>
+</body>
+</html>
