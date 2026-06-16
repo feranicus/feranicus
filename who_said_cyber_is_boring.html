@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WHO SAID CYBER IS BORING? — A Field Note</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06090b;--bg2:#0a0f12;--ink:#e7f0ee;--muted:#7d8c89;
+    --green:#27ff95;--red:#ff3b46;--amber:#ffb020;--cyan:#36e6ff;
+    --card:#0c1216;--line:rgba(39,255,149,.16);--r:16px;--ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--green);color:#000}
+  .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(transparent 0 2px,rgba(0,0,0,.18) 2px 4px)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .mono{font-family:'JetBrains Mono',monospace}
+  a{color:inherit;text-decoration:none}
+
+  /* hero */
+  .hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden}
+  #grid{position:absolute;inset:0;z-index:0;opacity:.8}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:
+    radial-gradient(60% 60% at 80% 10%,rgba(255,59,70,.12),transparent 60%),
+    radial-gradient(70% 70% at 8% 90%,rgba(39,255,149,.12),transparent 60%),var(--bg)}
+  .tagbar{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--green);border:1px solid var(--line);padding:8px 15px;border-radius:6px;background:rgba(39,255,149,.04)}
+  .tagbar .blink{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:blink 1.2s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+  h1{font-family:'Chakra Petch';font-weight:700;line-height:.95;letter-spacing:-.01em;text-transform:uppercase;
+    font-size:clamp(36px,8vw,104px);margin:24px 0 10px;position:relative}
+  h1 .glitch{position:relative;display:inline-block}
+  h1 .glitch::before,h1 .glitch::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;overflow:hidden}
+  h1 .glitch::before{color:var(--red);transform:translate(-2px,0);clip-path:inset(0 0 55% 0);animation:gl 3.5s infinite}
+  h1 .glitch::after{color:var(--cyan);transform:translate(2px,0);clip-path:inset(55% 0 0 0);animation:gl 2.7s infinite reverse}
+  @keyframes gl{0%,92%,100%{transform:translate(0)}93%{transform:translate(-3px,1px)}96%{transform:translate(3px,-1px)}}
+  .sub{font-family:'JetBrains Mono';color:var(--cyan);font-size:clamp(14px,2.4vw,22px);letter-spacing:.04em}
+  .lead{max-width:600px;font-size:clamp(15px,2vw,18px);color:#aebbb7;line-height:1.65;margin-top:22px}
+  .lead b{color:var(--green)}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;font-family:'Chakra Petch';font-weight:700;font-size:14px;
+    letter-spacing:.06em;text-transform:uppercase;background:var(--green);color:#05140d;border:none;border-radius:8px;transition:.2s}
+  .btn:hover{box-shadow:0 0 0 3px rgba(39,255,149,.2),0 14px 40px rgba(39,255,149,.2)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--green);box-shadow:none}
+
+  section{position:relative;z-index:2}
+  .sec{padding:90px 0}
+  .tag{font-family:'JetBrains Mono';font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+  .title{font-family:'Chakra Petch';font-weight:700;font-size:clamp(28px,5vw,58px);line-height:1;text-transform:uppercase;margin:12px 0 16px}
+  .title em{font-style:normal;color:var(--green)}
+  .desc{max-width:640px;color:#aebbb7;font-size:16px;line-height:1.65}
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* redacted card */
+  .redact{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;font-family:'JetBrains Mono';font-size:14px}
+  .redact .row{display:flex;gap:14px;padding:8px 0;flex-wrap:wrap}
+  .redact .k{color:var(--muted);min-width:130px}
+  .bar{display:inline-block;background:#1a2a26;color:transparent;border-radius:3px;padding:0 6px;user-select:none;position:relative;overflow:hidden}
+  .bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(39,255,149,.15),transparent);animation:slide 2.4s linear infinite}
+  @keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+  .redact .v{color:var(--green)}
+
+  /* toggle architecture */
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:8px 0 4px}
+  .seg button{font-family:'Chakra Petch';font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:12px 22px;background:transparent;color:var(--muted);border:none;transition:.2s;cursor:pointer}
+  .seg button.on.exp{background:var(--red);color:#fff}
+  .seg button.on.hard{background:var(--green);color:#05140d}
+  .cap{min-height:40px;color:var(--ink);font-size:15px;line-height:1.5;max-width:760px;margin:12px 0;font-family:'JetBrains Mono'}
+  .cap.exp{color:#ff8a90}.cap.hard{color:var(--green)}
+  .stage{border:1px solid var(--line);border-radius:20px;padding:8px;overflow:hidden;background:var(--bg2)}
+  .scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border-radius:14px}
+  svg.map{display:block;width:100%;min-width:880px;height:auto}
+  .swipe{display:none;text-align:center;color:var(--muted);font-size:12px;padding:6px 0;font-family:'JetBrains Mono'}
+  @media(max-width:880px){.swipe{display:block}}
+  text{font-family:'JetBrains Mono',monospace}
+
+  /* blast / playbook grids */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:860px){.grid3{grid-template-columns:1fr}}
+  .cardx{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.3s}
+  .cardx:hover{border-color:rgba(39,255,149,.5);transform:translateY(-4px)}
+  .cardx .ic{font-size:24px}
+  .cardx h4{font-family:'Chakra Petch';font-weight:700;font-size:16px;text-transform:uppercase;margin:12px 0 8px}
+  .cardx p{color:#aebbb7;font-size:14px;line-height:1.55}
+  .cardx code{font-family:'JetBrains Mono';background:rgba(39,255,149,.1);color:var(--green);padding:1px 6px;border-radius:5px;font-size:12.5px}
+  .cardx.warn{border-color:rgba(255,59,70,.3)}.cardx.warn h4{color:var(--red)}
+  .cardx.warn:hover{border-color:var(--red)}
+
+  /* timeline */
+  .tline{margin-top:26px;border-left:2px solid var(--line);padding-left:24px;display:grid;gap:22px}
+  .tl{position:relative}
+  .tl::before{content:"";position:absolute;left:-31px;top:3px;width:14px;height:14px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+  .tl .t{font-family:'JetBrains Mono';color:var(--cyan);font-size:13px}
+  .tl h4{font-family:'Chakra Petch';font-weight:700;font-size:17px;text-transform:uppercase;margin:4px 0 6px}
+  .tl p{color:#aebbb7;font-size:14.5px;line-height:1.55}
+
+  .ethic{margin-top:24px;border:1px solid rgba(54,230,255,.25);border-radius:var(--r);padding:24px;background:linear-gradient(135deg,rgba(54,230,255,.07),transparent)}
+  .ethic b{color:var(--cyan)}
+
+  footer{border-top:1px solid var(--line);padding:60px 0;background:var(--bg2);text-align:center}
+  footer .big{font-family:'Chakra Petch';font-weight:700;font-size:clamp(22px,4vw,40px);text-transform:uppercase}
+  footer .big em{font-style:normal;color:var(--green)}
+  footer p{color:var(--muted);font-family:'JetBrains Mono';font-size:13px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="scan"></div>
+
+<section class="hero">
+  <div class="hero-bg"></div><canvas id="grid"></canvas>
+  <div class="wrap">
+    <span class="tagbar"><span class="blink"></span>Field note · Responsible disclosure · Identifiers redacted</span>
+    <h1><span class="glitch" data-t="WHO SAID">WHO SAID</span><br>CYBER IS <span class="glitch" data-t="BORING?">BORING?</span></h1>
+    <div class="sub">&gt; welcome to my daily life..._</div>
+    <p class="lead">Routine sweep of internet-exposed assets. One host answers on <b>:443</b> — and serves up the login page of an exposed <b>n8n</b> server: a workflow-automation platform that quietly holds the keys to everything behind it. No name. No IP. Just the story, and the fix.</p>
+    <div class="cta"><a href="#arch" class="btn">See the architecture →</a><a href="#fix" class="btn ghost">Jump to the fix</a></div>
+  </div>
+</section>
+
+<!-- FINDING -->
+<section class="sec wrap">
+  <div class="reveal">
+    <div class="tag">// 01 — The finding</div>
+    <h2 class="title">An open door to the <em>nerve center</em></h2>
+    <p class="desc">During a passive review of publicly indexed services, an <b>n8n</b> server — a popular open-source workflow-automation / integration platform, usually self-hosted in Docker — answered straight from the open internet, its sign-in surface reachable by anyone with no network restriction in front of it. The catch: a tool like n8n is the <b>nervous system</b> of an organization. Its whole job is to connect systems and act for them, so it stores API keys, SSH and database credentials and tokens to dozens of downstream services. Expose it, and you don't expose one box — you expose the whole chain it's wired into.</p>
+    <div class="redact mono">
+      <div class="row"><span class="k">target_org:</span><span class="bar">████████████████</span></div>
+      <div class="row"><span class="k">host / fqdn:</span><span class="bar">██████████████████████</span></div>
+      <div class="row"><span class="k">ip_address:</span><span class="bar">███.███.███.███</span></div>
+      <div class="row"><span class="k">upstream_isp:</span><span class="bar">█████████</span></div>
+      <div class="row"><span class="k">platform:</span><span class="v">n8n · self-hosted workflow automation (Docker)</span></div>
+      <div class="row"><span class="k">exposure:</span><span class="v">admin / integration login reachable on :443, no gate</span></div>
+      <div class="row"><span class="k">my_access:</span><span class="v">observed only — no login, no creds, no probing</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE TOGGLE -->
+<section class="sec wrap" id="arch">
+  <div class="reveal">
+    <div class="tag">// 02 — Architecture, before & after</div>
+    <h2 class="title">Flip it from <em>exposed</em> to hardened</h2>
+    <p class="desc">Same system, two worlds. Watch the traffic move — then hit the switch.</p>
+    <div class="seg" id="seg">
+      <button class="on exp" data-s="exp">⚠ Exposed</button>
+      <button class="hard" data-s="hard">✓ Hardened</button>
+    </div>
+    <div class="cap exp" id="cap"></div>
+    <div class="stage">
+      <div class="scroller">
+        <svg class="map" viewBox="0 0 1100 540" id="svgmap" aria-label="Architecture diagram">
+          <defs><filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g id="edges"></g><g id="nodes"></g>
+        </svg>
+      </div>
+      <div class="swipe">← swipe to see the full diagram →</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLAST RADIUS -->
+<section class="sec wrap">
+  <div class="reveal">
+    <div class="tag">// 03 — Why an open n8n is a big deal</div>
+    <h2 class="title">One open box, <em>everyone's problem</em></h2>
+    <p class="desc">n8n is an integration hub: its entire purpose is to connect systems and act on their behalf. To do that it <b>stores the credentials</b> for everything it touches, and its workflows can run logic — a built-in code/execute node, HTTP calls and public webhooks. So an exposed admin surface isn't "just a login page" — it's <b>code execution plus a master key ring</b>, handed to whoever walks up.</p>
+    <div class="grid3">
+      <div class="cardx warn"><div class="ic">🔑</div><h4>It's a key ring</h4><p>n8n holds API keys, tokens and SSH / database credentials for every connected service — by design. Reach the panel, inherit the keys to everything behind it.</p></div>
+      <div class="cardx warn"><div class="ic">🧬</div><h4>It runs code</h4><p>Workflows execute on a schedule. A poisoned flow inherits all that stored trust and runs quietly, automatically, with a persistence most monitoring never looks at.</p></div>
+      <div class="cardx warn"><div class="ic">🪜</div><h4>It pivots</h4><p>Every integration is a doorway inward. From the hub, an intruder moves laterally into the internal systems n8n was built to reach — that's the whole point of the tool, now working for the wrong side.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT HITS -->
+<section class="sec wrap">
+  <div class="reveal">
+    <div class="tag">// 04 — Blast radius: who actually gets hurt</div>
+    <h2 class="title">The company, its <em>customers &amp; suppliers</em></h2>
+    <p class="desc">An automation hub sits in the middle of a business — so its compromise doesn't stay in one place. It radiates outward in every direction.</p>
+    <div class="grid3">
+      <div class="cardx warn"><div class="ic">🏢</div><h4>The company</h4><p>Full takeover of the automation backbone: data exfiltration, ransomware staging, fraudulent actions pushed through trusted workflows, and a hidden foothold that survives reboots. Every automated process is suspect until proven clean — which means downtime, audits and incident cost.</p></div>
+      <div class="cardx warn"><div class="ic">🧑‍🤝‍🧑</div><h4>Its customers</h4><p>Anything routed through workflows — orders, personal data, payments, support tickets — is readable and alterable. Customer-facing services can be broken or weaponized, and a quiet exposure turns into a public breach-notification and trust problem.</p></div>
+      <div class="cardx warn"><div class="ic">🔗</div><h4>Its suppliers &amp; partners</h4><p>The hub holds live credentials into partner and supplier APIs. One open box becomes a launch pad <b>up and down the supply chain</b> — your incident becomes theirs, and a weak link anywhere becomes everyone's exposure.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE FIX -->
+<section class="sec wrap" id="fix">
+  <div class="reveal">
+    <div class="tag">// 05 — Secure by design (the work plan)</div>
+    <h2 class="title">Close it the <em>right way</em></h2>
+    <p class="desc">No magic — just disciplined, open-source-friendly defense. This is the playbook I'd hand any team running this kind of platform.</p>
+    <div class="grid3">
+      <div class="cardx"><div class="ic">🚧</div><h4>Kill public access</h4><p>Drop <code>:443</code> for anything that isn't an authenticated <code>VPN</code> / corporate tunnel. Management surfaces never face the open internet.</p></div>
+      <div class="cardx"><div class="ic">🛡️</div><h4>Open-source WAF</h4><p>Sit the app behind a hardened reverse proxy — e.g. <code>ModSecurity</code> or a tightened <code>NGINX</code> config — to filter and rate-limit.</p></div>
+      <div class="cardx"><div class="ic">🔐</div><h4>Zero Trust</h4><p>Full Zero-Trust access to automation: identity-aware, least-privilege, every request verified. No implicit "inside the perimeter".</p></div>
+      <div class="cardx"><div class="ic">📡</div><h4>Monitor + bait</h4><p>Deep packet inspection (<code>DPI</code>) on the edge, plus <code>honeypots</code> to detect and waste an intruder's time early.</p></div>
+      <div class="cardx"><div class="ic">♻️</div><h4>Rotate every secret</h4><p>Assume exposure: pre-emptively rotate every password, API key and token, and move them into a real vault — not the app's database.</p></div>
+      <div class="cardx"><div class="ic">🔬</div><h4>Forensics first</h4><p>Before "just rebooting": preserve evidence. <code>RAM</code> snapshot, container <code>diff</code>, entropy scan of workflows, review access logs for foreign hits.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE / ETHICS -->
+<section class="sec wrap">
+  <div class="reveal">
+    <div class="tag">// 06 — Done the right way</div>
+    <h2 class="title">Responsible <em>disclosure</em></h2>
+    <div class="tline">
+      <div class="tl"><div class="t">DAY 0</div><h4>Observe, don't touch</h4><p>Noticed the exposed sign-in surface during routine OSINT. No login attempt, no credential testing, no probing beyond confirming it was publicly reachable.</p></div>
+      <div class="tl"><div class="t">DAY 0</div><h4>Report to the national CERT</h4><p>Filed a formal report with the relevant national cyber authority so the right people could validate and route it.</p></div>
+      <div class="tl"><div class="t">DAY 1</div><h4>Notify stakeholders</h4><p>Looped in the owner and infrastructure provider with a clear, cooperative offer to help — plus this hardening plan.</p></div>
+      <div class="tl"><div class="t">ONGOING</div><h4>Hold details until fixed</h4><p>Names, host and IP stay redacted in anything public while remediation is in progress. The lesson travels — the target doesn't.</p></div>
+    </div>
+    <div class="ethic"><b>The rule I live by:</b> find it, report it, help fix it — and never publish a live map to someone else's open door. Awareness up, attack surface down.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big">Who said cyber is <em>boring?</em></div>
+    <p>// welcome to my daily life..._</p>
+  </div>
+</footer>
+
+<script>
+/* hero grid/scan canvas */
+const cv=document.getElementById('grid'),ctx=cv.getContext('2d');let W,H,pts=[],sweep=0;
+function sz(){W=cv.width=innerWidth;H=cv.height=cv.parentElement.offsetHeight}sz();addEventListener('resize',sz);
+for(let i=0;i<70;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.5,v:Math.random()*.4+.1,c:Math.random()>.8?'255,59,70':'39,255,149'});
+(function dr(){ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='rgba(39,255,149,.05)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=48){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  sweep=(sweep+1.4)%(H+200);
+  const g=ctx.createLinearGradient(0,sweep-120,0,sweep);g.addColorStop(0,'rgba(39,255,149,0)');g.addColorStop(1,'rgba(39,255,149,.10)');
+  ctx.fillStyle=g;ctx.fillRect(0,sweep-120,W,120);
+  pts.forEach(p=>{p.y-=p.v;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle=`rgba(${p.c},.5)`;ctx.fill()});
+  requestAnimationFrame(dr)})();
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* architecture toggle */
+const SCN={
+  exp:{cap:'Anyone on the internet reaches the admin door. No lock. The platform holds the keys — so the secrets and every downstream client are one step away.',
+    nodes:[
+      {id:'net',x:120,y:280,ic:'🌐',t:'INTERNET',s:'the whole world',c:'cyan'},
+      {id:'atk',x:120,y:110,ic:'👁',t:'ANYONE',s:'unauthenticated',c:'red'},
+      {id:'door',x:380,y:280,ic:'🚪',t:'OPEN :443',s:'no auth · no gate',c:'red'},
+      {id:'plat',x:640,y:280,ic:'⚙',t:'n8n',s:'admin reachable',c:'amber'},
+      {id:'sec',x:900,y:190,ic:'🔑',t:'SECRETS',s:'API · SSH · tokens',c:'red'},
+      {id:'down',x:900,y:380,ic:'🏢',t:'DOWNSTREAM',s:'connected clients',c:'amber'},
+    ],
+    edges:[['net','door','cyan'],['atk','door','red'],['door','plat','red'],['plat','sec','red'],['plat','down','amber'],['sec','down','red']]},
+  hard:{cap:'Public port closed. Only an authenticated VPN / Zero-Trust path gets in. A WAF and DPI watch the edge, honeypots bait intruders, and secrets live in a vault — rotated.',
+    nodes:[
+      {id:'net',x:120,y:280,ic:'🌐',t:'INTERNET',s:'the whole world',c:'cyan'},
+      {id:'atk',x:120,y:100,ic:'👁',t:'ATTACKER',s:'blocked at edge',c:'red'},
+      {id:'waf',x:340,y:280,ic:'🛡',t:'WAF',s:'open-source',c:'green'},
+      {id:'vpn',x:560,y:280,ic:'🔐',t:'VPN / ZT',s:'identity-aware',c:'green'},
+      {id:'plat',x:780,y:280,ic:'⚙',t:'n8n',s:'private only',c:'green'},
+      {id:'vault',x:980,y:190,ic:'🗝',t:'VAULT',s:'rotated secrets',c:'green'},
+      {id:'down',x:980,y:380,ic:'🏢',t:'DOWNSTREAM',s:'protected',c:'green'},
+      {id:'pot',x:560,y:440,ic:'🍯',t:'HONEYPOT+DPI',s:'detect early',c:'cyan'},
+    ],
+    edges:[['net','waf','cyan'],['atk','waf','red',true],['waf','vpn','green'],['vpn','plat','green'],['plat','vault','green'],['plat','down','green'],['waf','pot','cyan']]},
+};
+const COL={green:'#27ff95',red:'#ff3b46',amber:'#ffb020',cyan:'#36e6ff'};
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const pathD=(a,b)=>{const mx=(a.x+b.x)/2;return `M ${a.x} ${a.y} C ${mx} ${a.y} ${mx} ${b.y} ${b.x} ${b.y}`};
+function render(key){
+  const sc=SCN[key],eg=document.getElementById('edges'),ng=document.getElementById('nodes');
+  eg.innerHTML='';ng.innerHTML='';
+  const byId=Object.fromEntries(sc.nodes.map(n=>[n.id,n]));
+  sc.edges.forEach((e,i)=>{const a=byId[e[0]],b=byId[e[1]],col=COL[e[2]],blocked=e[3],d=pathD(a,b);
+    eg.appendChild(el('path',{d,fill:'none',stroke:col,'stroke-width':2,'stroke-opacity':blocked?.25:.22,'stroke-dasharray':'2 9','stroke-linecap':'round'}));
+    if(blocked){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+      eg.appendChild(el('line',{x1:mx-9,y1:my-9,x2:mx+9,y2:my+9,stroke:COL.red,'stroke-width':3,'stroke-linecap':'round'}));
+      eg.appendChild(el('line',{x1:mx+9,y1:my-9,x2:mx-9,y2:my+9,stroke:COL.red,'stroke-width':3,'stroke-linecap':'round'}));
+    } else {
+      for(let k=0;k<3;k++){const dot=el('circle',{r:4.4,fill:col,filter:'url(#glow)'});
+        dot.appendChild(el('animateMotion',{dur:(3.4+i*.12)+'s',repeatCount:'indefinite',begin:(-(k*1.13))+'s',path:d,calcMode:'linear'}));eg.appendChild(dot)}
+    }});
+  sc.nodes.forEach(n=>{const col=COL[n.c],w=158,h=84,x=n.x-w/2,y=n.y-h/2;const g=el('g',{});
+    g.appendChild(el('rect',{x,y,width:w,height:h,rx:14,fill:'#0c1216',stroke:col,'stroke-opacity':.5,'stroke-width':1.3}));
+    const ic=el('text',{x:n.x,y:y+32,'text-anchor':'middle','font-size':26});ic.textContent=n.ic;g.appendChild(ic);
+    const t=el('text',{x:n.x,y:y+56,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#e7f0ee'});t.textContent=n.t;g.appendChild(t);
+    const s=el('text',{x:n.x,y:y+72,'text-anchor':'middle','font-size':10,fill:'#7d8c89'});s.textContent=n.s;g.appendChild(s);
+    ng.appendChild(g)});
+  const cap=document.getElementById('cap');cap.textContent=sc.cap;cap.className='cap '+key;
+}
+document.querySelectorAll('#seg button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');render(b.dataset.s)});
+render('exp');
+</script>
+</body>
+</html>
