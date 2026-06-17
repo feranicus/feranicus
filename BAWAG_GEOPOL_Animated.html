@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BAWAG GEOPOL — The Vanishing Perimeter · Colt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05080E; --bg2:#0A111C; --panel:#0E1827; --line:#16243B;
+    --ink:#E9F1FA; --dim:#8DA0BC; --faint:#54657F;
+    --teal:#00D7BD; --teal2:#0C544E; --tealg:#19F0D6;
+    --amber:#FFC33C; --red:#FF3B57; --violet:#9E86FF; --orange:#FF7A33;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{background:
+    radial-gradient(1200px 700px at 82% -8%, rgba(0,215,189,.10), transparent 60%),
+    radial-gradient(900px 600px at -8% 30%, rgba(158,134,255,.05), transparent 60%),
+    radial-gradient(1000px 700px at 50% 115%, rgba(0,215,189,.06), transparent 60%),
+    var(--bg);}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;opacity:.35;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    mix-blend-mode:overlay}
+  .wrap{position:relative;z-index:3}
+  header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 26px;background:rgba(5,8,14,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .brand{font-family:"Unbounded";font-weight:800;letter-spacing:.06em;font-size:15px}
+  .brand b{color:var(--teal)}
+  .tag{font-family:"JetBrains Mono";font-size:10.5px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase}
+  .colt{font-family:Arial,sans-serif;font-weight:800;font-size:17px;color:var(--teal)}
+  section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:54px 26px 40px;position:relative}
+  .eyebrow{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+  h1{font-family:"Unbounded";font-weight:800;font-size:clamp(26px,4.4vw,52px);line-height:1.02;margin:0 0 8px}
+  h1 .hl{color:var(--teal)}
+  .sub{color:var(--dim);max-width:880px;font-size:clamp(13px,1.5vw,16px);line-height:1.5;margin:0 0 18px}
+  canvas{display:block;width:100%;height:100%}
+  .stage{position:relative;flex:1;min-height:440px;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(14,24,39,.55), rgba(5,8,14,.2))}
+  .legend{position:absolute;left:18px;bottom:16px;display:flex;gap:16px;flex-wrap:wrap;font-family:"JetBrains Mono";font-size:10.5px;color:var(--dim);z-index:5}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .statbar{position:absolute;right:18px;top:16px;display:flex;flex-direction:column;gap:8px;z-index:5;text-align:right}
+  .stat{background:rgba(5,8,14,.55);border:1px solid var(--line);border-radius:9px;padding:7px 12px;min-width:148px}
+  .stat .n{font-family:"Unbounded";font-weight:800;font-size:21px;color:var(--teal);line-height:1}
+  .stat .l{font-family:"JetBrains Mono";font-size:9px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-top:3px}
+  .stat.bad .n{color:var(--red)}
+  .caption{font-family:"JetBrains Mono";font-size:11px;color:var(--faint);margin-top:14px;letter-spacing:.04em}
+  .foot{padding:20px 26px;border-top:1px solid var(--line);color:var(--faint);font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.08em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  @media(max-width:680px){.statbar{position:static;flex-direction:row;flex-wrap:wrap;margin-top:10px}.legend{position:static;margin-top:10px}.stage{min-height:520px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><span class="brand">BAWAG <b>GEOPOL</b></span> &nbsp;<span class="tag">Geopolitical Cyber Threat Assessment</span></div>
+    <div class="colt">colt</div>
+  </header>
+
+  <!-- SCENE 1 -->
+  <section id="s1">
+    <div class="eyebrow">Scene 01 · The exposed estate</div>
+    <h1>The <span class="hl">vanishing perimeter</span>.</h1>
+    <p class="sub">Of 1,954 internet-visible records, just <b style="color:var(--teal)">2</b> sit on BAWAG's own network (AS52220). The other 99.9% drift across 37 third-party ASNs in 40 countries — a brand estate with no centre to defend. Each dot is an exposed host; red dots are the critical findings.</p>
+    <div class="stage">
+      <canvas id="c1"></canvas>
+      <div class="statbar">
+        <div class="stat"><div class="n" data-to="1954">0</div><div class="l">Host records</div></div>
+        <div class="stat"><div class="n" data-to="37">0</div><div class="l">Third-party ASNs</div></div>
+        <div class="stat"><div class="n" data-to="40">0</div><div class="l">Countries</div></div>
+        <div class="stat bad"><div class="n" data-to="2">0</div><div class="l">On AS52220 (own)</div></div>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--teal)"></i>Brand host (off-ASN)</span>
+        <span><i style="background:var(--amber)"></i>Akamai CDN (84%)</span>
+        <span><i style="background:var(--red)"></i>Critical finding</span>
+        <span><i style="background:#3b4a63"></i>AS52220 core (2)</span>
+      </div>
+    </div>
+    <p class="caption">Findings: finonline-bawagpsk.at (EOL PHP) · mcebics.bawagpsk.com (cert expired 2023) · suedwestbank.de (off-ASN) · bawag.losangeles-cabling.com (impersonation) · no RPKI on AS52220.</p>
+  </section>
+
+  <!-- SCENE 2 -->
+  <section id="s2">
+    <div class="eyebrow">Scene 02 · Who is coming</div>
+    <h1>Threat <span class="hl">convergence</span>.</h1>
+    <p class="sub">Five origins, five tradecrafts — all aimed at the same scattered estate. Watch the access vectors flow toward the exposed core: China through the web/edge sprawl, DPRK at the payment plane, Russia via sanctions-driven DDoS and identity, Iran reselling cheap access, and eCrime through the end-of-life portal and impersonation phishing.</p>
+    <div class="stage">
+      <canvas id="c2"></canvas>
+      <div class="legend">
+        <span><i style="background:var(--red)"></i>China — web/edge LOTL</span>
+        <span><i style="background:var(--violet)"></i>Russia — DDoS + identity</span>
+        <span><i style="background:var(--teal)"></i>DPRK — eBICS / payments</span>
+        <span><i style="background:var(--amber)"></i>Iran — access broker</span>
+        <span><i style="background:var(--orange)"></i>eCrime — EOL portal + phishing</span>
+      </div>
+    </div>
+    <p class="caption">Most likely: EOL-portal ransomware + retail phishing. Most dangerous: corporate-payment fraud (eBICS) or quiet PRC pre-positioning. Break it cheapest: retire the portal, take down impersonation, consolidate the estate.</p>
+  </section>
+
+  <div class="foot">
+    <span>COLT / S4BIZ · INTERNAL — CONFIDENTIAL · NOT FOR EXTERNAL DISTRIBUTION</span>
+    <span>BAWAG GROUP · AS52220 · EVIDENCE: SHODAN CENSUS 29 MAY 2026</span>
+  </div>
+</div>
+
+<script>
+"use strict";
+const TEAL="#00D7BD",AMBER="#FFC33C",RED="#FF3B57",VIOLET="#9E86FF",ORANGE="#FF7A33",CORE="#3b4a63";
+function fit(cv){const r=cv.getBoundingClientRect();const d=Math.min(window.devicePixelRatio||1,2);
+  cv.width=Math.max(2,r.width*d);cv.height=Math.max(2,r.height*d);const x=cv.getContext("2d");x.setTransform(d,0,0,d,0,0);return {w:r.width,h:r.height};}
+
+/* ---------- SCENE 1 : vanishing perimeter ---------- */
+(function(){
+  const cv=document.getElementById("c1"),ctx=cv.getContext("2d");let W,H,nodes=[],t=0,started=0;
+  function build(){const s=fit(cv);W=s.w;H=s.h;const cx=W*0.5,cy=H*0.5;nodes=[];
+    // 2 core nodes (AS52220) near centre
+    for(let i=0;i<2;i++)nodes.push({core:true,ang:Math.random()*6.28,rad:26+i*14,cx,cy,r:3.4,col:CORE,sp:0.2});
+    // ~150 scattered off-ASN hosts in a wide ring/cloud
+    const N=Math.max(90,Math.min(170,Math.round(W*0.16)));
+    for(let i=0;i<N;i++){const a=Math.random()*6.283;const rr=Math.min(W,H)*(0.20+Math.random()*0.42);
+      const crit=Math.random()<0.05;const akam=!crit&&Math.random()<0.55;
+      nodes.push({core:false,ang:a,rad:rr,cx,cy,r:crit?2.9:(akam?1.7:2.1),
+        col:crit?RED:(akam?AMBER:TEAL),sp:0.04+Math.random()*0.10,drift:Math.random()*6.28,da:0.2+Math.random()*0.5,crit,akam});}
+  }
+  build();window.addEventListener("resize",build);
+  function frame(){t+=0.016;const cx=W*0.5,cy=H*0.5;ctx.clearRect(0,0,W,H);
+    // faint perimeter ring (the "missing" perimeter)
+    ctx.save();ctx.strokeStyle="rgba(0,215,189,"+(0.10+0.05*Math.sin(t*1.3))+")";ctx.setLineDash([4,9]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.16,0,6.2832);ctx.stroke();ctx.setLineDash([]);ctx.restore();
+    // core glow
+    const g=ctx.createRadialGradient(cx,cy,2,cx,cy,70);g.addColorStop(0,"rgba(0,215,189,.18)");g.addColorStop(1,"rgba(0,215,189,0)");
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,70,0,6.2832);ctx.fill();
+    // faint links from a few outer nodes back toward the empty core
+    for(let i=0;i<nodes.length;i+=11){const n=nodes[i];if(n.core)continue;const x=cx+Math.cos(n.ang)*n.rad,y=cy+Math.sin(n.ang)*n.rad;
+      ctx.strokeStyle="rgba(141,160,188,0.06)";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();}
+    // nodes
+    for(const n of nodes){n.ang+=n.sp*0.004*(n.core?1:1);
+      let rr=n.rad+(n.core?0:Math.sin(t*n.da+n.drift)*6);
+      const x=n.cx+Math.cos(n.ang)*rr,y=n.cy+Math.sin(n.ang)*rr;
+      const pulse=n.crit?(0.5+0.5*Math.sin(t*3+n.drift)):1;
+      ctx.beginPath();ctx.fillStyle=n.col;ctx.globalAlpha=n.core?0.9:(0.55+0.4*pulse);
+      ctx.arc(x,y,n.r*(n.crit?(0.8+0.5*pulse):1),0,6.2832);ctx.fill();
+      if(n.crit){ctx.globalAlpha=0.25*pulse;ctx.beginPath();ctx.arc(x,y,n.r*3.4*pulse,0,6.2832);ctx.fillStyle=RED;ctx.fill();}
+      ctx.globalAlpha=1;}
+    // core label
+    ctx.fillStyle="rgba(233,241,250,.85)";ctx.font="600 11px 'JetBrains Mono', monospace";ctx.textAlign="center";
+    ctx.fillText("AS52220 · 2 hosts",cx,cy+Math.min(W,H)*0.16+18);
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+  // counters
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!started){started=1;document.querySelectorAll("#s1 .stat .n").forEach(el=>{
+    const to=+el.dataset.to;const d=1400;const st=performance.now();
+    (function tick(now){const p=Math.min(1,(now-st)/d);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString();if(p<1)requestAnimationFrame(tick);})(st);});}}),{threshold:.3});
+  obs.observe(document.getElementById("s1"));
+})();
+
+/* ---------- SCENE 2 : threat convergence ---------- */
+(function(){
+  const cv=document.getElementById("c2"),ctx=cv.getContext("2d");let W,H,sources=[],particles=[],t=0,target;
+  const defs=[["CHINA",RED,"web / edge LOTL"],["RUSSIA",VIOLET,"DDoS + identity"],["DPRK",TEAL,"eBICS / payments"],["IRAN",AMBER,"access broker"],["eCRIME",ORANGE,"EOL portal + phishing"]];
+  function build(){const s=fit(cv);W=s.w;H=s.h;target={x:W*0.62,y:H*0.5};sources=[];
+    const lx=W*0.14;defs.forEach((d,i)=>{const y=H*(0.16+i*0.17);sources.push({x:lx,y,name:d[0],col:d[1],meth:d[2],ph:Math.random()*6.28});});
+    particles=[];}
+  build();window.addEventListener("resize",build);
+  function spawn(){for(const s of sources){if(Math.random()<0.18){
+    const c1x=(s.x+target.x)/2+(Math.random()-0.5)*W*0.12,c1y=s.y+(Math.random()-0.5)*H*0.22;
+    particles.push({s,x:s.x,y:s.y,p:0,sp:0.006+Math.random()*0.010,c1x,c1y,r:1.6+Math.random()*1.8});}}}
+  function bez(a,c,b,t){const u=1-t;return u*u*a+2*u*t*c+t*t*b;}
+  function frame(){t+=0.016;ctx.clearRect(0,0,W,H);
+    // target estate glow (the exposed core)
+    const g=ctx.createRadialGradient(target.x,target.y,3,target.x,target.y,110);
+    g.addColorStop(0,"rgba(0,215,189,"+(0.16+0.06*Math.sin(t*2))+")");g.addColorStop(1,"rgba(0,215,189,0)");
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(target.x,target.y,110,0,6.2832);ctx.fill();
+    ctx.strokeStyle="rgba(0,215,189,.5)";ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(target.x,target.y,30+2*Math.sin(t*2),0,6.2832);ctx.stroke();
+    ctx.fillStyle="rgba(233,241,250,.9)";ctx.font="700 12px 'Unbounded', sans-serif";ctx.textAlign="center";
+    ctx.fillText("EXPOSED ESTATE",target.x,target.y-44);
+    ctx.font="500 9.5px 'JetBrains Mono', monospace";ctx.fillStyle="rgba(141,160,188,.85)";
+    ctx.fillText("37 ASNs · 1,924 IPs · no perimeter",target.x,target.y+52);
+    // source nodes + paths
+    for(const s of sources){
+      ctx.save();ctx.beginPath();const pr=6+1.6*Math.sin(t*2.4+s.ph);
+      const gg=ctx.createRadialGradient(s.x,s.y,1,s.x,s.y,22);gg.addColorStop(0,s.col);gg.addColorStop(1,"transparent");
+      ctx.fillStyle=gg;ctx.globalAlpha=.5;ctx.arc(s.x,s.y,22,0,6.2832);ctx.fill();ctx.restore();
+      ctx.beginPath();ctx.fillStyle=s.col;ctx.arc(s.x,s.y,pr,0,6.2832);ctx.fill();
+      ctx.fillStyle="rgba(233,241,250,.92)";ctx.font="700 11px 'Unbounded',sans-serif";ctx.textAlign="left";
+      ctx.fillText(s.name,s.x+14,s.y-2);
+      ctx.fillStyle="rgba(141,160,188,.8)";ctx.font="400 9px 'JetBrains Mono',monospace";
+      ctx.fillText(s.meth,s.x+14,s.y+11);
+    }
+    spawn();
+    for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.p+=p.sp;
+      if(p.p>=1){ // impact flash
+        ctx.globalAlpha=0.6;ctx.beginPath();ctx.fillStyle=p.s.col;ctx.arc(target.x,target.y,3,0,6.2832);ctx.fill();ctx.globalAlpha=1;
+        particles.splice(i,1);continue;}
+      const x=bez(p.s.x,p.c1x,target.x,p.p),y=bez(p.s.y,p.c1y,target.y,p.p);
+      // trailing line
+      const x2=bez(p.s.x,p.c1x,target.x,Math.max(0,p.p-0.06)),y2=bez(p.s.y,p.c1y,target.y,Math.max(0,p.p-0.06));
+      ctx.strokeStyle=p.s.col;ctx.globalAlpha=0.28;ctx.lineWidth=p.r*0.9;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x,y);ctx.stroke();
+      ctx.globalAlpha=0.9;ctx.beginPath();ctx.fillStyle=p.s.col;ctx.arc(x,y,p.r,0,6.2832);ctx.fill();ctx.globalAlpha=1;}
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
