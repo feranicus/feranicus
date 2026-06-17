@@ -9,10 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#05080E; --bg2:#0A111C; --panel:#0E1827; --line:#16243B;
-    --ink:#E9F1FA; --dim:#8DA0BC; --faint:#54657F;
-    --teal:#00D7BD; --teal2:#0C544E; --tealg:#19F0D6;
-    --amber:#FFC33C; --red:#FF3B57; --violet:#9E86FF; --orange:#FF7A33;
+    --bg:#05080E;--bg2:#0A111C;--panel:#0E1827;--line:#16243B;
+    --ink:#E9F1FA;--dim:#8DA0BC;--faint:#54657F;
+    --teal:#00D7BD;--teal2:#0C544E;--tealg:#19F0D6;
+    --amber:#FFC33C;--red:#FF3B57;--violet:#9E86FF;--orange:#FF7A33;--mint:#5FFFC2;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
@@ -40,8 +40,10 @@
   canvas{display:block;width:100%;height:100%}
   .stage{position:relative;flex:1;min-height:440px;border:1px solid var(--line);border-radius:14px;overflow:hidden;
     background:linear-gradient(180deg, rgba(14,24,39,.55), rgba(5,8,14,.2))}
+  .stage.tall{min-height:560px;flex:none}
   .legend{position:absolute;left:18px;bottom:16px;display:flex;gap:16px;flex-wrap:wrap;font-family:"JetBrains Mono";font-size:10.5px;color:var(--dim);z-index:5}
   .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .legend.static{position:static;left:auto;bottom:auto;margin-top:12px}
   .statbar{position:absolute;right:18px;top:16px;display:flex;flex-direction:column;gap:8px;z-index:5;text-align:right}
   .stat{background:rgba(5,8,14,.55);border:1px solid var(--line);border-radius:9px;padding:7px 12px;min-width:148px}
   .stat .n{font-family:"Unbounded";font-weight:800;font-size:21px;color:var(--teal);line-height:1}
@@ -59,7 +61,6 @@
     <div class="colt">colt</div>
   </header>
 
-  <!-- SCENE 1 -->
   <section id="s1">
     <div class="eyebrow">Scene 01 · The exposed estate</div>
     <h1>The <span class="hl">vanishing perimeter</span>.</h1>
@@ -82,7 +83,6 @@
     <p class="caption">Findings: finonline-bawagpsk.at (EOL PHP) · mcebics.bawagpsk.com (cert expired 2023) · suedwestbank.de (off-ASN) · bawag.losangeles-cabling.com (impersonation) · no RPKI on AS52220.</p>
   </section>
 
-  <!-- SCENE 2 -->
   <section id="s2">
     <div class="eyebrow">Scene 02 · Who is coming</div>
     <h1>Threat <span class="hl">convergence</span>.</h1>
@@ -100,6 +100,22 @@
     <p class="caption">Most likely: EOL-portal ransomware + retail phishing. Most dangerous: corporate-payment fraud (eBICS) or quiet PRC pre-positioning. Break it cheapest: retire the portal, take down impersonation, consolidate the estate.</p>
   </section>
 
+  <section id="s3">
+    <div class="eyebrow">Scene 03 · The full attack surface</div>
+    <h1>Every way <span class="hl">in</span>.</h1>
+    <p class="sub">The attack-path map: threat vectors on the left, BAWAG's own exposed findings in the centre, and the crown-jewels an attacker is ultimately after on the right. Each flowing wire is a live, available path — coloured by its MITRE ATT&amp;CK stage. This is what "no perimeter" looks like in motion.</p>
+    <div class="stage tall"><canvas id="c3"></canvas></div>
+    <div class="legend static">
+        <span><i style="background:#FFC33C;border-radius:2px"></i>Reconnaissance</span>
+        <span><i style="background:#FF7A33;border-radius:2px"></i>Initial access</span>
+        <span><i style="background:#FF3B57;border-radius:2px"></i>Exploitation</span>
+        <span><i style="background:#9E86FF;border-radius:2px"></i>DDoS / impact</span>
+        <span><i style="background:#00D7BD;border-radius:2px"></i>Supply-chain</span>
+        <span><i style="background:#5FFFC2;border-radius:2px"></i>Insider</span>
+      </div>
+    <p class="caption">Vectors &#8594; exposures &#8594; impact, mapped to MITRE ATT&amp;CK · illustrative attack-path synthesis of the 29 May 2026 findings.</p>
+  </section>
+
   <div class="foot">
     <span>COLT / S4BIZ · INTERNAL — CONFIDENTIAL · NOT FOR EXTERNAL DISTRIBUTION</span>
     <span>BAWAG GROUP · AS52220 · EVIDENCE: SHODAN CENSUS 29 MAY 2026</span>
@@ -112,65 +128,52 @@ const TEAL="#00D7BD",AMBER="#FFC33C",RED="#FF3B57",VIOLET="#9E86FF",ORANGE="#FF7
 function fit(cv){const r=cv.getBoundingClientRect();const d=Math.min(window.devicePixelRatio||1,2);
   cv.width=Math.max(2,r.width*d);cv.height=Math.max(2,r.height*d);const x=cv.getContext("2d");x.setTransform(d,0,0,d,0,0);return {w:r.width,h:r.height};}
 
-/* ---------- SCENE 1 : vanishing perimeter ---------- */
+/* SCENE 1 : vanishing perimeter */
 (function(){
   const cv=document.getElementById("c1"),ctx=cv.getContext("2d");let W,H,nodes=[],t=0,started=0;
   function build(){const s=fit(cv);W=s.w;H=s.h;const cx=W*0.5,cy=H*0.5;nodes=[];
-    // 2 core nodes (AS52220) near centre
     for(let i=0;i<2;i++)nodes.push({core:true,ang:Math.random()*6.28,rad:26+i*14,cx,cy,r:3.4,col:CORE,sp:0.2});
-    // ~150 scattered off-ASN hosts in a wide ring/cloud
     const N=Math.max(90,Math.min(170,Math.round(W*0.16)));
     for(let i=0;i<N;i++){const a=Math.random()*6.283;const rr=Math.min(W,H)*(0.20+Math.random()*0.42);
       const crit=Math.random()<0.05;const akam=!crit&&Math.random()<0.55;
       nodes.push({core:false,ang:a,rad:rr,cx,cy,r:crit?2.9:(akam?1.7:2.1),
-        col:crit?RED:(akam?AMBER:TEAL),sp:0.04+Math.random()*0.10,drift:Math.random()*6.28,da:0.2+Math.random()*0.5,crit,akam});}
-  }
+        col:crit?RED:(akam?AMBER:TEAL),sp:0.04+Math.random()*0.10,drift:Math.random()*6.28,da:0.2+Math.random()*0.5,crit,akam});}}
   build();window.addEventListener("resize",build);
   function frame(){t+=0.016;const cx=W*0.5,cy=H*0.5;ctx.clearRect(0,0,W,H);
-    // faint perimeter ring (the "missing" perimeter)
     ctx.save();ctx.strokeStyle="rgba(0,215,189,"+(0.10+0.05*Math.sin(t*1.3))+")";ctx.setLineDash([4,9]);ctx.lineWidth=1;
     ctx.beginPath();ctx.arc(cx,cy,Math.min(W,H)*0.16,0,6.2832);ctx.stroke();ctx.setLineDash([]);ctx.restore();
-    // core glow
     const g=ctx.createRadialGradient(cx,cy,2,cx,cy,70);g.addColorStop(0,"rgba(0,215,189,.18)");g.addColorStop(1,"rgba(0,215,189,0)");
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,70,0,6.2832);ctx.fill();
-    // faint links from a few outer nodes back toward the empty core
     for(let i=0;i<nodes.length;i+=11){const n=nodes[i];if(n.core)continue;const x=cx+Math.cos(n.ang)*n.rad,y=cy+Math.sin(n.ang)*n.rad;
       ctx.strokeStyle="rgba(141,160,188,0.06)";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();}
-    // nodes
-    for(const n of nodes){n.ang+=n.sp*0.004*(n.core?1:1);
-      let rr=n.rad+(n.core?0:Math.sin(t*n.da+n.drift)*6);
-      const x=n.cx+Math.cos(n.ang)*rr,y=n.cy+Math.sin(n.ang)*rr;
-      const pulse=n.crit?(0.5+0.5*Math.sin(t*3+n.drift)):1;
+    for(const n of nodes){n.ang+=n.sp*0.004;let rr=n.rad+(n.core?0:Math.sin(t*n.da+n.drift)*6);
+      const x=n.cx+Math.cos(n.ang)*rr,y=n.cy+Math.sin(n.ang)*rr;const pulse=n.crit?(0.5+0.5*Math.sin(t*3+n.drift)):1;
       ctx.beginPath();ctx.fillStyle=n.col;ctx.globalAlpha=n.core?0.9:(0.55+0.4*pulse);
       ctx.arc(x,y,n.r*(n.crit?(0.8+0.5*pulse):1),0,6.2832);ctx.fill();
       if(n.crit){ctx.globalAlpha=0.25*pulse;ctx.beginPath();ctx.arc(x,y,n.r*3.4*pulse,0,6.2832);ctx.fillStyle=RED;ctx.fill();}
       ctx.globalAlpha=1;}
-    // core label
     ctx.fillStyle="rgba(233,241,250,.85)";ctx.font="600 11px 'JetBrains Mono', monospace";ctx.textAlign="center";
     ctx.fillText("AS52220 · 2 hosts",cx,cy+Math.min(W,H)*0.16+18);
     requestAnimationFrame(frame);}
   requestAnimationFrame(frame);
-  // counters
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!started){started=1;document.querySelectorAll("#s1 .stat .n").forEach(el=>{
     const to=+el.dataset.to;const d=1400;const st=performance.now();
     (function tick(now){const p=Math.min(1,(now-st)/d);el.textContent=Math.round(to*(1-Math.pow(1-p,3))).toLocaleString();if(p<1)requestAnimationFrame(tick);})(st);});}}),{threshold:.3});
   obs.observe(document.getElementById("s1"));
 })();
 
-/* ---------- SCENE 2 : threat convergence ---------- */
+/* SCENE 2 : threat convergence */
 (function(){
   const cv=document.getElementById("c2"),ctx=cv.getContext("2d");let W,H,sources=[],particles=[],t=0,target;
   const defs=[["CHINA",RED,"web / edge LOTL"],["RUSSIA",VIOLET,"DDoS + identity"],["DPRK",TEAL,"eBICS / payments"],["IRAN",AMBER,"access broker"],["eCRIME",ORANGE,"EOL portal + phishing"]];
   function build(){const s=fit(cv);W=s.w;H=s.h;target={x:W*0.62,y:H*0.5};sources=[];
-    const lx=W*0.14;defs.forEach((d,i)=>{const y=H*(0.16+i*0.17);sources.push({x:lx,y,name:d[0],col:d[1],meth:d[2],ph:Math.random()*6.28});});
-    particles=[];}
+    const lx=W*0.14;defs.forEach((d,i)=>{const y=H*(0.16+i*0.17);sources.push({x:lx,y,name:d[0],col:d[1],meth:d[2],ph:Math.random()*6.28});});particles=[];}
   build();window.addEventListener("resize",build);
   function spawn(){for(const s of sources){if(Math.random()<0.18){
     const c1x=(s.x+target.x)/2+(Math.random()-0.5)*W*0.12,c1y=s.y+(Math.random()-0.5)*H*0.22;
     particles.push({s,x:s.x,y:s.y,p:0,sp:0.006+Math.random()*0.010,c1x,c1y,r:1.6+Math.random()*1.8});}}}
   function bez(a,c,b,t){const u=1-t;return u*u*a+2*u*t*c+t*t*b;}
   function frame(){t+=0.016;ctx.clearRect(0,0,W,H);
-    // target estate glow (the exposed core)
     const g=ctx.createRadialGradient(target.x,target.y,3,target.x,target.y,110);
     g.addColorStop(0,"rgba(0,215,189,"+(0.16+0.06*Math.sin(t*2))+")");g.addColorStop(1,"rgba(0,215,189,0)");
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(target.x,target.y,110,0,6.2832);ctx.fill();
@@ -179,27 +182,64 @@ function fit(cv){const r=cv.getBoundingClientRect();const d=Math.min(window.devi
     ctx.fillText("EXPOSED ESTATE",target.x,target.y-44);
     ctx.font="500 9.5px 'JetBrains Mono', monospace";ctx.fillStyle="rgba(141,160,188,.85)";
     ctx.fillText("37 ASNs · 1,924 IPs · no perimeter",target.x,target.y+52);
-    // source nodes + paths
-    for(const s of sources){
-      ctx.save();ctx.beginPath();const pr=6+1.6*Math.sin(t*2.4+s.ph);
+    for(const s of sources){ctx.save();ctx.beginPath();const pr=6+1.6*Math.sin(t*2.4+s.ph);
       const gg=ctx.createRadialGradient(s.x,s.y,1,s.x,s.y,22);gg.addColorStop(0,s.col);gg.addColorStop(1,"transparent");
       ctx.fillStyle=gg;ctx.globalAlpha=.5;ctx.arc(s.x,s.y,22,0,6.2832);ctx.fill();ctx.restore();
       ctx.beginPath();ctx.fillStyle=s.col;ctx.arc(s.x,s.y,pr,0,6.2832);ctx.fill();
-      ctx.fillStyle="rgba(233,241,250,.92)";ctx.font="700 11px 'Unbounded',sans-serif";ctx.textAlign="left";
-      ctx.fillText(s.name,s.x+14,s.y-2);
-      ctx.fillStyle="rgba(141,160,188,.8)";ctx.font="400 9px 'JetBrains Mono',monospace";
-      ctx.fillText(s.meth,s.x+14,s.y+11);
-    }
+      ctx.fillStyle="rgba(233,241,250,.92)";ctx.font="700 11px 'Unbounded',sans-serif";ctx.textAlign="left";ctx.fillText(s.name,s.x+14,s.y-2);
+      ctx.fillStyle="rgba(141,160,188,.8)";ctx.font="400 9px 'JetBrains Mono',monospace";ctx.fillText(s.meth,s.x+14,s.y+11);}
     spawn();
     for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.p+=p.sp;
-      if(p.p>=1){ // impact flash
-        ctx.globalAlpha=0.6;ctx.beginPath();ctx.fillStyle=p.s.col;ctx.arc(target.x,target.y,3,0,6.2832);ctx.fill();ctx.globalAlpha=1;
-        particles.splice(i,1);continue;}
+      if(p.p>=1){ctx.globalAlpha=0.6;ctx.beginPath();ctx.fillStyle=p.s.col;ctx.arc(target.x,target.y,3,0,6.2832);ctx.fill();ctx.globalAlpha=1;particles.splice(i,1);continue;}
       const x=bez(p.s.x,p.c1x,target.x,p.p),y=bez(p.s.y,p.c1y,target.y,p.p);
-      // trailing line
       const x2=bez(p.s.x,p.c1x,target.x,Math.max(0,p.p-0.06)),y2=bez(p.s.y,p.c1y,target.y,Math.max(0,p.p-0.06));
       ctx.strokeStyle=p.s.col;ctx.globalAlpha=0.28;ctx.lineWidth=p.r*0.9;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x,y);ctx.stroke();
       ctx.globalAlpha=0.9;ctx.beginPath();ctx.fillStyle=p.s.col;ctx.arc(x,y,p.r,0,6.2832);ctx.fill();ctx.globalAlpha=1;}
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+})();
+
+/* SCENE 3 : attack-path map */
+(function(){
+  const cv=document.getElementById("c3");if(!cv)return;const ctx=cv.getContext("2d");
+  const MINT="#5FFFC2";let W,H,t=0,parts=[];
+  const LEFT=[["Mass scanning / recon",AMBER],["Phishing & impersonation",ORANGE],["Web / edge exploit (EOL)",RED],["Volumetric DDoS",VIOLET],["Supply-chain / off-ASN",TEAL],["Insider (DPRK IT-worker)",MINT]];
+  const MID=["finonline EOL portal","'bawag.' impersonation","Expired eBICS gateway","Suedwestbank off-ASN","Public test/UAT - weak TLS","37-ASN sprawl - no RPKI"];
+  const RIGHT=["Retail accounts & deposits","Corporate payments (eBICS)","Customer data (GDPR)","Brand trust","Service availability"];
+  const LM=[[0,5],[0,4],[1,1],[1,0],[2,0],[2,4],[3,5],[3,0],[4,3],[4,5],[5,2],[5,3]];
+  const MR=[[0,0,RED],[0,4,VIOLET],[1,0,ORANGE],[1,3,ORANGE],[2,1,MINT],[2,3,RED],[3,2,TEAL],[3,3,TEAL],[4,2,RED],[4,4,VIOLET],[5,4,VIOLET],[5,2,TEAL]];
+  let lx,mx,rx,ly,my,ry,laR,maL,maR,raL;
+  function colY(n){const top=58,bot=H-40,step=(bot-top)/(n>1?n-1:1),a=[];for(let i=0;i<n;i++)a.push(top+i*step);return a;}
+  function build(){const r=cv.getBoundingClientRect();const d=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.max(2,r.width*d);cv.height=Math.max(2,r.height*d);ctx.setTransform(d,0,0,d,0,0);
+    W=r.width;H=r.height;lx=W*0.155;mx=W*0.5;rx=W*0.845;ly=colY(LEFT.length);my=colY(MID.length);ry=colY(RIGHT.length);
+    laR=lx+Math.min(96,W*0.10);maL=mx-Math.min(100,W*0.105);maR=mx+Math.min(100,W*0.105);raL=rx-Math.min(96,W*0.10);parts=[];}
+  build();window.addEventListener("resize",build);
+  function cubic(a,b,c,d,t){const u=1-t;return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*d;}
+  function ptOn(x1,y1,x2,y2,tt){const cx=(x1+x2)/2;return [cubic(x1,cx,cx,x2,tt),cubic(y1,y1,y2,y2,tt)];}
+  function wire(x1,y1,x2,y2,col,a){const cx=(x1+x2)/2;ctx.strokeStyle=col;ctx.globalAlpha=a;ctx.lineWidth=1.1;
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.bezierCurveTo(cx,y1,cx,y2,x2,y2);ctx.stroke();ctx.globalAlpha=1;}
+  function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function chip(cx,y,text,col){ctx.font="600 10px 'Inter',sans-serif";const w=ctx.measureText(text).width+16,h=19,x=cx-w/2;
+    roundRect(x,y-h/2,w,h,6);ctx.fillStyle="rgba(10,18,30,.94)";ctx.fill();ctx.strokeStyle=col;ctx.globalAlpha=.85;ctx.lineWidth=1.2;ctx.stroke();ctx.globalAlpha=1;
+    ctx.fillStyle="#E9F1FA";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(text,cx,y);}
+  function spawn(){if(parts.length<95&&Math.random()<0.55){
+    if(Math.random()<0.5){const e=LM[(Math.random()*LM.length)|0];parts.push({x1:laR,y1:ly[e[0]],x2:maL,y2:my[e[1]],col:LEFT[e[0]][1],p:0,sp:0.008+Math.random()*0.01});}
+    else{const e=MR[(Math.random()*MR.length)|0];parts.push({x1:maR,y1:my[e[0]],x2:raL,y2:ry[e[1]],col:e[2],p:0,sp:0.008+Math.random()*0.01});}}}
+  function frame(){t+=0.016;ctx.clearRect(0,0,W,H);
+    ctx.font="700 10px 'JetBrains Mono',monospace";ctx.fillStyle="rgba(141,160,188,.8)";ctx.textAlign="center";ctx.textBaseline="alphabetic";
+    ctx.fillText("THREAT VECTORS",lx,28);ctx.fillText("BAWAG EXPOSURES",mx,28);ctx.fillText("IMPACT - CROWN JEWELS",rx,28);
+    LM.forEach(e=>wire(laR,ly[e[0]],maL,my[e[1]],LEFT[e[0]][1],0.12));
+    MR.forEach(e=>wire(maR,my[e[0]],raL,ry[e[1]],e[2],0.12));
+    spawn();
+    for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.p+=p.sp;if(p.p>=1){parts.splice(i,1);continue;}
+      const a=ptOn(p.x1,p.y1,p.x2,p.y2,p.p),b=ptOn(p.x1,p.y1,p.x2,p.y2,Math.max(0,p.p-0.05));
+      ctx.strokeStyle=p.col;ctx.globalAlpha=.5;ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(b[0],b[1]);ctx.lineTo(a[0],a[1]);ctx.stroke();
+      ctx.globalAlpha=1;ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(a[0],a[1],1.9,0,6.283);ctx.fill();}
+    ctx.globalAlpha=1;
+    LEFT.forEach((n,i)=>chip(lx,ly[i],n[0],n[1]));
+    MID.forEach((n,i)=>chip(mx,my[i],n,TEAL));
+    RIGHT.forEach((n,i)=>chip(rx,ry[i],n,RED));
     requestAnimationFrame(frame);}
   requestAnimationFrame(frame);
 })();
