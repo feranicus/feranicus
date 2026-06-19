@@ -76,7 +76,7 @@ header.stuck{background:rgba(10,6,7,.82);backdrop-filter:blur(12px);padding:12px
 .burger span{width:26px;height:2px;background:var(--cream);transition:.3s}
 
 /* ---------- hero ---------- */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden}
 .hero-bg{position:absolute;inset:-8% 0 0 0;z-index:0;
   background:url('tabacalera-img/room-floor.jpg') center/cover no-repeat;
   filter:saturate(1.05) contrast(1.05) brightness(.62);will-change:transform}
@@ -201,8 +201,8 @@ section.sec{padding:120px 0;position:relative}
 
 /* join / visit */
 .visit{background:
-  linear-gradient(rgba(10,6,7,.82),rgba(10,6,7,.92)),url('tabacalera-img/city-riga.jpg') center/cover fixed;
-  text-align:center}
+  linear-gradient(rgba(10,6,7,.84),rgba(10,6,7,.93)),url('tabacalera-img/city-riga.jpg') center/cover;
+  background-attachment:scroll;text-align:center}
 .visit .sec-head{margin:0 auto 40px}
 .vrow{display:flex;gap:50px;justify-content:center;flex-wrap:wrap;margin:46px 0}
 .vrow .vi b{display:block;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-bright)}
@@ -222,8 +222,8 @@ section.sec{padding:120px 0;position:relative}
 .tnt-poster .live-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
 .tnt-copy .lede{margin-bottom:8px}
 .tnt-meta{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--gold-bright);margin:6px 0 24px}
-.countdown{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 18px}
-.countdown .seg{min-width:88px;text-align:center;border:1px solid rgba(199,154,75,.28);
+.countdown{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:8px 0 18px;max-width:460px}
+.countdown .seg{min-width:0;text-align:center;border:1px solid rgba(199,154,75,.28);
   background:rgba(10,6,7,.55);padding:16px 8px;border-radius:3px;position:relative;overflow:hidden}
 .countdown .seg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(199,154,75,.08),transparent 60%)}
 .countdown .seg b{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,5vw,52px);
@@ -259,18 +259,46 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 #lb .nav.prev{left:14px}#lb .nav.next{right:14px}
 
 @media(max-width:900px){
-  .menu{position:fixed;inset:0 0 0 auto;width:78%;max-width:340px;background:var(--noir2);
-    flex-direction:column;justify-content:center;padding:40px;gap:26px;transform:translateX(100%);
+  .wrap{padding:0 20px}
+  .menu{position:fixed;inset:0 0 0 auto;width:80%;max-width:330px;background:var(--noir2);
+    flex-direction:column;justify-content:center;padding:40px;gap:24px;transform:translateX(100%);
     transition:transform .4s;border-left:1px solid rgba(199,154,75,.2);z-index:210}
-  .menu.show{transform:none}.menu a{font-size:16px}
+  .menu.show{transform:none}.menu a{font-size:17px}
   .burger{display:flex;z-index:220}
-  .room-grid,.split{grid-template-columns:1fr}
+  .room-grid,.split,.tnt-grid{grid-template-columns:1fr;gap:40px}
+  .tnt-poster{max-width:380px;margin:0 auto}
   .gal{columns:2}.pour-grid{grid-template-columns:1fr}
-  .split .im{min-height:300px}
-  section.sec{padding:84px 0}
+  .split .im{min-height:280px}
+  .split .tx{padding:38px 30px}
+  section.sec{padding:76px 0}
   .room-art .cap{left:0}
+  .room-art .frame img{height:400px}
+  /* touch devices have no hover: show photos in full colour + captions by default */
+  .gal .cell img{filter:none}
+  .gal .cell .ov{opacity:1;background:linear-gradient(180deg,transparent 58%,rgba(10,6,7,.86))}
+  .gal .cell .ov span{transform:none}
+  .gal .cell .plus{opacity:.85}
 }
-@media(max-width:560px){.gal{columns:1}.hstats{gap:26px}.vrow{gap:30px}}
+@media(max-width:560px){
+  .wrap{padding:0 16px}
+  .gal{columns:1}
+  .hstats{gap:20px 24px;padding-top:24px}
+  .hstats .st{flex:1 1 40%}
+  .vrow{gap:22px}
+  .countdown{gap:8px}
+  .countdown .seg{padding:13px 4px}
+  .countdown .seg b{font-size:30px}
+  .countdown .seg span{font-size:9px;letter-spacing:.1em}
+  .ev{flex-wrap:wrap;gap:5px 14px}
+  .ev .tm{margin-left:0;width:100%}
+  .scrolldown{display:none}
+  .room-art .frame img{height:300px}
+  .room-copy p .drop{font-size:52px}
+  h1.title{letter-spacing:-.022em}
+  .sec-head{margin-bottom:40px}
+  .tnt-meta{font-size:17px}
+  .marq-track span{font-size:18px}
+}
 </style>
 </head>
 <body class="loading">
@@ -527,7 +555,9 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classL
 
 /* ---------- hero parallax ---------- */
 const heroBg=document.getElementById('heroBg');
-addEventListener('scroll',()=>{const y=scrollY;if(y<innerHeight)heroBg.style.transform='translateY('+(y*.28)+'px) scale(1.05)';},{passive:true});
+addEventListener('scroll',()=>{const y=scrollY;
+  if(innerWidth>900){if(y<innerHeight)heroBg.style.transform='translateY('+(y*.28)+'px) scale(1.05)';}
+  else heroBg.style.transform='none';},{passive:true});
 
 /* ---------- reveal on scroll ---------- */
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.16});
