@@ -74,6 +74,17 @@ header.stuck{background:rgba(10,6,7,.82);backdrop-filter:blur(12px);padding:12px
 .join:hover{background:var(--gold);color:#1a1206}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:none}
 .burger span{width:26px;height:2px;background:var(--cream);transition:.3s}
+.bar-right{display:flex;align-items:center;gap:22px}
+.hl{color:var(--cream);font-weight:600}
+.lang{position:relative}
+.lang-btn{display:flex;align-items:center;gap:7px;background:none;border:1px solid rgba(199,154,75,.32);color:var(--cream);padding:9px 13px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:none;transition:.25s;font-family:'Inter',sans-serif}
+.lang-btn:hover{border-color:var(--gold);color:var(--gold-bright)}
+.lang-btn .gl{font-size:14px}
+.lang-menu{position:absolute;top:calc(100% + 10px);right:0;background:var(--noir2);border:1px solid rgba(199,154,75,.25);border-radius:5px;padding:7px;min-width:160px;display:none;flex-direction:column;gap:2px;box-shadow:0 24px 60px rgba(0,0,0,.7);z-index:240}
+.lang-menu.open{display:flex}
+.lang-menu button{background:none;border:0;color:var(--muted);text-align:left;padding:11px 15px;font-size:14px;letter-spacing:.03em;cursor:none;border-radius:3px;transition:.2s;font-family:'Inter',sans-serif}
+.lang-menu button:hover{background:rgba(199,154,75,.1);color:var(--cream)}
+.lang-menu button.on{color:var(--gold-bright);background:rgba(199,154,75,.06)}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden}
@@ -258,7 +269,7 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 #lb .nav{position:absolute;top:50%;transform:translateY(-50%);font-size:46px;color:var(--gold);cursor:none;user-select:none;padding:20px}
 #lb .nav.prev{left:14px}#lb .nav.next{right:14px}
 
-@media(max-width:900px){
+@media(max-width:1140px){
   .wrap{padding:0 20px}
   .menu{position:fixed;inset:0 0 0 auto;width:80%;max-width:330px;background:var(--noir2);
     flex-direction:column;justify-content:center;padding:40px;gap:24px;transform:translateX(100%);
@@ -316,16 +327,28 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 <header id="hdr">
   <div class="wrap bar">
     <a href="#top" class="brand"><span class="em"></span>TABACALERA</a>
-    <nav class="menu" id="menu">
-      <a href="#tonight">Tonight</a>
-      <a href="#room">The Room</a>
-      <a href="#humidor">Humidor</a>
-      <a href="#pour">The Pour</a>
-      <a href="#gatherings">Gatherings</a>
-      <a href="#visit">Visit</a>
-      <a href="#visit" class="join">Request a seat</a>
-    </nav>
-    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="bar-right">
+      <nav class="menu" id="menu">
+        <a href="#tonight" data-i18n="nav.tonight">Tonight</a>
+        <a href="#room" data-i18n="nav.room">The Room</a>
+        <a href="#humidor" data-i18n="nav.humidor">Humidor</a>
+        <a href="#pour" data-i18n="nav.pour">The Pour</a>
+        <a href="#gatherings" data-i18n="nav.gatherings">Gatherings</a>
+        <a href="#visit" data-i18n="nav.visit">Visit</a>
+        <a href="#visit" class="join" data-i18n="nav.join">Request a seat</a>
+      </nav>
+      <div class="lang" id="lang">
+        <button class="lang-btn" id="langBtn"><span class="gl">🌐</span><span id="langCur">EN</span> ▾</button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="en">English</button>
+          <button data-lang="ru">Русский</button>
+          <button data-lang="lv">Latviešu</button>
+          <button data-lang="de">Deutsch</button>
+          <button data-lang="zh">中文</button>
+        </div>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
@@ -335,20 +358,20 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
   <canvas id="smoke"></canvas>
   <div class="vig"></div>
   <div class="wrap">
-    <div class="eyebrow reveal">A Whisky · Rum · Cigar Society</div>
+    <div class="eyebrow reveal" data-i18n="hero.eyebrow">A Whisky · Rum · Cigar Society</div>
     <h1 class="title reveal">TABACALERA</h1>
-    <p class="sub reveal">Behind the red curtain on Tērbatas iela — a room in the heart of Riga where the smoke never settles, the drams run deep, and a good cigar is never rushed.</p>
+    <p class="sub reveal" data-i18n="hero.sub">Behind the red curtain on Tērbatas iela — a room in the heart of Riga where the smoke never settles, the drams run deep, and a good cigar is never rushed.</p>
     <div class="hero-cta reveal">
-      <a href="#room" class="btn btn-gold">Step inside ↗</a>
-      <a href="#pour" class="btn btn-ghost">Saturday tastings</a>
+      <a href="#room" class="btn btn-gold" data-i18n="hero.btn1">Step inside ↗</a>
+      <a href="#pour" class="btn btn-ghost" data-i18n="hero.btn2">Saturday tastings</a>
     </div>
     <div class="hstats reveal">
-      <div class="st"><b>Tasting Saturdays</b><span>Whisky Live · 19:00</span></div>
-      <div class="st"><b>Rum · Whisky · Cigars</b><span>Tasted, not rushed</span></div>
-      <div class="st"><b>Tērbatas 68 · Rīga</b><span>Open Mon–Fri</span></div>
+      <div class="st"><b data-i18n="hero.s1a">Tasting Saturdays</b><span data-i18n="hero.s1b">Whisky Live · 19:00</span></div>
+      <div class="st"><b data-i18n="hero.s2a">Rum · Whisky · Cigars</b><span data-i18n="hero.s2b">Tasted, not rushed</span></div>
+      <div class="st"><b data-i18n="hero.s3a">Tērbatas 68 · Rīga</b><span data-i18n="hero.s3b">Open Mon–Fri</span></div>
     </div>
   </div>
-  <div class="scrolldown">Descend<div class="ln"></div></div>
+  <div class="scrolldown"><span data-i18n="hero.descend">Descend</span><div class="ln"></div></div>
 </section>
 <div class="chevron"></div>
 
@@ -368,24 +391,24 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
       <img src="tabacalera-img/event-tonight.jpg" alt="Tonight's event — Australian rum & La Flor Dominicana ORO">
     </div>
     <div class="tnt-copy reveal">
-      <div class="sec-tag" style="color:var(--gold-bright)">Friday · 19 June · 19:00</div>
-      <h2 class="sec-title">The <em>final countdown</em>.</h2>
-      <p class="lede">Tonight only — the legendary Australian rum, <strong style="color:var(--cream);font-weight:600">Transcontinental Australia 2015</strong>, poured beside <strong style="color:var(--cream);font-weight:600">La Flor Dominicana ORO</strong>. The best company to meet the weekend.</p>
-      <div class="tnt-meta">Doors swing at seven. The curtain's already warm.</div>
+      <div class="sec-tag" style="color:var(--gold-bright)" data-i18n="tn.tag">Friday · 19 June · 19:00</div>
+      <h2 class="sec-title" data-i18n="tn.title">The <em>final countdown</em>.</h2>
+      <p class="lede" data-i18n="tn.lede">Tonight only — the legendary Australian rum, <strong class="hl">Transcontinental Australia 2015</strong>, poured beside <strong class="hl">La Flor Dominicana ORO</strong>. The best company to meet the weekend.</p>
+      <div class="tnt-meta" data-i18n="tn.meta">Doors swing at seven. The curtain's already warm.</div>
       <div class="countdown" id="cd">
-        <div class="seg"><b id="cd-d">00</b><span>Days</span></div>
-        <div class="seg"><b id="cd-h">00</b><span>Hours</span></div>
-        <div class="seg"><b id="cd-m">00</b><span>Minutes</span></div>
-        <div class="seg"><b id="cd-s">00</b><span>Seconds</span></div>
+        <div class="seg"><b id="cd-d">00</b><span data-i18n="tn.dDays">Days</span></div>
+        <div class="seg"><b id="cd-h">00</b><span data-i18n="tn.dHours">Hours</span></div>
+        <div class="seg"><b id="cd-m">00</b><span data-i18n="tn.dMinutes">Minutes</span></div>
+        <div class="seg"><b id="cd-s">00</b><span data-i18n="tn.dSeconds">Seconds</span></div>
       </div>
       <div class="tnt-live" id="cdMsg"><span class="dot"></span>Counting down to 19:00 · Riga time</div>
       <div class="upcoming">
-        <h4>Upcoming tastings · Tērbatas iela 68</h4>
-        <div class="ev"><span class="date">04 Jul</span><span class="nm">Speyside Whisky</span><span class="tm">Sat · 19:00</span></div>
-        <div class="ev"><span class="date">18 Jul</span><span class="nm">Rum, from A to Z</span><span class="tm">Sat · 19:00</span></div>
-        <div class="ev"><span class="date">Weekly</span><span class="nm">Whisky Live — new releases, poured blind</span><span class="tm">Sat · 19:00</span></div>
+        <h4 data-i18n="tn.upcoming">Upcoming tastings · Tērbatas iela 68</h4>
+        <div class="ev"><span class="date" data-i18n="tn.ev1date">04 Jul</span><span class="nm" data-i18n="tn.ev1name">Speyside Whisky</span><span class="tm" data-i18n="tn.evtime">Sat · 19:00</span></div>
+        <div class="ev"><span class="date" data-i18n="tn.ev2date">18 Jul</span><span class="nm" data-i18n="tn.ev2name">Rum, from A to Z</span><span class="tm" data-i18n="tn.evtime">Sat · 19:00</span></div>
+        <div class="ev"><span class="date" data-i18n="tn.ev3date">Weekly</span><span class="nm" data-i18n="tn.ev3name">Whisky Live — new releases, poured blind</span><span class="tm" data-i18n="tn.evtime">Sat · 19:00</span></div>
       </div>
-      <div class="resv">Reservations &amp; guest list — <a href="tel:+37129783515">+371 29 783 515</a></div>
+      <div class="resv"><span data-i18n="tn.resv">Reservations &amp; guest list</span> — <a href="tel:+37129783515">+371 29 783 515</a></div>
     </div>
   </div>
 </section>
@@ -394,20 +417,20 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 <section class="sec room" id="room">
   <div class="wrap room-grid">
     <div class="room-copy reveal">
-      <div class="sec-tag">The Red Room</div>
-      <h2 class="sec-title">Where the world goes <em>quiet</em>.</h2>
-      <p><span class="drop">T</span>here is a moment, once the curtain falls behind you, when the city outside simply stops existing. The lights drop to ember. The leather exhales. A cigar is clipped, a dram is poured, and time loosens its collar. This is the room our circle keeps — not a bar, but a confidence.</p>
-      <p>We are a society of friends who believe that the right whisky, the right rum and an honest cigar are best shared slowly, in good company, with nothing to prove and nowhere to be.</p>
+      <div class="sec-tag" data-i18n="room.tag">The Red Room</div>
+      <h2 class="sec-title" data-i18n="room.title">Where the world goes <em>quiet</em>.</h2>
+      <p data-i18n="room.p1"><span class="drop">T</span>here is a moment, once the curtain falls behind you, when the city outside simply stops existing. The lights drop to ember. The leather exhales. A cigar is clipped, a dram is poured, and time loosens its collar. This is the room our circle keeps — not a bar, but a confidence.</p>
+      <p data-i18n="room.p2">We are a society of friends who believe that the right whisky, the right rum and an honest cigar are best shared slowly, in good company, with nothing to prove and nowhere to be.</p>
       <div class="creed">
-        <div><b>I.</b><span>No rushing a good pour. No phones at the table that can't wait.</span></div>
-        <div><b>II.</b><span>Every bottle has a story — we open it, taste it, and argue about it kindly.</span></div>
-        <div><b>III.</b><span>What is said in the room, stays in the room.</span></div>
+        <div><b>I.</b><span data-i18n="room.creed1">No rushing a good pour. No phones at the table that can't wait.</span></div>
+        <div><b>II.</b><span data-i18n="room.creed2">Every bottle has a story — we open it, taste it, and argue about it kindly.</span></div>
+        <div><b>III.</b><span data-i18n="room.creed3">What is said in the room, stays in the room.</span></div>
       </div>
     </div>
     <div class="room-art reveal">
       <div class="zz"></div>
       <div class="frame"><img src="tabacalera-img/lounge-04.jpg" alt="A member with a cigar in the lounge"></div>
-      <div class="cap">"Forever, together. Rum and cigar."</div>
+      <div class="cap" data-i18n="room.cap">"Forever, together. Rum and cigar."</div>
     </div>
   </div>
 </section>
@@ -416,21 +439,21 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 <section class="sec" id="humidor">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="sec-tag">The Humidor</div>
-      <h2 class="sec-title">Cedar, fire &amp; <em>patience</em>.</h2>
-      <p class="lede">From a hand-rolled La Rosa de SanDiego to a well-aged Bolívar, our cigars are chosen the way good company is — for character, not noise. Open a box. Take your time.</p>
+      <div class="sec-tag" data-i18n="humidor.tag">The Humidor</div>
+      <h2 class="sec-title" data-i18n="humidor.title">Cedar, fire &amp; <em>patience</em>.</h2>
+      <p class="lede" data-i18n="humidor.lede">From a hand-rolled La Rosa de SanDiego to a well-aged Bolívar, our cigars are chosen the way good company is — for character, not noise. Open a box. Take your time.</p>
     </div>
     <div class="gal reveal">
-      <div class="cell" data-cap="Lit, banded, and held just right — a dram waiting alongside"><img src="tabacalera-img/cigar-laxox.jpg" alt="Cigar in hand"><div class="plus">+</div><div class="ov"><span>Held just right</span></div></div>
-      <div class="cell" data-cap="An open box — the first cut of the evening"><img src="tabacalera-img/cigar-01.jpg" alt="Open cigar box"><div class="plus">+</div><div class="ov"><span>The first cut</span></div></div>
-      <div class="cell" data-cap="Hand-rolled, banded in gold"><img src="tabacalera-img/cigar-07.jpg" alt="Cigar with gold band"><div class="plus">+</div><div class="ov"><span>Banded in gold</span></div></div>
-      <div class="cell" data-cap="Toasting the foot — slow and even"><img src="tabacalera-img/cigar-09.jpg" alt="Lighting a cigar"><div class="plus">+</div><div class="ov"><span>Toasting the foot</span></div></div>
-      <div class="cell" data-cap="La Rosa de SanDiego — a house favourite"><img src="tabacalera-img/cigar-05.jpg" alt="La Rosa de SanDiego box"><div class="plus">+</div><div class="ov"><span>La Rosa de SanDiego</span></div></div>
-      <div class="cell" data-cap="A full box, waiting for the right night"><img src="tabacalera-img/cigar-03.jpg" alt="Cigar box"><div class="plus">+</div><div class="ov"><span>Waiting its night</span></div></div>
-      <div class="cell" data-cap="Lit, and in good hands"><img src="tabacalera-img/cigar-08.jpg" alt="Lit cigar in hand"><div class="plus">+</div><div class="ov"><span>In good hands</span></div></div>
-      <div class="cell" data-cap="Bolívar — quiet strength"><img src="tabacalera-img/cigar-10.jpg" alt="Bolivar cigar"><div class="plus">+</div><div class="ov"><span>Bolívar</span></div></div>
-      <div class="cell" data-cap="The humidor, kept just so"><img src="tabacalera-img/cigar-06.jpg" alt="Humidor"><div class="plus">+</div><div class="ov"><span>Kept just so</span></div></div>
-      <div class="cell" data-cap="Smoke, and a long conversation"><img src="tabacalera-img/cigar-11.jpg" alt="Cigar smoke"><div class="plus">+</div><div class="ov"><span>A long conversation</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-laxox.jpg" alt="Cigar in hand"><div class="plus">+</div><div class="ov"><span data-i18n="cap.held">Held just right</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-01.jpg" alt="Open cigar box"><div class="plus">+</div><div class="ov"><span data-i18n="cap.firstcut">The first cut</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-07.jpg" alt="Cigar with gold band"><div class="plus">+</div><div class="ov"><span data-i18n="cap.banded">Banded in gold</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-09.jpg" alt="Lighting a cigar"><div class="plus">+</div><div class="ov"><span data-i18n="cap.toasting">Toasting the foot</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-05.jpg" alt="La Rosa de SanDiego box"><div class="plus">+</div><div class="ov"><span data-i18n="cap.larosa">La Rosa de SanDiego</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-03.jpg" alt="Cigar box"><div class="plus">+</div><div class="ov"><span data-i18n="cap.waiting">Waiting its night</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-08.jpg" alt="Lit cigar in hand"><div class="plus">+</div><div class="ov"><span data-i18n="cap.goodhands">In good hands</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-10.jpg" alt="Bolivar cigar"><div class="plus">+</div><div class="ov"><span data-i18n="cap.bolivar">Bolívar</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-06.jpg" alt="Humidor"><div class="plus">+</div><div class="ov"><span data-i18n="cap.keptso">Kept just so</span></div></div>
+      <div class="cell"><img src="tabacalera-img/cigar-11.jpg" alt="Cigar smoke"><div class="plus">+</div><div class="ov"><span data-i18n="cap.longconv">A long conversation</span></div></div>
     </div>
   </div>
 </section>
@@ -441,9 +464,9 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
     <div class="split reveal">
       <div class="im" style="background-image:url('tabacalera-img/lounge-01.jpg')"></div>
       <div class="tx">
-        <h3>The lounge is <em>red</em>, the leather is <em>deep</em>.</h3>
-        <p>Oxblood chesterfields, low brass light, and a chevron floor that any Lynch devotee will recognise on sight. We built the room around the conversation, not the other way round.</p>
-        <p>Pull up a chair. The next pour is already breathing.</p>
+        <h3 data-i18n="split.h3">The lounge is <em>red</em>, the leather is <em>deep</em>.</h3>
+        <p data-i18n="split.p1">Oxblood chesterfields, low brass light, and a chevron floor that any Lynch devotee will recognise on sight. We built the room around the conversation, not the other way round.</p>
+        <p data-i18n="split.p2">Pull up a chair. The next pour is already breathing.</p>
       </div>
     </div>
   </div>
@@ -453,22 +476,22 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 <section class="sec pour" id="pour">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="sec-tag">The Pour</div>
-      <h2 class="sec-title">A dram with a <em>passport</em>.</h2>
-      <p class="lede">Saturdays are for tasting. We travel by glass — a Réunion rum one week, a peated Islay the next, a blending masterclass the one after. Here is how a typical season pours.</p>
+      <div class="sec-tag" data-i18n="pour.tag">The Pour</div>
+      <h2 class="sec-title" data-i18n="pour.title">A dram with a <em>passport</em>.</h2>
+      <p class="lede" data-i18n="pour.lede">Saturdays are for tasting. We travel by glass — a Réunion rum one week, a peated Islay the next, a blending masterclass the one after. Here is how a typical season pours.</p>
     </div>
     <div class="pour-grid">
-      <div class="pcard reveal"><div class="rn">№ 01</div><h3>Whisky Live</h3><p>Our standing Saturday ritual at 19:00 — new releases poured side by side, opinions encouraged, scores cheerfully disputed.</p><div class="tags"><em>Ardbeg</em><em>Springbank</em><em>Glenfiddich</em></div></div>
-      <div class="pcard reveal"><div class="rn">№ 02</div><h3>The Art of Blending</h3><p>A Compass Box evening — we taste the components, then the blend, and finally understand what "marrying" really means.</p><div class="tags"><em>Compass Box</em><em>Vatting</em><em>Casks</em></div></div>
-      <div class="pcard reveal"><div class="rn">№ 03</div><h3>Rum, with a French Accent</h3><p>From Isautier of Réunion to Foursquare and New Grove — agricole, molasses and everything the islands do best.</p><div class="tags"><em>Isautier</em><em>Foursquare</em><em>Jamaica</em></div></div>
+      <div class="pcard reveal"><div class="rn">№ 01</div><h3 data-i18n="pour.c1title">Whisky Live</h3><p data-i18n="pour.c1desc">Our standing Saturday ritual at 19:00 — new releases poured side by side, opinions encouraged, scores cheerfully disputed.</p><div class="tags"><em>Ardbeg</em><em>Springbank</em><em>Glenfiddich</em></div></div>
+      <div class="pcard reveal"><div class="rn">№ 02</div><h3 data-i18n="pour.c2title">The Art of Blending</h3><p data-i18n="pour.c2desc">A Compass Box evening — we taste the components, then the blend, and finally understand what "marrying" really means.</p><div class="tags"><em>Compass Box</em><em>Vatting</em><em>Casks</em></div></div>
+      <div class="pcard reveal"><div class="rn">№ 03</div><h3 data-i18n="pour.c3title">Rum, with a French Accent</h3><p data-i18n="pour.c3desc">From Isautier of Réunion to Foursquare and New Grove — agricole, molasses and everything the islands do best.</p><div class="tags"><em>Isautier</em><em>Foursquare</em><em>Jamaica</em></div></div>
     </div>
     <div class="gal reveal" style="margin-top:54px">
-      <div class="cell" data-cap="Springbank · Glen Scotia · Longrow · Kilkerran — a Campbeltown flight"><img src="tabacalera-img/flight-campbeltown.jpg" alt="Campbeltown whisky flight"><div class="plus">+</div><div class="ov"><span>A Campbeltown flight</span></div></div>
-      <div class="cell" data-cap="Davidsen's XO Black Label — a cigar resting beside the glass"><img src="tabacalera-img/pour-davidsen.jpg" alt="Davidsen's XO rum with cigar"><div class="plus">+</div><div class="ov"><span>Rested &amp; ready</span></div></div>
-      <div class="cell" data-cap="The table set — glasses, caviar, and good intentions"><img src="tabacalera-img/bottle-01.jpg" alt="Tasting table"><div class="plus">+</div><div class="ov"><span>The table, set</span></div></div>
-      <div class="cell" data-cap="Springbank Cask Strength — neat, no apologies"><img src="tabacalera-img/pour-05.jpg" alt="Springbank cask strength"><div class="plus">+</div><div class="ov"><span>Neat, no apologies</span></div></div>
-      <div class="cell" data-cap="A Compass Box flight, lined up for blending night"><img src="tabacalera-img/bottle-03.jpg" alt="Compass Box flight"><div class="plus">+</div><div class="ov"><span>Blending night</span></div></div>
-      <div class="cell" data-cap="Ardbeg — peated, and proud of it"><img src="tabacalera-img/bottle-02.jpg" alt="Ardbeg bottles"><div class="plus">+</div><div class="ov"><span>Peated &amp; proud</span></div></div>
+      <div class="cell"><img src="tabacalera-img/flight-campbeltown.jpg" alt="Campbeltown whisky flight"><div class="plus">+</div><div class="ov"><span data-i18n="cap.campbeltown">A Campbeltown flight</span></div></div>
+      <div class="cell"><img src="tabacalera-img/pour-davidsen.jpg" alt="Davidsen's XO rum with cigar"><div class="plus">+</div><div class="ov"><span data-i18n="cap.rested">Rested &amp; ready</span></div></div>
+      <div class="cell"><img src="tabacalera-img/bottle-01.jpg" alt="Tasting table"><div class="plus">+</div><div class="ov"><span data-i18n="cap.tableset">The table, set</span></div></div>
+      <div class="cell"><img src="tabacalera-img/pour-05.jpg" alt="Springbank cask strength"><div class="plus">+</div><div class="ov"><span data-i18n="cap.neat">Neat, no apologies</span></div></div>
+      <div class="cell"><img src="tabacalera-img/bottle-03.jpg" alt="Compass Box flight"><div class="plus">+</div><div class="ov"><span data-i18n="cap.blending">Blending night</span></div></div>
+      <div class="cell"><img src="tabacalera-img/bottle-02.jpg" alt="Ardbeg bottles"><div class="plus">+</div><div class="ov"><span data-i18n="cap.peated">Peated &amp; proud</span></div></div>
     </div>
   </div>
 </section>
@@ -477,16 +500,16 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 <section class="sec" id="gatherings">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="sec-tag">Gatherings</div>
-      <h2 class="sec-title">The night is <em>young</em>, the company older.</h2>
-      <p class="lede">Faces from the table — the tastings, the toasts, the arguments about whether a half-shot is ever worth the price. This is who we are.</p>
+      <div class="sec-tag" data-i18n="gatherings.tag">Gatherings</div>
+      <h2 class="sec-title" data-i18n="gatherings.title">The night is <em>young</em>, the company older.</h2>
+      <p class="lede" data-i18n="gatherings.lede">Faces from the table — the tastings, the toasts, the arguments about whether a half-shot is ever worth the price. This is who we are.</p>
     </div>
     <div class="gal reveal">
-      <div class="cell" data-cap="Around the table — a Saturday tasting"><img src="tabacalera-img/event-01.jpg" alt="Tasting gathering"><div class="plus">+</div><div class="ov"><span>A Saturday tasting</span></div></div>
-      <div class="cell" data-cap="The spread — cigars and deli, included"><img src="tabacalera-img/event-02.jpg" alt="Tasting spread"><div class="plus">+</div><div class="ov"><span>Cigars &amp; deli</span></div></div>
-      <div class="cell" data-cap="Oxblood leather, brass light"><img src="tabacalera-img/lounge-02.jpg" alt="Red leather lounge"><div class="plus">+</div><div class="ov"><span>Oxblood &amp; brass</span></div></div>
-      <div class="cell" data-cap="To the weekend — the whole table raises a glass"><img src="tabacalera-img/gathering-02.jpg" alt="Members raising a toast"><div class="plus">+</div><div class="ov"><span>The whole table</span></div></div>
-      <div class="cell" data-cap="An Oliva Serie V, lit and in good hands"><img src="tabacalera-img/city-riga.jpg" alt="Oliva cigar in hand"><div class="plus">+</div><div class="ov"><span>Lit &amp; in good hands</span></div></div>
+      <div class="cell"><img src="tabacalera-img/event-01.jpg" alt="Tasting gathering"><div class="plus">+</div><div class="ov"><span data-i18n="cap.saturday">A Saturday tasting</span></div></div>
+      <div class="cell"><img src="tabacalera-img/event-02.jpg" alt="Tasting spread"><div class="plus">+</div><div class="ov"><span data-i18n="cap.cigarsdeli">Cigars &amp; deli</span></div></div>
+      <div class="cell"><img src="tabacalera-img/lounge-02.jpg" alt="Red leather lounge"><div class="plus">+</div><div class="ov"><span data-i18n="cap.oxblood">Oxblood &amp; brass</span></div></div>
+      <div class="cell"><img src="tabacalera-img/gathering-02.jpg" alt="Members raising a toast"><div class="plus">+</div><div class="ov"><span data-i18n="cap.wholetable">The whole table</span></div></div>
+      <div class="cell"><img src="tabacalera-img/city-riga.jpg" alt="Oliva cigar in hand"><div class="plus">+</div><div class="ov"><span data-i18n="cap.litgood">Lit &amp; in good hands</span></div></div>
     </div>
   </div>
 </section>
@@ -495,28 +518,28 @@ footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:
 <section class="sec visit" id="visit">
   <div class="wrap">
     <div class="sec-head reveal" style="text-align:center">
-      <div class="sec-tag" style="color:var(--gold-bright)">Visit · Reserve</div>
-      <h2 class="sec-title">Find the <em>red door</em>.</h2>
-      <p class="lede">Tabacalera sits at Tērbatas iela 68 in the heart of Riga — a cigar &amp; fine-spirits lounge by day, a tasting room by night. Walk in for a cigar on a weekday, or reserve your seat for the next tasting.</p>
+      <div class="sec-tag" style="color:var(--gold-bright)" data-i18n="visit.tag">Visit · Reserve</div>
+      <h2 class="sec-title" data-i18n="visit.title">Find the <em>red door</em>.</h2>
+      <p class="lede" data-i18n="visit.lede">Tabacalera sits at Tērbatas iela 68 in the heart of Riga — a cigar &amp; fine-spirits lounge by day, a tasting room by night. Walk in for a cigar on a weekday, or reserve your seat for the next tasting.</p>
     </div>
     <div class="vrow reveal">
-      <div class="vi"><b>Tērbatas iela 68</b><span>Rīga, Latvia</span></div>
-      <div class="vi"><b>Mon–Fri · 09–19</b><span>Weekends for tastings</span></div>
-      <div class="vi"><b>+371 29 151 112</b><span>Cigars &amp; reservations</span></div>
+      <div class="vi"><b>Tērbatas iela 68</b><span data-i18n="visit.v1b">Rīga, Latvia</span></div>
+      <div class="vi"><b data-i18n="visit.v2a">Mon–Fri · 09–19</b><span data-i18n="visit.v2b">Weekends for tastings</span></div>
+      <div class="vi"><b>+371 29 151 112</b><span data-i18n="visit.v3b">Cigars &amp; reservations</span></div>
     </div>
     <div class="reveal" style="margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-      <a href="https://www.google.com/maps/place/Tabacalera/@56.9578218,24.1308051,17z" target="_blank" rel="noopener" class="btn btn-gold">Open in Maps ↗</a>
-      <a href="tel:+37129151112" class="btn btn-ghost">Call the lounge</a>
+      <a href="https://www.google.com/maps/place/Tabacalera/@56.9578218,24.1308051,17z" target="_blank" rel="noopener" class="btn btn-gold" data-i18n="visit.btn1">Open in Maps ↗</a>
+      <a href="tel:+37129151112" class="btn btn-ghost" data-i18n="visit.btn2">Call the lounge</a>
     </div>
-    <p class="resv reveal" style="text-align:center;margin-top:22px">Weekend doors open on tasting nights — see the programme above, or call to confirm.</p>
+    <p class="resv reveal" style="text-align:center;margin-top:22px" data-i18n="visit.resv">Weekend doors open on tasting nights — see the programme above, or call to confirm.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div class="fbrand">TABACALERA</div>
-    <div class="fmeta">A whisky, rum &amp; cigar lounge — Tērbatas iela 68, Rīga, Latvia<br>Mon–Fri 09:00–19:00 · weekends for tastings · <a href="tel:+37129151112">+371 29 151 112</a> · <a href="https://cybergod.ai">cybergod.ai</a></div>
-    <div class="fnote">Members 18+ only. Please enjoy whisky, rum and cigars responsibly.</div>
+    <div class="fmeta" data-i18n="footer.meta">A whisky, rum &amp; cigar lounge — Tērbatas iela 68, Rīga, Latvia<br>Mon–Fri 09:00–19:00 · weekends for tastings · <a href="tel:+37129151112">+371 29 151 112</a> · <a href="https://cybergod.ai">cybergod.ai</a></div>
+    <div class="fnote" data-i18n="footer.note">Members 18+ only. Please enjoy whisky, rum and cigars responsibly.</div>
   </div>
 </footer>
 
@@ -585,7 +608,7 @@ const cells=[...document.querySelectorAll('.gal .cell')];
 const lb=document.getElementById('lb'),lbimg=document.getElementById('lbimg'),lbcap=document.getElementById('lbcap');
 let idx=0;
 function show(i){idx=(i+cells.length)%cells.length;const c=cells[idx];
-  lbimg.src=c.querySelector('img').src;lbcap.textContent=c.dataset.cap||'';}
+  lbimg.src=c.querySelector('img').src;const ov=c.querySelector('.ov span');lbcap.textContent=ov?ov.textContent:'';}
 cells.forEach((c,i)=>c.addEventListener('click',()=>{show(i);lb.classList.add('on');}));
 document.getElementById('lbx').onclick=()=>lb.classList.remove('on');
 document.getElementById('lbprev').onclick=e=>{e.stopPropagation();show(idx-1);};
@@ -610,17 +633,117 @@ setTimeout(fitTitle,1400);
         msg=document.getElementById('cdMsg');
   if(!dd)return;
   const p=n=>String(n).padStart(2,'0');
+  let done=false;
+  function dict(){return (window.I18N&&window.I18N[window.curLang])||(window.I18N&&window.I18N.en)||{};}
+  window.refreshCountdown=function(){const d=dict();
+    msg.innerHTML='<span class="dot"></span>'+(done?(d['tn.open']||'The curtain is open — happening now'):(d['tn.counting']||'Counting down to 19:00 · Riga time'));
+    msg.classList.toggle('go',done);};
   function tick(){let d=target-Date.now();
     if(d<=0){dd.textContent=hh.textContent=mm.textContent=ss.textContent='00';
-      if(!msg.classList.contains('go')){msg.classList.add('go');
-        msg.innerHTML='<span class="dot"></span>The curtain is open — happening now';}
-      return;}
+      if(!done){done=true;window.refreshCountdown();}return;}
+    if(done){done=false;window.refreshCountdown();}
     const day=Math.floor(d/864e5);d-=day*864e5;
     const h=Math.floor(d/36e5);d-=h*36e5;
     const m=Math.floor(d/6e4);d-=m*6e4;
     const s=Math.floor(d/1e3);
     dd.textContent=p(day);hh.textContent=p(h);mm.textContent=p(m);ss.textContent=p(s);}
-  tick();setInterval(tick,1000);
+  tick();setInterval(tick,1000);window.refreshCountdown();
+})();
+
+/* ---------- internationalisation (EN · RU · LV · DE · ZH) ---------- */
+window.I18N={
+en:{
+"nav.tonight":"Tonight","nav.room":"The Room","nav.humidor":"Humidor","nav.pour":"The Pour","nav.gatherings":"Gatherings","nav.visit":"Visit","nav.join":"Request a seat",
+"hero.eyebrow":"A Whisky · Rum · Cigar Society","hero.sub":"Behind the red curtain on Tērbatas iela — a room in the heart of Riga where the smoke never settles, the drams run deep, and a good cigar is never rushed.","hero.btn1":"Step inside ↗","hero.btn2":"Saturday tastings","hero.s1a":"Tasting Saturdays","hero.s1b":"Whisky Live · 19:00","hero.s2a":"Rum · Whisky · Cigars","hero.s2b":"Tasted, not rushed","hero.s3b":"Open Mon–Fri","hero.descend":"Descend",
+"tn.tag":"Friday · 19 June · 19:00","tn.title":"The <em>final countdown</em>.","tn.lede":"Tonight only — the legendary Australian rum, <strong class='hl'>Transcontinental Australia 2015</strong>, poured beside <strong class='hl'>La Flor Dominicana ORO</strong>. The best company to meet the weekend.","tn.meta":"Doors swing at seven. The curtain's already warm.","tn.dDays":"Days","tn.dHours":"Hours","tn.dMinutes":"Minutes","tn.dSeconds":"Seconds","tn.counting":"Counting down to 19:00 · Riga time","tn.open":"The curtain is open — happening now","tn.upcoming":"Upcoming tastings · Tērbatas iela 68","tn.ev1date":"04 Jul","tn.ev1name":"Speyside Whisky","tn.ev2date":"18 Jul","tn.ev2name":"Rum, from A to Z","tn.ev3date":"Weekly","tn.ev3name":"Whisky Live — new releases, poured blind","tn.evtime":"Sat · 19:00","tn.resv":"Reservations & guest list",
+"room.tag":"The Red Room","room.title":"Where the world goes <em>quiet</em>.","room.p1":"<span class='drop'>T</span>here is a moment, once the curtain falls behind you, when the city outside simply stops existing. The lights drop to ember. The leather exhales. A cigar is clipped, a dram is poured, and time loosens its collar. This is the room our circle keeps — not a bar, but a confidence.","room.p2":"We are a society of friends who believe that the right whisky, the right rum and an honest cigar are best shared slowly, in good company, with nothing to prove and nowhere to be.","room.creed1":"No rushing a good pour. No phones at the table that can't wait.","room.creed2":"Every bottle has a story — we open it, taste it, and argue about it kindly.","room.creed3":"What is said in the room, stays in the room.","room.cap":"\"Forever, together. Rum and cigar.\"",
+"humidor.tag":"The Humidor","humidor.title":"Cedar, fire & <em>patience</em>.","humidor.lede":"From a hand-rolled La Rosa de SanDiego to a well-aged Bolívar, our cigars are chosen the way good company is — for character, not noise. Open a box. Take your time.",
+"split.h3":"The lounge is <em>red</em>, the leather is <em>deep</em>.","split.p1":"Oxblood chesterfields, low brass light, and a chevron floor that any Lynch devotee will recognise on sight. We built the room around the conversation, not the other way round.","split.p2":"Pull up a chair. The next pour is already breathing.",
+"pour.tag":"The Pour","pour.title":"A dram with a <em>passport</em>.","pour.lede":"Saturdays are for tasting. We travel by glass — a Réunion rum one week, a peated Islay the next, a blending masterclass the one after. Here is how a typical season pours.","pour.c1title":"Whisky Live","pour.c1desc":"Our standing Saturday ritual at 19:00 — new releases poured side by side, opinions encouraged, scores cheerfully disputed.","pour.c2title":"The Art of Blending","pour.c2desc":"A Compass Box evening — we taste the components, then the blend, and finally understand what \"marrying\" really means.","pour.c3title":"Rum, with a French Accent","pour.c3desc":"From Isautier of Réunion to Foursquare and New Grove — agricole, molasses and everything the islands do best.",
+"gatherings.tag":"Gatherings","gatherings.title":"The night is <em>young</em>, the company older.","gatherings.lede":"Faces from the table — the tastings, the toasts, the arguments about whether a half-shot is ever worth the price. This is who we are.",
+"visit.tag":"Visit · Reserve","visit.title":"Find the <em>red door</em>.","visit.lede":"Tabacalera sits at Tērbatas iela 68 in the heart of Riga — a cigar & fine-spirits lounge by day, a tasting room by night. Walk in for a cigar on a weekday, or reserve your seat for the next tasting.","visit.v1b":"Rīga, Latvia","visit.v2a":"Mon–Fri · 09–19","visit.v2b":"Weekends for tastings","visit.v3b":"Cigars & reservations","visit.btn1":"Open in Maps ↗","visit.btn2":"Call the lounge","visit.resv":"Weekend doors open on tasting nights — see the programme above, or call to confirm.",
+"footer.meta":"A whisky, rum & cigar lounge — Tērbatas iela 68, Rīga, Latvia<br>Mon–Fri 09:00–19:00 · weekends for tastings · <a href='tel:+37129151112'>+371 29 151 112</a> · <a href='https://cybergod.ai'>cybergod.ai</a>","footer.note":"Members 18+ only. Please enjoy whisky, rum and cigars responsibly.",
+"cap.held":"Held just right","cap.firstcut":"The first cut","cap.banded":"Banded in gold","cap.toasting":"Toasting the foot","cap.waiting":"Waiting its night","cap.goodhands":"In good hands","cap.keptso":"Kept just so","cap.longconv":"A long conversation","cap.campbeltown":"A Campbeltown flight","cap.rested":"Rested & ready","cap.tableset":"The table, set","cap.neat":"Neat, no apologies","cap.blending":"Blending night","cap.peated":"Peated & proud","cap.saturday":"A Saturday tasting","cap.cigarsdeli":"Cigars & deli","cap.oxblood":"Oxblood & brass","cap.wholetable":"The whole table","cap.litgood":"Lit & in good hands"
+},
+ru:{
+"nav.tonight":"Сегодня","nav.room":"Зал","nav.humidor":"Хьюмидор","nav.pour":"Дегустации","nav.gatherings":"Встречи","nav.visit":"Контакты","nav.join":"Забронировать место",
+"hero.eyebrow":"Клуб виски · рома · сигар","hero.sub":"За красным занавесом на улице Тербатас — зал в самом сердце Риги, где дым не оседает, напитки глубоки, а хорошую сигару никто не торопит.","hero.btn1":"Войти ↗","hero.btn2":"Субботние дегустации","hero.s1a":"Дегустации по субботам","hero.s1b":"Whisky Live · 19:00","hero.s2a":"Ром · Виски · Сигары","hero.s2b":"Смакуем не спеша","hero.s3b":"Открыто Пн–Пт","hero.descend":"Вниз",
+"tn.tag":"Пятница · 19 июня · 19:00","tn.title":"<em>Финальный отсчёт</em>.","tn.lede":"Только сегодня — легендарный австралийский ром <strong class='hl'>Transcontinental Australia 2015</strong> в паре с <strong class='hl'>La Flor Dominicana ORO</strong>. Лучшая компания, чтобы встретить выходные.","tn.meta":"Двери открываются в семь. Занавес уже тёплый.","tn.dDays":"Дни","tn.dHours":"Часы","tn.dMinutes":"Минуты","tn.dSeconds":"Секунды","tn.counting":"Отсчёт до 19:00 · по Риге","tn.open":"Занавес открыт — уже началось","tn.upcoming":"Ближайшие дегустации · Tērbatas iela 68","tn.ev1date":"4 июл","tn.ev1name":"Виски Спейсайда","tn.ev2date":"18 июл","tn.ev2name":"Ром от А до Я","tn.ev3date":"Еженедельно","tn.ev3name":"Whisky Live — новинки вслепую","tn.evtime":"Сб · 19:00","tn.resv":"Бронь и гостевой список",
+"room.tag":"Красный зал","room.title":"Где мир становится <em>тише</em>.","room.p1":"<span class='drop'>Е</span>сть миг: едва занавес опустится за спиной, город снаружи попросту перестаёт существовать. Свет гаснет до угольков. Кожа вздыхает. Сигара обрезана, налит дижестив, и время распускает воротник. Это зал, который хранит наш круг, — не бар, а доверие.","room.p2":"Мы — общество друзей, убеждённых, что правильный виски, правильный ром и честная сигара лучше всего разделяются неспешно, в хорошей компании, когда нечего доказывать и некуда спешить.","room.creed1":"Хороший напиток не торопят. Никаких телефонов за столом, что не могут подождать.","room.creed2":"У каждой бутылки есть история — мы открываем её, пробуем и по-доброму спорим.","room.creed3":"Что сказано в зале — остаётся в зале.","room.cap":"«Навсегда, вместе. Ром и сигара.»",
+"humidor.tag":"Хьюмидор","humidor.title":"Кедр, огонь и <em>терпение</em>.","humidor.lede":"От скрученной вручную La Rosa de SanDiego до выдержанной Bolívar — сигары мы выбираем, как хорошую компанию: за характер, а не за шум. Откройте коробку. Не спешите.",
+"split.h3":"Зал — <em>красный</em>, кожа — <em>глубокая</em>.","split.p1":"Честерфилды цвета бычьей крови, низкий латунный свет и пол-шеврон, который любой поклонник Линча узнает с первого взгляда. Мы выстроили зал вокруг беседы, а не наоборот.","split.p2":"Придвигайте кресло. Следующий налив уже дышит.",
+"pour.tag":"Дегустации","pour.title":"Напиток с <em>паспортом</em>.","pour.lede":"Субботы — для дегустаций. Мы путешествуем бокалом: ром с Реюньона на одной неделе, торфяной Айла на следующей, мастер-класс по блендингу затем. Вот так наливается типичный сезон.","pour.c1title":"Whisky Live","pour.c1desc":"Наш постоянный субботний ритуал в 19:00 — новинки бок о бок, мнения приветствуются, оценки весело оспариваются.","pour.c2title":"Искусство блендинга","pour.c2desc":"Вечер Compass Box — пробуем компоненты, затем бленд и наконец понимаем, что значит «женитьба» вкусов.","pour.c3title":"Ром с французским акцентом","pour.c3desc":"От Isautier с Реюньона до Foursquare и New Grove — agricole, меласса и всё, что острова умеют лучше всех.",
+"gatherings.tag":"Встречи","gatherings.title":"Ночь <em>молода</em>, компания — постарше.","gatherings.lede":"Лица из-за стола — дегустации, тосты, споры о том, стоит ли полшота своих денег. Вот кто мы.",
+"visit.tag":"Визит · Бронь","visit.title":"Найдите <em>красную дверь</em>.","visit.lede":"Tabacalera находится на Tērbatas iela 68 в сердце Риги — сигарный лаунж с благородным алкоголем днём и дегустационный зал вечером. Загляните за сигарой в будни или забронируйте место на ближайшую дегустацию.","visit.v1b":"Рига, Латвия","visit.v2a":"Пн–Пт · 09–19","visit.v2b":"Выходные — для дегустаций","visit.v3b":"Сигары и бронь","visit.btn1":"Открыть на карте ↗","visit.btn2":"Позвонить","visit.resv":"По выходным двери открыты в дни дегустаций — смотрите программу выше или позвоните для уточнения.",
+"footer.meta":"Лаунж виски, рома и сигар — Tērbatas iela 68, Рига, Латвия<br>Пн–Пт 09:00–19:00 · выходные — для дегустаций · <a href='tel:+37129151112'>+371 29 151 112</a> · <a href='https://cybergod.ai'>cybergod.ai</a>","footer.note":"Только 18+. Пожалуйста, наслаждайтесь виски, ромом и сигарами ответственно.",
+"cap.held":"В правильной руке","cap.firstcut":"Первый рез","cap.banded":"В золотом кольце","cap.toasting":"Поджигаем ножку","cap.waiting":"Ждёт своей ночи","cap.goodhands":"В надёжных руках","cap.keptso":"В идеальном порядке","cap.longconv":"Долгий разговор","cap.campbeltown":"Сет из Кэмпбелтауна","cap.rested":"Отдохнул и готов","cap.tableset":"Стол накрыт","cap.neat":"Чистый, без компромиссов","cap.blending":"Вечер блендинга","cap.peated":"Торфяной и гордый","cap.saturday":"Субботняя дегустация","cap.cigarsdeli":"Сигары и закуски","cap.oxblood":"Бордо и латунь","cap.wholetable":"Весь стол","cap.litgood":"Зажжена, в надёжных руках"
+},
+lv:{
+"nav.tonight":"Šovakar","nav.room":"Zāle","nav.humidor":"Humidors","nav.pour":"Degustācijas","nav.gatherings":"Pulcēšanās","nav.visit":"Apmeklēt","nav.join":"Rezervēt vietu",
+"hero.eyebrow":"Viskija · Ruma · Cigāru klubs","hero.sub":"Aiz sarkanā priekškara Tērbatas ielā — telpa Rīgas sirdī, kur dūmi nenosēžas, malki ir dziļi, un labu cigāru nekad nesteidzina.","hero.btn1":"Ienākt ↗","hero.btn2":"Sestdienas degustācijas","hero.s1a":"Degustāciju sestdienas","hero.s1b":"Whisky Live · 19:00","hero.s2a":"Rums · Viskijs · Cigāri","hero.s2b":"Bauda bez steigas","hero.s3b":"Atvērts P–Pk","hero.descend":"Lejup",
+"tn.tag":"Piektdiena · 19. jūnijs · 19:00","tn.title":"<em>Pēdējā atpakaļskaitīšana</em>.","tn.lede":"Tikai šovakar — leģendārais Austrālijas rums <strong class='hl'>Transcontinental Australia 2015</strong> kopā ar <strong class='hl'>La Flor Dominicana ORO</strong>. Labākā kompānija, lai sagaidītu nedēļas nogali.","tn.meta":"Durvis veras septiņos. Priekškars jau silts.","tn.dDays":"Dienas","tn.dHours":"Stundas","tn.dMinutes":"Minūtes","tn.dSeconds":"Sekundes","tn.counting":"Atskaite līdz 19:00 · pēc Rīgas","tn.open":"Priekškars atvērts — notiek tagad","tn.upcoming":"Gaidāmās degustācijas · Tērbatas iela 68","tn.ev1date":"4. jūl.","tn.ev1name":"Speyside viskijs","tn.ev2date":"18. jūl.","tn.ev2name":"Rums no A līdz Z","tn.ev3date":"Iknedēļas","tn.ev3name":"Whisky Live — jaunumi, akli degustēti","tn.evtime":"Se · 19:00","tn.resv":"Rezervācijas un viesu saraksts",
+"room.tag":"Sarkanā zāle","room.title":"Kur pasaule <em>apklust</em>.","room.p1":"<span class='drop'>I</span>r mirklis, kad priekškaram aizveroties aiz muguras, pilsēta ārā vienkārši pārstāj eksistēt. Gaisma noplok līdz oglēm. Āda nopūšas. Cigārs apgriezts, malks ieliets, un laiks atlaiž apkakli. Šī ir telpa, ko glabā mūsu loks, — nevis bārs, bet uzticība.","room.p2":"Mēs esam draugu kopa, kas tic, ka īstais viskijs, īstais rums un godīgs cigārs vislabāk baudāmi lēni, labā sabiedrībā, kad nekas nav jāpierāda un nav kurp steigties.","room.creed1":"Labu malku nesteidzina. Nekādu telefonu pie galda, kas nevar pagaidīt.","room.creed2":"Katrai pudelei ir stāsts — mēs to atveram, nogaršojam un laipni strīdamies.","room.creed3":"Kas pateikts zālē, paliek zālē.","room.cap":"«Mūžīgi kopā. Rums un cigārs.»",
+"humidor.tag":"Humidors","humidor.title":"Ciedrs, uguns un <em>pacietība</em>.","humidor.lede":"No ar roku tītas La Rosa de SanDiego līdz nogatavinātai Bolívar — cigārus izvēlamies tāpat kā labu sabiedrību: pēc rakstura, ne trokšņa. Atveriet kasti. Nesteidzieties.",
+"split.h3":"Zāle ir <em>sarkana</em>, āda ir <em>dziļa</em>.","split.p1":"Vēršu asins krāsas chesterfield dīvāni, zems misiņa gaišums un šebrona grīda, ko ikviens Linča cienītājs pazīs uzreiz. Telpu veidojām ap sarunu, nevis otrādi.","split.p2":"Pievelciet krēslu. Nākamais malks jau elpo.",
+"pour.tag":"Degustācijas","pour.title":"Malks ar <em>pasi</em>.","pour.lede":"Sestdienas ir degustācijām. Mēs ceļojam ar glāzi — Reinjonas rums vienu nedēļu, kūdrains Ailas viskijs nākamo, blendēšanas meistarklase pēc tam. Lūk, kā ieskanas tipiska sezona.","pour.c1title":"Whisky Live","pour.c1desc":"Mūsu pastāvīgais sestdienas rituāls plkst. 19:00 — jaunumi blakus, viedokļi tiek gaidīti, vērtējumi jautri apstrīdēti.","pour.c2title":"Blendēšanas māksla","pour.c2desc":"Compass Box vakars — nogaršojam sastāvdaļas, tad blendu, un beidzot saprotam, ko patiesi nozīmē «laulāšana».","pour.c3title":"Rums ar franču akcentu","pour.c3desc":"No Reinjonas Isautier līdz Foursquare un New Grove — agricole, melase un viss, ko salas prot vislabāk.",
+"gatherings.tag":"Pulcēšanās","gatherings.title":"Nakts ir <em>jauna</em>, kompānija vecāka.","gatherings.lede":"Sejas no galda — degustācijas, tosti, strīdi par to, vai pusšots vērts savas cenas. Lūk, kas mēs esam.",
+"visit.tag":"Apmeklē · Rezervē","visit.title":"Atrodi <em>sarkanās durvis</em>.","visit.lede":"Tabacalera atrodas Tērbatas ielā 68 Rīgas sirdī — cigāru un cēlo dzērienu laundža dienā, degustāciju telpa vakarā. Ienāciet pēc cigāra darbdienā vai rezervējiet vietu nākamajai degustācijai.","visit.v1b":"Rīga, Latvija","visit.v2a":"P–Pk · 09–19","visit.v2b":"Nedēļas nogales — degustācijām","visit.v3b":"Cigāri un rezervācijas","visit.btn1":"Atvērt kartē ↗","visit.btn2":"Zvanīt","visit.resv":"Nedēļas nogalēs durvis ir atvērtas degustāciju vakaros — skatiet programmu augstāk vai zvaniet, lai apstiprinātu.",
+"footer.meta":"Viskija, ruma un cigāru laundža — Tērbatas iela 68, Rīga, Latvija<br>P–Pk 09:00–19:00 · nedēļas nogales degustācijām · <a href='tel:+37129151112'>+371 29 151 112</a> · <a href='https://cybergod.ai'>cybergod.ai</a>","footer.note":"Tikai 18+. Lūdzu, baudiet viskiju, rumu un cigārus atbildīgi.",
+"cap.held":"Tieši pareizi turēts","cap.firstcut":"Pirmais griezums","cap.banded":"Zelta gredzenā","cap.toasting":"Iekvēlinot galu","cap.waiting":"Gaida savu nakti","cap.goodhands":"Labās rokās","cap.keptso":"Kārtīgi glabāts","cap.longconv":"Gara saruna","cap.campbeltown":"Kembeltaunas sets","cap.rested":"Atpūties un gatavs","cap.tableset":"Galds klāts","cap.neat":"Tīrs, bez atvainošanās","cap.blending":"Blendēšanas vakars","cap.peated":"Kūdrains un lepns","cap.saturday":"Sestdienas degustācija","cap.cigarsdeli":"Cigāri un uzkodas","cap.oxblood":"Vēršasinis un misiņš","cap.wholetable":"Viss galds","cap.litgood":"Aizdedzināts, labās rokās"
+},
+de:{
+"nav.tonight":"Heute Abend","nav.room":"Der Salon","nav.humidor":"Humidor","nav.pour":"Der Ausschank","nav.gatherings":"Treffen","nav.visit":"Besuch","nav.join":"Platz anfragen",
+"hero.eyebrow":"Ein Whisky-·-Rum-·-Zigarren-Klub","hero.sub":"Hinter dem roten Vorhang in der Tērbatas iela — ein Raum im Herzen Rigas, wo sich der Rauch nie legt, die Drams tief sind und eine gute Zigarre niemals gehetzt wird.","hero.btn1":"Eintreten ↗","hero.btn2":"Samstags-Tastings","hero.s1a":"Tasting-Samstage","hero.s1b":"Whisky Live · 19:00","hero.s2a":"Rum · Whisky · Zigarren","hero.s2b":"Genossen, nicht gehetzt","hero.s3b":"Mo–Fr geöffnet","hero.descend":"Hinab",
+"tn.tag":"Freitag · 19. Juni · 19:00","tn.title":"Der <em>finale Countdown</em>.","tn.lede":"Nur heute Abend — der legendäre australische Rum <strong class='hl'>Transcontinental Australia 2015</strong>, ausgeschenkt neben <strong class='hl'>La Flor Dominicana ORO</strong>. Die beste Gesellschaft fürs Wochenende.","tn.meta":"Die Türen öffnen um sieben. Der Vorhang ist schon warm.","tn.dDays":"Tage","tn.dHours":"Stunden","tn.dMinutes":"Minuten","tn.dSeconds":"Sekunden","tn.counting":"Countdown bis 19:00 · Rigaer Zeit","tn.open":"Der Vorhang ist offen — es geht los","tn.upcoming":"Kommende Tastings · Tērbatas iela 68","tn.ev1date":"04. Jul","tn.ev1name":"Speyside Whisky","tn.ev2date":"18. Jul","tn.ev2name":"Rum von A bis Z","tn.ev3date":"Wöchentlich","tn.ev3name":"Whisky Live — Neuheiten, blind verkostet","tn.evtime":"Sa · 19:00","tn.resv":"Reservierungen & Gästeliste",
+"room.tag":"Der rote Salon","room.title":"Wo die Welt <em>verstummt</em>.","room.p1":"<span class='drop'>E</span>s gibt einen Moment, sobald sich der Vorhang hinter dir schließt, in dem die Stadt draußen einfach aufhört zu existieren. Das Licht sinkt zur Glut. Das Leder atmet aus. Eine Zigarre wird gekappt, ein Dram eingeschenkt, und die Zeit lockert den Kragen. Das ist der Raum, den unser Kreis hütet — keine Bar, sondern ein Vertrauen.","room.p2":"Wir sind eine Gesellschaft von Freunden, die glauben, dass der richtige Whisky, der richtige Rum und eine ehrliche Zigarre am besten langsam geteilt werden — in guter Gesellschaft, ohne etwas beweisen zu müssen und ohne Eile.","room.creed1":"Einen guten Dram hetzt man nicht. Keine Handys am Tisch, die nicht warten können.","room.creed2":"Jede Flasche hat eine Geschichte — wir öffnen sie, kosten sie und streiten freundlich darüber.","room.creed3":"Was im Salon gesagt wird, bleibt im Salon.","room.cap":"„Für immer, zusammen. Rum und Zigarre.“",
+"humidor.tag":"Der Humidor","humidor.title":"Zeder, Feuer & <em>Geduld</em>.","humidor.lede":"Von einer handgerollten La Rosa de SanDiego bis zu einer gut gereiften Bolívar — wir wählen unsere Zigarren wie gute Gesellschaft: nach Charakter, nicht nach Lärm. Öffnen Sie eine Kiste. Lassen Sie sich Zeit.",
+"split.h3":"Der Salon ist <em>rot</em>, das Leder ist <em>tief</em>.","split.p1":"Ochsenblutrote Chesterfields, tiefes Messinglicht und ein Fischgrätboden, den jeder Lynch-Verehrer sofort erkennt. Wir haben den Raum um das Gespräch herum gebaut, nicht umgekehrt.","split.p2":"Ziehen Sie einen Stuhl heran. Der nächste Dram atmet bereits.",
+"pour.tag":"Der Ausschank","pour.title":"Ein Dram mit <em>Reisepass</em>.","pour.lede":"Samstage sind zum Verkosten da. Wir reisen per Glas — einen Réunion-Rum die eine Woche, einen getorften Islay die nächste, eine Blending-Masterclass danach. So schenkt eine typische Saison aus.","pour.c1title":"Whisky Live","pour.c1desc":"Unser festes Samstagsritual um 19:00 — Neuheiten Seite an Seite, Meinungen erwünscht, Bewertungen fröhlich umstritten.","pour.c2title":"Die Kunst des Blendings","pour.c2desc":"Ein Compass-Box-Abend — wir verkosten die Komponenten, dann den Blend und verstehen endlich, was „Vermählen“ wirklich bedeutet.","pour.c3title":"Rum mit französischem Akzent","pour.c3desc":"Von Isautier aus Réunion bis Foursquare und New Grove — Agricole, Melasse und alles, was die Inseln am besten können.",
+"gatherings.tag":"Treffen","gatherings.title":"Die Nacht ist <em>jung</em>, die Gesellschaft älter.","gatherings.lede":"Gesichter vom Tisch — die Tastings, die Trinksprüche, die Debatten, ob ein halber Shot je seinen Preis wert ist. Das sind wir.",
+"visit.tag":"Besuch · Reservierung","visit.title":"Finden Sie die <em>rote Tür</em>.","visit.lede":"Tabacalera liegt in der Tērbatas iela 68 im Herzen Rigas — tagsüber eine Zigarren- und Spirituosen-Lounge, abends ein Verkostungsraum. Kommen Sie unter der Woche für eine Zigarre vorbei oder reservieren Sie Ihren Platz fürs nächste Tasting.","visit.v1b":"Riga, Lettland","visit.v2a":"Mo–Fr · 09–19","visit.v2b":"Wochenenden für Tastings","visit.v3b":"Zigarren & Reservierungen","visit.btn1":"In Maps öffnen ↗","visit.btn2":"Anrufen","visit.resv":"Am Wochenende öffnen die Türen an Tasting-Abenden — siehe Programm oben oder rufen Sie zur Bestätigung an.",
+"footer.meta":"Eine Whisky-, Rum- & Zigarren-Lounge — Tērbatas iela 68, Riga, Lettland<br>Mo–Fr 09:00–19:00 · Wochenenden für Tastings · <a href='tel:+37129151112'>+371 29 151 112</a> · <a href='https://cybergod.ai'>cybergod.ai</a>","footer.note":"Nur für Mitglieder ab 18. Bitte genießen Sie Whisky, Rum und Zigarren verantwortungsvoll.",
+"cap.held":"Genau richtig gehalten","cap.firstcut":"Der erste Schnitt","cap.banded":"In Gold gebändert","cap.toasting":"Den Fuß antoasten","cap.waiting":"Wartet auf seine Nacht","cap.goodhands":"In guten Händen","cap.keptso":"Sorgsam gehütet","cap.longconv":"Ein langes Gespräch","cap.campbeltown":"Ein Campbeltown-Flight","cap.rested":"Geruht & bereit","cap.tableset":"Der Tisch ist gedeckt","cap.neat":"Pur, ohne Entschuldigung","cap.blending":"Blending-Abend","cap.peated":"Getorft & stolz","cap.saturday":"Ein Samstags-Tasting","cap.cigarsdeli":"Zigarren & Delikatessen","cap.oxblood":"Ochsenblut & Messing","cap.wholetable":"Der ganze Tisch","cap.litgood":"Angezündet & in guten Händen"
+},
+zh:{
+"nav.tonight":"今夜","nav.room":"红厅","nav.humidor":"雪茄房","nav.pour":"品鉴","nav.gatherings":"聚会","nav.visit":"到访","nav.join":"预约席位",
+"hero.eyebrow":"威士忌 · 朗姆 · 雪茄俱乐部","hero.sub":"在特尔巴塔斯街的红色帷幕之后——里加心脏地带的一处空间，烟雾不散，酒香深邃，一支好雪茄从不被催促。","hero.btn1":"步入其中 ↗","hero.btn2":"周六品鉴","hero.s1a":"品鉴周六","hero.s1b":"威士忌之夜 · 19:00","hero.s2a":"朗姆 · 威士忌 · 雪茄","hero.s2b":"细品慢酌","hero.s3b":"周一至周五营业","hero.descend":"向下",
+"tn.tag":"周五 · 6月19日 · 19:00","tn.title":"<em>最后倒计时</em>。","tn.lede":"仅限今夜——传奇的澳大利亚朗姆酒 <strong class='hl'>Transcontinental Australia 2015</strong>，与 <strong class='hl'>La Flor Dominicana ORO</strong> 雪茄相伴。以最好的相聚迎接周末。","tn.meta":"七点开门，帷幕已暖。","tn.dDays":"天","tn.dHours":"时","tn.dMinutes":"分","tn.dSeconds":"秒","tn.counting":"倒数至 19:00 · 里加时间","tn.open":"帷幕已启——正在进行","tn.upcoming":"近期品鉴 · Tērbatas iela 68","tn.ev1date":"7月4日","tn.ev1name":"斯佩塞威士忌","tn.ev2date":"7月18日","tn.ev2name":"朗姆酒，从A到Z","tn.ev3date":"每周","tn.ev3name":"威士忌之夜——新品盲品","tn.evtime":"周六 · 19:00","tn.resv":"预约与宾客名单",
+"room.tag":"红厅","room.title":"世界在此<em>归于宁静</em>。","room.p1":"<span class='drop'>当</span>帷幕在身后合拢，外面的城市便不复存在。灯火暗至余烬，皮革轻舒。剪开一支雪茄，斟上一杯酒，时间松开了衣领。这是我们这群人守护的空间——不是酒吧，而是一份默契。","room.p2":"我们是一群朋友，深信对的威士忌、对的朗姆与一支诚实的雪茄，最宜在好友相伴中慢慢分享——无需证明什么，也无处需赶。","room.creed1":"好酒不催。桌上不摆等不及的手机。","room.creed2":"每瓶酒都有故事——我们开瓶、品尝，再友善地争论一番。","room.creed3":"厅内之言，止于厅内。","room.cap":"「永远，相伴。朗姆与雪茄。」",
+"humidor.tag":"雪茄房","humidor.title":"雪松、火焰与<em>耐心</em>。","humidor.lede":"从手工卷制的 La Rosa de SanDiego 到陈年的 Bolívar——我们挑选雪茄一如挑选挚友：看重品格，而非喧嚣。打开一盒，慢慢来。",
+"split.h3":"厅是<em>红</em>的，皮革是<em>深</em>的。","split.p1":"牛血红的切斯特菲尔德沙发、低垂的黄铜灯光，还有任何林奇迷一眼便识的人字纹地板。我们围绕交谈打造这个空间，而非相反。","split.p2":"拉过一把椅子。下一杯已在呼吸。",
+"pour.tag":"品鉴","pour.title":"一杯带<em>护照</em>的酒。","pour.lede":"周六属于品鉴。我们以杯为舟——这周留尼汪朗姆，下周泥煤艾莱，再下周调和大师课。一个典型的季节，便是这样斟出。","pour.c1title":"威士忌之夜","pour.c1desc":"我们雷打不动的周六仪式，19:00——新品并陈，畅所欲言，评分笑着争辩。","pour.c2title":"调和的艺术","pour.c2desc":"Compass Box 之夜——先尝各组分，再品调和，终于懂得何谓风味的「联姻」。","pour.c3title":"带法式口音的朗姆","pour.c3desc":"从留尼汪的 Isautier 到 Foursquare 与 New Grove——农业朗姆、糖蜜，以及群岛最擅长的一切。",
+"gatherings.tag":"聚会","gatherings.title":"夜还<em>年轻</em>，人却年长。","gatherings.lede":"桌边的面孔——品鉴、举杯，以及关于半盎司是否值这价钱的争论。这就是我们。",
+"visit.tag":"到访 · 预约","visit.title":"寻找那扇<em>红门</em>。","visit.lede":"Tabacalera 坐落于里加心脏地带的 Tērbatas iela 68——白天是雪茄与佳酿沙龙，入夜则成品鉴之所。平日进来享一支雪茄，或为下一场品鉴预约席位。","visit.v1b":"拉脱维亚，里加","visit.v2a":"周一至周五 · 09–19","visit.v2b":"周末用于品鉴","visit.v3b":"雪茄与预约","visit.btn1":"在地图中打开 ↗","visit.btn2":"致电沙龙","visit.resv":"周末仅在品鉴之夜开门——请见上方节目单，或来电确认。",
+"footer.meta":"威士忌、朗姆与雪茄沙龙 — Tērbatas iela 68，里加，拉脱维亚<br>周一至周五 09:00–19:00 · 周末用于品鉴 · <a href='tel:+37129151112'>+371 29 151 112</a> · <a href='https://cybergod.ai'>cybergod.ai</a>","footer.note":"仅限18岁以上。请理性享用威士忌、朗姆与雪茄。",
+"cap.held":"恰到好处地夹着","cap.firstcut":"第一刀","cap.banded":"金环加身","cap.toasting":"烘烤雪茄脚","cap.waiting":"静待属于它的夜","cap.goodhands":"交于妥善之手","cap.keptso":"悉心存放","cap.longconv":"一场长谈","cap.campbeltown":"坎贝尔镇一组","cap.rested":"醒透待饮","cap.tableset":"桌已备好","cap.neat":"纯饮，不必致歉","cap.blending":"调和之夜","cap.peated":"泥煤，且自豪","cap.saturday":"周六品鉴","cap.cigarsdeli":"雪茄与熟食","cap.oxblood":"牛血红与黄铜","cap.wholetable":"满座同庆","cap.litgood":"已点燃，在妥善之手"
+}
+};
+window.curLang='en';
+function applyLang(l){
+  if(!window.I18N[l])l='en';
+  window.curLang=l;
+  const d=window.I18N[l];
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const k=el.getAttribute('data-i18n');
+    if(d[k]!=null)el.innerHTML=d[k];
+  });
+  const codes={en:'EN',ru:'RU',lv:'LV',de:'DE',zh:'中文'};
+  const cur=document.getElementById('langCur');if(cur)cur.textContent=codes[l];
+  document.querySelectorAll('#langMenu button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')===l);});
+  try{localStorage.setItem('tab_lang',l);}catch(e){}
+  if(window.refreshCountdown)window.refreshCountdown();
+}
+(function(){
+  const lbtn=document.getElementById('langBtn'),lmenu=document.getElementById('langMenu');
+  if(lbtn&&lmenu){
+    lbtn.addEventListener('click',function(e){e.stopPropagation();lmenu.classList.toggle('open');});
+    document.addEventListener('click',function(){lmenu.classList.remove('open');});
+    lmenu.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){applyLang(b.getAttribute('data-lang'));lmenu.classList.remove('open');});});
+  }
+  let saved=null;try{saved=localStorage.getItem('tab_lang');}catch(e){}
+  const nav=(navigator.language||'en').slice(0,2).toLowerCase();
+  applyLang(saved||(window.I18N[nav]?nav:'en'));
 })();
 </script>
 </body>
