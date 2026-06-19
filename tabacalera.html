@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TABACALERA — The Members' Room · Whisky · Rum · Cigars · Riga</title>
+<meta name="description" content="Tabacalera — a whisky, rum and cigar society in Riga. Saturday tastings, blending nights, and a red room that never sleeps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noir:#0a0607; --noir2:#120b0d; --oxblood:#2a0a0e; --wine:#4a0d14;
+  --red:#b3121f; --red-bright:#e01a2b; --red-soft:#7a0a12;
+  --gold:#c79a4b; --gold-bright:#ecca7e; --cream:#efe6d2; --muted:#9a8a82;
+  --ink:#f3ece0;
+  --curtain:#7c0a14;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--noir); color:var(--ink);
+  font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden; cursor:none;
+}
+body.loading{overflow:hidden;height:100vh}
+::selection{background:var(--red);color:#fff}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 26px}
+
+/* ---------- custom cursor ember ---------- */
+.cursor,.cursor-dot{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:screen}
+.cursor{width:30px;height:30px;border:1px solid rgba(199,154,75,.6);transition:width .2s,height .2s,background .2s}
+.cursor.hot{width:46px;height:46px;background:rgba(179,18,31,.18);border-color:rgba(224,26,43,.7)}
+.cursor-dot{width:6px;height:6px;background:var(--gold-bright);box-shadow:0 0 12px 3px rgba(236,202,126,.6)}
+@media(hover:none){.cursor,.cursor-dot{display:none}body{cursor:auto}}
+
+/* ---------- curtain intro ---------- */
+#curtain{position:fixed;inset:0;z-index:9000;display:flex;pointer-events:none}
+#curtain .panel{width:50%;height:100%;background:
+  repeating-linear-gradient(90deg,#5e0710 0,#8c0f1a 26px,#3d050b 54px,#6e0b15 80px);
+  box-shadow:inset 0 0 120px rgba(0,0,0,.7);
+  transition:transform 1.6s cubic-bezier(.77,0,.18,1);
+  position:relative;overflow:hidden}
+#curtain .panel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.35))}
+#curtain .panel.r::after{transform:scaleX(-1)}
+#curtain .seal{position:absolute;top:50%;z-index:2;transform:translateY(-50%);
+  font-family:'Playfair Display',serif;color:var(--gold-bright);text-align:center;width:100%;
+  transition:opacity .6s}
+#curtain .panel.l .seal{right:0;transform:translate(50%,-50%)}
+.seal .mk{font-size:13px;letter-spacing:.5em;color:var(--gold);text-transform:uppercase}
+.seal .nm{font-size:clamp(30px,7vw,68px);font-weight:900;letter-spacing:.04em;line-height:1;margin-top:8px;text-shadow:0 2px 30px rgba(0,0,0,.6)}
+body.open #curtain .panel.l{transform:translateX(-101%)}
+body.open #curtain .panel.r{transform:translateX(101%)}
+body.open #curtain .seal{opacity:0}
+body.open #curtain{transition:opacity .4s .9s;opacity:0}
+
+/* ---------- nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 0;
+  transition:background .4s,padding .4s,border-color .4s;border-bottom:1px solid transparent}
+header.stuck{background:rgba(10,6,7,.82);backdrop-filter:blur(12px);padding:12px 0;border-color:rgba(199,154,75,.16)}
+.bar{display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:'Playfair Display',serif;font-weight:900;font-size:21px;letter-spacing:.16em;
+  display:flex;align-items:center;gap:11px;color:var(--cream)}
+.brand .em{width:9px;height:9px;border-radius:50%;background:var(--red-bright);box-shadow:0 0 14px 2px var(--red);animation:pulse 2.6s infinite}
+@keyframes pulse{0%,100%{opacity:.5;box-shadow:0 0 8px 1px var(--red)}50%{opacity:1;box-shadow:0 0 20px 5px var(--red-bright)}}
+.menu{display:flex;gap:30px;align-items:center}
+.menu a{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .25s;position:relative}
+.menu a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:width .3s}
+.menu a:hover{color:var(--cream)}.menu a:hover::after{width:100%}
+.join{padding:11px 22px;border:1px solid var(--gold);color:var(--gold-bright);border-radius:2px;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;transition:.3s}
+.join:hover{background:var(--gold);color:#1a1206}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:none}
+.burger span{width:26px;height:2px;background:var(--cream);transition:.3s}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:-8% 0 0 0;z-index:0;
+  background:url('tabacalera-img/room-floor.jpg') center/cover no-repeat;
+  filter:saturate(1.05) contrast(1.05) brightness(.62);will-change:transform}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 18%,transparent 0,rgba(10,6,7,.45) 55%,rgba(10,6,7,.97) 100%),
+  linear-gradient(180deg,rgba(10,6,7,.6) 0,transparent 26%,transparent 55%,rgba(10,6,7,.95) 100%)}
+#smoke{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.55}
+.vig{position:absolute;inset:0;z-index:1;pointer-events:none;
+  box-shadow:inset 0 0 320px 80px rgba(0,0,0,.85)}
+.hero .wrap{position:relative;z-index:3;width:100%;padding-top:60px}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:24px}
+.eyebrow::before,.eyebrow::after{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.eyebrow::after{background:linear-gradient(90deg,var(--gold),transparent)}
+h1.title{font-family:'Playfair Display',serif;font-weight:900;line-height:.92;
+  font-size:clamp(40px,12vw,164px);letter-spacing:-.012em;text-transform:uppercase;white-space:nowrap;
+  background:linear-gradient(180deg,#fbf1d8 0,var(--gold-bright) 46%,var(--gold) 70%,#8a6a2e 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 12px 50px rgba(0,0,0,.5);margin:0}
+/* title renders as one solid gold word — no per-letter animation (keeps every letter visible) */
+.sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,2.6vw,30px);
+  color:var(--cream);margin:22px 0 0;max-width:620px;line-height:1.4;font-weight:500}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-top:38px}
+.btn{display:inline-flex;align-items:center;gap:11px;padding:16px 30px;font-size:12.5px;
+  letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-radius:2px;transition:.3s;border:1px solid transparent}
+.btn-gold{background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#1a1206}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 14px 34px -10px rgba(199,154,75,.6)}
+.btn-ghost{border-color:rgba(243,236,224,.32);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright)}
+.hstats{display:flex;gap:42px;flex-wrap:wrap;margin-top:58px;padding-top:30px;border-top:1px solid rgba(199,154,75,.18)}
+.hstats .st b{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(20px,2.4vw,27px);color:var(--gold-bright);line-height:1}
+.hstats .st span{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:7px;display:block}
+.scrolldown{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);z-index:3;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-align:center}
+.scrolldown .ln{width:1px;height:42px;background:linear-gradient(var(--gold),transparent);margin:10px auto 0;animation:drop 2s infinite}
+@keyframes drop{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(.2);transform-origin:bottom}}
+
+/* ---------- chevron floor ---------- */
+.chevron{height:46px;position:relative;z-index:4;
+  background:
+    linear-gradient(135deg,var(--noir) 25%,transparent 25%) -23px 0,
+    linear-gradient(225deg,var(--noir) 25%,transparent 25%) -23px 0,
+    linear-gradient(315deg,var(--noir) 25%,transparent 25%),
+    linear-gradient(45deg,var(--noir) 25%,transparent 25%);
+  background-size:46px 46px;background-color:#cabfa3;
+  box-shadow:0 -14px 30px rgba(0,0,0,.5)}
+
+/* ---------- marquee ---------- */
+.marq{background:var(--oxblood);border-top:1px solid rgba(199,154,75,.2);border-bottom:1px solid rgba(199,154,75,.2);
+  overflow:hidden;white-space:nowrap;padding:16px 0}
+.marq-track{display:inline-block;animation:scroll 34s linear infinite}
+.marq-track span{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;color:var(--gold);margin:0 6px}
+.marq-track i{color:var(--red-bright);margin:0 22px;font-style:normal}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section.sec{padding:120px 0;position:relative}
+.sec-head{max-width:720px;margin-bottom:60px}
+.sec-tag{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--red-bright);font-weight:600}
+.sec-title{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(34px,6vw,68px);
+  line-height:1.02;margin:16px 0 18px;color:var(--cream)}
+.sec-title em{font-style:italic;color:var(--gold-bright)}
+.lede{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.2vw,23px);line-height:1.5;color:#cdbfae}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* red room section */
+.room{background:
+  radial-gradient(80% 120% at 80% 0,rgba(74,13,20,.55),transparent 60%),var(--noir)}
+.room-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+.room-copy p{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.62;color:#cfc0b0;margin-bottom:18px}
+.room-copy p .drop{font-family:'Playfair Display',serif;float:left;font-size:62px;line-height:.78;
+  color:var(--red-bright);margin:6px 14px 0 0;font-weight:900}
+.creed{margin-top:26px;display:grid;gap:14px}
+.creed div{display:flex;gap:14px;align-items:baseline;font-size:14.5px;color:#d7cbbb}
+.creed b{font-family:'Playfair Display',serif;color:var(--gold-bright);font-size:13px;letter-spacing:.12em;min-width:30px}
+.room-art{position:relative}
+.room-art .frame{position:relative;border:1px solid rgba(199,154,75,.3);padding:12px;background:var(--noir2);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9)}
+.room-art .frame img{width:100%;height:520px;object-fit:cover;filter:saturate(1.1) contrast(1.05)}
+.room-art .cap{position:absolute;bottom:30px;left:-20px;background:var(--red);color:#fff;
+  font-family:'Playfair Display',serif;font-style:italic;font-size:15px;padding:12px 20px;
+  box-shadow:0 16px 40px -10px rgba(179,18,31,.7)}
+.room-art .zz{position:absolute;top:-18px;right:-18px;width:90px;height:90px;z-index:2;
+  background:linear-gradient(135deg,#1a1012 25%,transparent 25%) -10px 0,linear-gradient(225deg,#1a1012 25%,transparent 25%) -10px 0,linear-gradient(315deg,#1a1012 25%,transparent 25%),linear-gradient(45deg,#1a1012 25%,transparent 25%);
+  background-size:20px 20px;background-color:var(--cream);border:1px solid rgba(199,154,75,.3)}
+
+/* gallery */
+.gal{columns:3;column-gap:18px}
+.gal .cell{break-inside:avoid;margin-bottom:18px;position:relative;overflow:hidden;border:1px solid rgba(199,154,75,.12);cursor:none}
+.gal .cell img{width:100%;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .6s;
+  filter:saturate(.5) brightness(.82) sepia(.25) hue-rotate(-12deg)}
+.gal .cell:hover img{transform:scale(1.06);filter:none}
+.gal .cell .ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,6,7,.9));
+  opacity:0;transition:.4s;display:flex;align-items:flex-end;padding:18px}
+.gal .cell:hover .ov{opacity:1}
+.gal .cell .ov span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--gold-bright);transform:translateY(10px);transition:.4s}
+.gal .cell:hover .ov span{transform:none}
+.gal .cell .plus{position:absolute;top:14px;right:14px;width:30px;height:30px;border:1px solid var(--gold);
+  border-radius:50%;display:grid;place-items:center;color:var(--gold);opacity:0;transition:.4s;background:rgba(10,6,7,.5)}
+.gal .cell:hover .plus{opacity:1}
+
+/* pour cards */
+.pour{background:linear-gradient(180deg,var(--noir),var(--noir2))}
+.pour-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:14px}
+.pcard{border:1px solid rgba(199,154,75,.16);background:rgba(255,255,255,.015);padding:28px;transition:.4s;position:relative;overflow:hidden}
+.pcard:hover{border-color:rgba(199,154,75,.45);transform:translateY(-6px);background:rgba(74,13,20,.18)}
+.pcard .rn{font-family:'Playfair Display',serif;font-size:14px;letter-spacing:.2em;color:var(--red-bright)}
+.pcard h3{font-family:'Playfair Display',serif;font-size:23px;color:var(--cream);margin:14px 0 10px;line-height:1.1}
+.pcard p{font-size:14px;line-height:1.6;color:#b3a597}
+.pcard .tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.pcard .tags em{font-style:normal;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(199,154,75,.3);padding:5px 10px;border-radius:100px}
+
+/* split feature */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(199,154,75,.18);overflow:hidden}
+.split .im{min-height:440px;background-size:cover;background-position:center;filter:saturate(.9) brightness(.85)}
+.split .tx{padding:54px;background:var(--noir2);display:flex;flex-direction:column;justify-content:center}
+.split .tx h3{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,38px);color:var(--cream);line-height:1.05;margin-bottom:18px}
+.split .tx h3 em{font-style:italic;color:var(--gold-bright)}
+.split .tx p{font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.55;color:#cabcab;margin-bottom:14px}
+
+/* join / visit */
+.visit{background:
+  linear-gradient(rgba(10,6,7,.82),rgba(10,6,7,.92)),url('tabacalera-img/city-riga.jpg') center/cover fixed;
+  text-align:center}
+.visit .sec-head{margin:0 auto 40px}
+.vrow{display:flex;gap:50px;justify-content:center;flex-wrap:wrap;margin:46px 0}
+.vrow .vi b{display:block;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-bright)}
+.vrow .vi span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:8px;display:block}
+
+/* tonight / countdown */
+.tonight{background:
+  radial-gradient(90% 120% at 15% 0,rgba(74,13,20,.6),transparent 55%),
+  linear-gradient(180deg,var(--noir2),var(--noir));border-top:1px solid rgba(199,154,75,.12)}
+.tnt-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:54px;align-items:center}
+.tnt-poster{position:relative;border:1px solid rgba(199,154,75,.3);padding:10px;background:var(--noir);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9)}
+.tnt-poster img{width:100%;display:block}
+.tnt-poster .live-badge{position:absolute;top:-14px;left:-14px;background:var(--red-bright);color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;
+  box-shadow:0 12px 30px -8px rgba(224,26,43,.8);display:flex;align-items:center;gap:8px}
+.tnt-poster .live-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+.tnt-copy .lede{margin-bottom:8px}
+.tnt-meta{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--gold-bright);margin:6px 0 24px}
+.countdown{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 18px}
+.countdown .seg{min-width:88px;text-align:center;border:1px solid rgba(199,154,75,.28);
+  background:rgba(10,6,7,.55);padding:16px 8px;border-radius:3px;position:relative;overflow:hidden}
+.countdown .seg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(199,154,75,.08),transparent 60%)}
+.countdown .seg b{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,5vw,52px);
+  color:var(--gold-bright);line-height:1;font-variant-numeric:tabular-nums}
+.countdown .seg span{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:8px;display:block}
+.tnt-live{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.tnt-live .dot{width:9px;height:9px;border-radius:50%;background:var(--red-bright);box-shadow:0 0 12px 2px var(--red);animation:pulse 1.8s infinite}
+.tnt-live.go{color:var(--gold-bright)}
+.upcoming{margin-top:14px;border-top:1px solid rgba(199,154,75,.16);padding-top:30px}
+.upcoming h4{font-family:'Playfair Display',serif;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.ev{display:flex;align-items:baseline;gap:18px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.ev .date{font-family:'Playfair Display',serif;font-weight:700;color:var(--red-bright);font-size:14px;min-width:96px;letter-spacing:.04em}
+.ev .nm{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--cream);font-weight:600}
+.ev .tm{margin-left:auto;font-size:12px;letter-spacing:.14em;color:var(--gold);white-space:nowrap}
+.resv{margin-top:22px;font-size:13px;color:#b3a597;letter-spacing:.04em}
+.resv a{color:var(--gold-bright);font-weight:600}
+
+/* footer */
+footer{background:var(--noir);border-top:1px solid rgba(199,154,75,.16);padding:60px 0 40px;text-align:center}
+.fbrand{font-family:'Playfair Display',serif;font-weight:900;font-size:26px;letter-spacing:.2em;color:var(--cream)}
+.fmeta{font-size:12.5px;color:var(--muted);margin-top:16px;line-height:1.8}
+.fmeta a{color:var(--gold)}
+.fnote{font-size:11px;color:#6a5d56;margin-top:24px;letter-spacing:.05em}
+
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:8000;background:rgba(6,3,4,.96);display:none;
+  align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(6px)}
+#lb.on{display:flex}
+#lb img{max-width:88vw;max-height:78vh;border:1px solid rgba(199,154,75,.3);box-shadow:0 30px 90px rgba(0,0,0,.8)}
+#lb .lbcap{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-bright);margin-top:18px;font-size:18px}
+#lb .x{position:absolute;top:24px;right:30px;font-size:34px;color:var(--cream);cursor:none;line-height:1}
+#lb .nav{position:absolute;top:50%;transform:translateY(-50%);font-size:46px;color:var(--gold);cursor:none;user-select:none;padding:20px}
+#lb .nav.prev{left:14px}#lb .nav.next{right:14px}
+
+@media(max-width:900px){
+  .menu{position:fixed;inset:0 0 0 auto;width:78%;max-width:340px;background:var(--noir2);
+    flex-direction:column;justify-content:center;padding:40px;gap:26px;transform:translateX(100%);
+    transition:transform .4s;border-left:1px solid rgba(199,154,75,.2);z-index:210}
+  .menu.show{transform:none}.menu a{font-size:16px}
+  .burger{display:flex;z-index:220}
+  .room-grid,.split{grid-template-columns:1fr}
+  .gal{columns:2}.pour-grid{grid-template-columns:1fr}
+  .split .im{min-height:300px}
+  section.sec{padding:84px 0}
+  .room-art .cap{left:0}
+}
+@media(max-width:560px){.gal{columns:1}.hstats{gap:26px}.vrow{gap:30px}}
+</style>
+</head>
+<body class="loading">
+
+<!-- curtain intro -->
+<div id="curtain">
+  <div class="panel l"><div class="seal"><div class="mk">Riga · Members Only</div><div class="nm">TABACA</div></div></div>
+  <div class="panel r"><div class="seal"><div class="mk">Est. — The Club 🥃</div><div class="nm">LERA</div></div></div>
+</div>
+
+<!-- cursor -->
+<div class="cursor"></div><div class="cursor-dot"></div>
+
+<!-- nav -->
+<header id="hdr">
+  <div class="wrap bar">
+    <a href="#top" class="brand"><span class="em"></span>TABACALERA</a>
+    <nav class="menu" id="menu">
+      <a href="#tonight">Tonight</a>
+      <a href="#room">The Room</a>
+      <a href="#humidor">Humidor</a>
+      <a href="#pour">The Pour</a>
+      <a href="#gatherings">Gatherings</a>
+      <a href="#visit">Visit</a>
+      <a href="#visit" class="join">Request a seat</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- hero -->
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <canvas id="smoke"></canvas>
+  <div class="vig"></div>
+  <div class="wrap">
+    <div class="eyebrow reveal">A Whisky · Rum · Cigar Society</div>
+    <h1 class="title reveal">TABACALERA</h1>
+    <p class="sub reveal">Behind the red curtain on Tērbatas iela — a room in the heart of Riga where the smoke never settles, the drams run deep, and a good cigar is never rushed.</p>
+    <div class="hero-cta reveal">
+      <a href="#room" class="btn btn-gold">Step inside ↗</a>
+      <a href="#pour" class="btn btn-ghost">Saturday tastings</a>
+    </div>
+    <div class="hstats reveal">
+      <div class="st"><b>Tasting Saturdays</b><span>Whisky Live · 19:00</span></div>
+      <div class="st"><b>Rum · Whisky · Cigars</b><span>Tasted, not rushed</span></div>
+      <div class="st"><b>Tērbatas 68 · Rīga</b><span>Open Mon–Fri</span></div>
+    </div>
+  </div>
+  <div class="scrolldown">Descend<div class="ln"></div></div>
+</section>
+<div class="chevron"></div>
+
+<!-- marquee -->
+<div class="marq">
+  <div class="marq-track" id="marq">
+    <span>Compass Box Blending</span><i>◆</i><span>Isautier from Réunion</span><i>◆</i><span>Jamaican Rum</span><i>◆</i><span>Springbank</span><i>◆</i><span>Ardbeg &amp; Lagavulin</span><i>◆</i><span>La Rosa de SanDiego</span><i>◆</i><span>Bolívar</span><i>◆</i><span>Foursquare</span><i>◆</i>
+    <span>Compass Box Blending</span><i>◆</i><span>Isautier from Réunion</span><i>◆</i><span>Jamaican Rum</span><i>◆</i><span>Springbank</span><i>◆</i><span>Ardbeg &amp; Lagavulin</span><i>◆</i><span>La Rosa de SanDiego</span><i>◆</i><span>Bolívar</span><i>◆</i><span>Foursquare</span><i>◆</i>
+  </div>
+</div>
+
+<!-- tonight / countdown -->
+<section class="sec tonight" id="tonight">
+  <div class="wrap tnt-grid">
+    <div class="tnt-poster reveal">
+      <span class="live-badge">Tonight</span>
+      <img src="tabacalera-img/event-tonight.jpg" alt="Tonight's event — Australian rum & La Flor Dominicana ORO">
+    </div>
+    <div class="tnt-copy reveal">
+      <div class="sec-tag" style="color:var(--gold-bright)">Friday · 19 June · 19:00</div>
+      <h2 class="sec-title">The <em>final countdown</em>.</h2>
+      <p class="lede">Tonight only — the legendary Australian rum, <strong style="color:var(--cream);font-weight:600">Transcontinental Australia 2015</strong>, poured beside <strong style="color:var(--cream);font-weight:600">La Flor Dominicana ORO</strong>. The best company to meet the weekend.</p>
+      <div class="tnt-meta">Doors swing at seven. The curtain's already warm.</div>
+      <div class="countdown" id="cd">
+        <div class="seg"><b id="cd-d">00</b><span>Days</span></div>
+        <div class="seg"><b id="cd-h">00</b><span>Hours</span></div>
+        <div class="seg"><b id="cd-m">00</b><span>Minutes</span></div>
+        <div class="seg"><b id="cd-s">00</b><span>Seconds</span></div>
+      </div>
+      <div class="tnt-live" id="cdMsg"><span class="dot"></span>Counting down to 19:00 · Riga time</div>
+      <div class="upcoming">
+        <h4>Upcoming tastings · Tērbatas iela 68</h4>
+        <div class="ev"><span class="date">04 Jul</span><span class="nm">Speyside Whisky</span><span class="tm">Sat · 19:00</span></div>
+        <div class="ev"><span class="date">18 Jul</span><span class="nm">Rum, from A to Z</span><span class="tm">Sat · 19:00</span></div>
+        <div class="ev"><span class="date">Weekly</span><span class="nm">Whisky Live — new releases, poured blind</span><span class="tm">Sat · 19:00</span></div>
+      </div>
+      <div class="resv">Reservations &amp; guest list — <a href="tel:+37129783515">+371 29 783 515</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- the red room -->
+<section class="sec room" id="room">
+  <div class="wrap room-grid">
+    <div class="room-copy reveal">
+      <div class="sec-tag">The Red Room</div>
+      <h2 class="sec-title">Where the world goes <em>quiet</em>.</h2>
+      <p><span class="drop">T</span>here is a moment, once the curtain falls behind you, when the city outside simply stops existing. The lights drop to ember. The leather exhales. A cigar is clipped, a dram is poured, and time loosens its collar. This is the room our circle keeps — not a bar, but a confidence.</p>
+      <p>We are a society of friends who believe that the right whisky, the right rum and an honest cigar are best shared slowly, in good company, with nothing to prove and nowhere to be.</p>
+      <div class="creed">
+        <div><b>I.</b><span>No rushing a good pour. No phones at the table that can't wait.</span></div>
+        <div><b>II.</b><span>Every bottle has a story — we open it, taste it, and argue about it kindly.</span></div>
+        <div><b>III.</b><span>What is said in the room, stays in the room.</span></div>
+      </div>
+    </div>
+    <div class="room-art reveal">
+      <div class="zz"></div>
+      <div class="frame"><img src="tabacalera-img/lounge-04.jpg" alt="A member with a cigar in the lounge"></div>
+      <div class="cap">"Forever, together. Rum and cigar."</div>
+    </div>
+  </div>
+</section>
+
+<!-- humidor / cigars -->
+<section class="sec" id="humidor">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">The Humidor</div>
+      <h2 class="sec-title">Cedar, fire &amp; <em>patience</em>.</h2>
+      <p class="lede">From a hand-rolled La Rosa de SanDiego to a well-aged Bolívar, our cigars are chosen the way good company is — for character, not noise. Open a box. Take your time.</p>
+    </div>
+    <div class="gal reveal">
+      <div class="cell" data-cap="Lit, banded, and held just right — a dram waiting alongside"><img src="tabacalera-img/cigar-laxox.jpg" alt="Cigar in hand"><div class="plus">+</div><div class="ov"><span>Held just right</span></div></div>
+      <div class="cell" data-cap="An open box — the first cut of the evening"><img src="tabacalera-img/cigar-01.jpg" alt="Open cigar box"><div class="plus">+</div><div class="ov"><span>The first cut</span></div></div>
+      <div class="cell" data-cap="Hand-rolled, banded in gold"><img src="tabacalera-img/cigar-07.jpg" alt="Cigar with gold band"><div class="plus">+</div><div class="ov"><span>Banded in gold</span></div></div>
+      <div class="cell" data-cap="Toasting the foot — slow and even"><img src="tabacalera-img/cigar-09.jpg" alt="Lighting a cigar"><div class="plus">+</div><div class="ov"><span>Toasting the foot</span></div></div>
+      <div class="cell" data-cap="La Rosa de SanDiego — a house favourite"><img src="tabacalera-img/cigar-05.jpg" alt="La Rosa de SanDiego box"><div class="plus">+</div><div class="ov"><span>La Rosa de SanDiego</span></div></div>
+      <div class="cell" data-cap="A full box, waiting for the right night"><img src="tabacalera-img/cigar-03.jpg" alt="Cigar box"><div class="plus">+</div><div class="ov"><span>Waiting its night</span></div></div>
+      <div class="cell" data-cap="Lit, and in good hands"><img src="tabacalera-img/cigar-08.jpg" alt="Lit cigar in hand"><div class="plus">+</div><div class="ov"><span>In good hands</span></div></div>
+      <div class="cell" data-cap="Bolívar — quiet strength"><img src="tabacalera-img/cigar-10.jpg" alt="Bolivar cigar"><div class="plus">+</div><div class="ov"><span>Bolívar</span></div></div>
+      <div class="cell" data-cap="The humidor, kept just so"><img src="tabacalera-img/cigar-06.jpg" alt="Humidor"><div class="plus">+</div><div class="ov"><span>Kept just so</span></div></div>
+      <div class="cell" data-cap="Smoke, and a long conversation"><img src="tabacalera-img/cigar-11.jpg" alt="Cigar smoke"><div class="plus">+</div><div class="ov"><span>A long conversation</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- split feature -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="split reveal">
+      <div class="im" style="background-image:url('tabacalera-img/lounge-01.jpg')"></div>
+      <div class="tx">
+        <h3>The lounge is <em>red</em>, the leather is <em>deep</em>.</h3>
+        <p>Oxblood chesterfields, low brass light, and a chevron floor that any Lynch devotee will recognise on sight. We built the room around the conversation, not the other way round.</p>
+        <p>Pull up a chair. The next pour is already breathing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- the pour -->
+<section class="sec pour" id="pour">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">The Pour</div>
+      <h2 class="sec-title">A dram with a <em>passport</em>.</h2>
+      <p class="lede">Saturdays are for tasting. We travel by glass — a Réunion rum one week, a peated Islay the next, a blending masterclass the one after. Here is how a typical season pours.</p>
+    </div>
+    <div class="pour-grid">
+      <div class="pcard reveal"><div class="rn">№ 01</div><h3>Whisky Live</h3><p>Our standing Saturday ritual at 19:00 — new releases poured side by side, opinions encouraged, scores cheerfully disputed.</p><div class="tags"><em>Ardbeg</em><em>Springbank</em><em>Glenfiddich</em></div></div>
+      <div class="pcard reveal"><div class="rn">№ 02</div><h3>The Art of Blending</h3><p>A Compass Box evening — we taste the components, then the blend, and finally understand what "marrying" really means.</p><div class="tags"><em>Compass Box</em><em>Vatting</em><em>Casks</em></div></div>
+      <div class="pcard reveal"><div class="rn">№ 03</div><h3>Rum, with a French Accent</h3><p>From Isautier of Réunion to Foursquare and New Grove — agricole, molasses and everything the islands do best.</p><div class="tags"><em>Isautier</em><em>Foursquare</em><em>Jamaica</em></div></div>
+    </div>
+    <div class="gal reveal" style="margin-top:54px">
+      <div class="cell" data-cap="Springbank · Glen Scotia · Longrow · Kilkerran — a Campbeltown flight"><img src="tabacalera-img/flight-campbeltown.jpg" alt="Campbeltown whisky flight"><div class="plus">+</div><div class="ov"><span>A Campbeltown flight</span></div></div>
+      <div class="cell" data-cap="Davidsen's XO Black Label — a cigar resting beside the glass"><img src="tabacalera-img/pour-davidsen.jpg" alt="Davidsen's XO rum with cigar"><div class="plus">+</div><div class="ov"><span>Rested &amp; ready</span></div></div>
+      <div class="cell" data-cap="The table set — glasses, caviar, and good intentions"><img src="tabacalera-img/bottle-01.jpg" alt="Tasting table"><div class="plus">+</div><div class="ov"><span>The table, set</span></div></div>
+      <div class="cell" data-cap="Springbank Cask Strength — neat, no apologies"><img src="tabacalera-img/pour-05.jpg" alt="Springbank cask strength"><div class="plus">+</div><div class="ov"><span>Neat, no apologies</span></div></div>
+      <div class="cell" data-cap="A Compass Box flight, lined up for blending night"><img src="tabacalera-img/bottle-03.jpg" alt="Compass Box flight"><div class="plus">+</div><div class="ov"><span>Blending night</span></div></div>
+      <div class="cell" data-cap="Ardbeg — peated, and proud of it"><img src="tabacalera-img/bottle-02.jpg" alt="Ardbeg bottles"><div class="plus">+</div><div class="ov"><span>Peated &amp; proud</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- gatherings -->
+<section class="sec" id="gatherings">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Gatherings</div>
+      <h2 class="sec-title">The night is <em>young</em>, the company older.</h2>
+      <p class="lede">Faces from the table — the tastings, the toasts, the arguments about whether a half-shot is ever worth the price. This is who we are.</p>
+    </div>
+    <div class="gal reveal">
+      <div class="cell" data-cap="Around the table — a Saturday tasting"><img src="tabacalera-img/event-01.jpg" alt="Tasting gathering"><div class="plus">+</div><div class="ov"><span>A Saturday tasting</span></div></div>
+      <div class="cell" data-cap="The spread — cigars and deli, included"><img src="tabacalera-img/event-02.jpg" alt="Tasting spread"><div class="plus">+</div><div class="ov"><span>Cigars &amp; deli</span></div></div>
+      <div class="cell" data-cap="Oxblood leather, brass light"><img src="tabacalera-img/lounge-02.jpg" alt="Red leather lounge"><div class="plus">+</div><div class="ov"><span>Oxblood &amp; brass</span></div></div>
+      <div class="cell" data-cap="To the weekend — the whole table raises a glass"><img src="tabacalera-img/gathering-02.jpg" alt="Members raising a toast"><div class="plus">+</div><div class="ov"><span>The whole table</span></div></div>
+      <div class="cell" data-cap="An Oliva Serie V, lit and in good hands"><img src="tabacalera-img/city-riga.jpg" alt="Oliva cigar in hand"><div class="plus">+</div><div class="ov"><span>Lit &amp; in good hands</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- visit / join -->
+<section class="sec visit" id="visit">
+  <div class="wrap">
+    <div class="sec-head reveal" style="text-align:center">
+      <div class="sec-tag" style="color:var(--gold-bright)">Visit · Reserve</div>
+      <h2 class="sec-title">Find the <em>red door</em>.</h2>
+      <p class="lede">Tabacalera sits at Tērbatas iela 68 in the heart of Riga — a cigar &amp; fine-spirits lounge by day, a tasting room by night. Walk in for a cigar on a weekday, or reserve your seat for the next tasting.</p>
+    </div>
+    <div class="vrow reveal">
+      <div class="vi"><b>Tērbatas iela 68</b><span>Rīga, Latvia</span></div>
+      <div class="vi"><b>Mon–Fri · 09–19</b><span>Weekends for tastings</span></div>
+      <div class="vi"><b>+371 29 151 112</b><span>Cigars &amp; reservations</span></div>
+    </div>
+    <div class="reveal" style="margin-top:30px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="https://www.google.com/maps/place/Tabacalera/@56.9578218,24.1308051,17z" target="_blank" rel="noopener" class="btn btn-gold">Open in Maps ↗</a>
+      <a href="tel:+37129151112" class="btn btn-ghost">Call the lounge</a>
+    </div>
+    <p class="resv reveal" style="text-align:center;margin-top:22px">Weekend doors open on tasting nights — see the programme above, or call to confirm.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">TABACALERA</div>
+    <div class="fmeta">A whisky, rum &amp; cigar lounge — Tērbatas iela 68, Rīga, Latvia<br>Mon–Fri 09:00–19:00 · weekends for tastings · <a href="tel:+37129151112">+371 29 151 112</a> · <a href="https://cybergod.ai">cybergod.ai</a></div>
+    <div class="fnote">Members 18+ only. Please enjoy whisky, rum and cigars responsibly.</div>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div id="lb">
+  <span class="x" id="lbx">×</span>
+  <span class="nav prev" id="lbprev">‹</span>
+  <span class="nav next" id="lbnext">›</span>
+  <img id="lbimg" src="" alt="">
+  <div class="lbcap" id="lbcap"></div>
+</div>
+
+<script>
+/* ---------- curtain open ---------- */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{document.body.classList.remove('loading');document.body.classList.add('open');},650);
+  setTimeout(()=>{document.querySelectorAll('.hero .reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),i*120));},1100);
+});
+
+/* ---------- custom cursor ---------- */
+const cur=document.querySelector('.cursor'),dot=document.querySelector('.cursor-dot');
+let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cur.style.left=cx+'px';cur.style.top=cy+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.cell,#lb .nav,#lb .x').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('hot'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('hot'));
+});
+
+/* ---------- nav ---------- */
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>{hdr.classList.toggle('stuck',scrollY>60);},{passive:true});
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>menu.classList.toggle('show'));
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('show')));
+
+/* ---------- hero parallax ---------- */
+const heroBg=document.getElementById('heroBg');
+addEventListener('scroll',()=>{const y=scrollY;if(y<innerHeight)heroBg.style.transform='translateY('+(y*.28)+'px) scale(1.05)';},{passive:true});
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.16});
+document.querySelectorAll('.reveal').forEach(el=>{if(!el.closest('.hero'))io.observe(el);});
+
+/* ---------- smoke canvas ---------- */
+const cv=document.getElementById('smoke'),ctx=cv.getContext('2d');
+let W,H,parts=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+size();addEventListener('resize',size);
+function P(){this.reset(true);}
+P.prototype.reset=function(init){this.x=Math.random()*W;this.y=init?Math.random()*H:H+40;
+  this.r=40+Math.random()*90;this.sp=.3+Math.random()*.7;this.a=.02+Math.random()*.06;this.dx=(Math.random()-.5)*.3;};
+for(let i=0;i<26;i++)parts.push(new P());
+function smoke(){ctx.clearRect(0,0,W,H);
+  parts.forEach(p=>{p.y-=p.sp;p.x+=p.dx;if(p.y<-120)p.reset(false);
+    const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);
+    g.addColorStop(0,'rgba(150,120,90,'+p.a+')');g.addColorStop(1,'rgba(150,120,90,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();});
+  requestAnimationFrame(smoke);}
+smoke();
+
+/* ---------- lightbox ---------- */
+const cells=[...document.querySelectorAll('.gal .cell')];
+const lb=document.getElementById('lb'),lbimg=document.getElementById('lbimg'),lbcap=document.getElementById('lbcap');
+let idx=0;
+function show(i){idx=(i+cells.length)%cells.length;const c=cells[idx];
+  lbimg.src=c.querySelector('img').src;lbcap.textContent=c.dataset.cap||'';}
+cells.forEach((c,i)=>c.addEventListener('click',()=>{show(i);lb.classList.add('on');}));
+document.getElementById('lbx').onclick=()=>lb.classList.remove('on');
+document.getElementById('lbprev').onclick=e=>{e.stopPropagation();show(idx-1);};
+document.getElementById('lbnext').onclick=e=>{e.stopPropagation();show(idx+1);};
+lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('on');});
+addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;
+  if(e.key==='Escape')lb.classList.remove('on');if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1);});
+
+/* ---------- title auto-fit (never clip the last letter) ---------- */
+function fitTitle(){const t=document.querySelector('h1.title');if(!t)return;
+  t.style.fontSize='';let fs=parseFloat(getComputedStyle(t).fontSize),g=0;
+  while(t.scrollWidth>t.clientWidth+1&&fs>18&&g++<500){fs-=1.5;t.style.fontSize=fs+'px';}}
+addEventListener('load',fitTitle);addEventListener('resize',fitTitle);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitTitle);
+setTimeout(fitTitle,1400);
+
+/* ---------- tonight's live countdown (to 19:00 Riga, UTC+3) ---------- */
+(function(){
+  const target=new Date('2026-06-19T19:00:00+03:00').getTime();
+  const dd=document.getElementById('cd-d'),hh=document.getElementById('cd-h'),
+        mm=document.getElementById('cd-m'),ss=document.getElementById('cd-s'),
+        msg=document.getElementById('cdMsg');
+  if(!dd)return;
+  const p=n=>String(n).padStart(2,'0');
+  function tick(){let d=target-Date.now();
+    if(d<=0){dd.textContent=hh.textContent=mm.textContent=ss.textContent='00';
+      if(!msg.classList.contains('go')){msg.classList.add('go');
+        msg.innerHTML='<span class="dot"></span>The curtain is open — happening now';}
+      return;}
+    const day=Math.floor(d/864e5);d-=day*864e5;
+    const h=Math.floor(d/36e5);d-=h*36e5;
+    const m=Math.floor(d/6e4);d-=m*6e4;
+    const s=Math.floor(d/1e3);
+    dd.textContent=p(day);hh.textContent=p(h);mm.textContent=p(m);ss.textContent=p(s);}
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
