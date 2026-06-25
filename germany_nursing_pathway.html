@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethiopia → Germany · The Nurse's Pathway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07100f;--bg2:#0a1614;--ink:#eafaf6;--muted:#6f8a84;
+    --vital:#2ee6a6;      /* go / alive / primary */
+    --sky:#4fd1ff;        /* process / info */
+    --amber:#ffc24b;      /* caution / Ethiopia */
+    --pulse:#ff5470;      /* the cross + danger only */
+    --card:#0d1c19;--line:rgba(46,230,166,.16);--r:18px;--ease:cubic-bezier(.16,1,.3,1)
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--vital);color:#04100c}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .grain{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .cur,.ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;mix-blend-mode:difference}
+  .cur{width:7px;height:7px;background:var(--vital);transform:translate(-50%,-50%)}
+  .ring{width:38px;height:38px;border:1.5px solid var(--vital);transform:translate(-50%,-50%);transition:width .25s,height .25s}
+  .ring.grow{width:64px;height:64px}
+  @media (hover:none){.cur,.ring{display:none}body{cursor:auto}}
+  @media (hover:hover){body{cursor:none}a,button,input,.node,.chip,.dd,.check{cursor:none}}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:9000;transition:.4s var(--ease)}
+  header.s{background:rgba(7,16,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{font-family:'Space Grotesk';font-weight:700;font-size:18px;display:flex;align-items:center;gap:11px;letter-spacing:-.01em}
+  .cross{width:24px;height:24px;flex:none;position:relative;display:grid;place-items:center}
+  .cross::before,.cross::after{content:"";position:absolute;background:var(--pulse);border-radius:2px;box-shadow:0 0 12px rgba(255,84,112,.6)}
+  .cross::before{width:24px;height:7px}.cross::after{width:7px;height:24px}
+  .brand b{color:var(--vital);font-weight:700}
+  .menu{display:flex;gap:22px}
+  .menu a{font-family:'Space Mono';font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);transition:.3s}
+  .menu a:hover{color:var(--vital)}
+  @media(max-width:920px){.menu{display:none}}
+
+  .hero{min-height:100svh;display:flex;align-items:center;padding-top:80px;position:relative;overflow:hidden}
+  #field{position:absolute;inset:0;z-index:0;opacity:.85}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:
+    radial-gradient(55% 55% at 82% 16%,rgba(79,209,255,.14),transparent 60%),
+    radial-gradient(60% 60% at 8% 90%,rgba(46,230,166,.14),transparent 60%),
+    radial-gradient(50% 50% at 50% 60%,rgba(255,194,75,.05),transparent 60%),var(--bg)}
+  .ecg{position:absolute;left:0;right:0;bottom:8vh;z-index:1;width:100%;height:30vh;overflow:visible}
+  .ecg path{fill:none;stroke:var(--vital);stroke-width:2.4;filter:drop-shadow(0 0 6px rgba(46,230,166,.55));
+    stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw 4.2s var(--ease) forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .ecg .base{stroke:rgba(46,230,166,.14);stroke-width:1;filter:none;animation:none;stroke-dasharray:none;stroke-dashoffset:0}
+  .blip{r:5;fill:var(--vital);filter:drop-shadow(0 0 8px var(--vital));opacity:0;animation:blip 4.6s linear .3s infinite}
+  @keyframes blip{0%{opacity:0}3%{opacity:1}100%{opacity:0}}
+
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'Space Mono';font-weight:700;font-size:12px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--vital);border:1px solid var(--line);padding:8px 16px;border-radius:100px;background:rgba(46,230,166,.04)}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--vital);box-shadow:0 0 12px var(--vital);animation:beat 1.15s infinite}
+  @keyframes beat{0%,28%,100%{transform:scale(1);opacity:1}14%{transform:scale(1.7);opacity:.55}40%{transform:scale(1.25);opacity:.85}}
+  h1{font-family:'Space Grotesk';font-weight:700;line-height:.96;letter-spacing:-.03em;font-size:clamp(38px,8vw,98px);margin:22px 0 18px}
+  h1 .ln{display:block;overflow:hidden}
+  h1 .ln span{display:block;transform:translateY(106%);animation:rise .9s var(--ease) forwards}
+  h1 .ln:nth-child(2) span{animation-delay:.12s}h1 .ln:nth-child(3) span{animation-delay:.24s}
+  @keyframes rise{to{transform:translateY(0)}}
+  .stroke{-webkit-text-stroke:1.6px var(--vital);color:transparent}.fill{color:var(--vital)}
+  .lead{max-width:580px;font-size:clamp(16px,2vw,19px);color:#bcd6cf;line-height:1.6;opacity:0;animation:fade .8s .5s var(--ease) forwards}
+  @keyframes fade{to{opacity:1}}
+  .hero-cta{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px;opacity:0;animation:fade .8s .65s var(--ease) forwards}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 25px;font-family:'Space Grotesk';font-weight:700;font-size:14px;letter-spacing:.01em;background:var(--vital);color:#04100c;border:none;border-radius:100px;transition:.2s}
+  .btn:hover{box-shadow:0 14px 40px rgba(46,230,166,.25);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--vital)}
+
+  section{position:relative;z-index:2}
+  .sec{padding-block:90px}
+  .sec-tag{font-family:'Space Mono';font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--sky)}
+  .sec-title{font-family:'Space Grotesk';font-weight:700;font-size:clamp(28px,5vw,56px);line-height:1.02;letter-spacing:-.025em;margin:12px 0 14px}
+  .sec-title em{font-style:normal;color:var(--vital)}
+  .sec-desc{max-width:640px;color:#bcd6cf;font-size:16px;line-height:1.62}
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* TRUTH PANEL */
+  .truth{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;margin-top:26px}
+  @media(max-width:880px){.truth{grid-template-columns:1fr}}
+  .vpanel{background:linear-gradient(150deg,rgba(46,230,166,.1),rgba(46,230,166,.02));border:1px solid var(--line);border-radius:22px;padding:32px}
+  .vpanel .k{font-family:'Space Mono';font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--vital);margin-bottom:14px}
+  .vpanel h3{font-family:'Space Grotesk';font-weight:700;font-size:clamp(22px,3.4vw,32px);line-height:1.12;letter-spacing:-.02em}
+  .vpanel h3 b{color:var(--vital)}
+  .vpanel p{color:#cfe6e0;font-size:15.5px;line-height:1.6;margin-top:14px}
+  .vitals{display:grid;gap:12px}
+  .vit{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+  .vit .lab{font-size:13.5px;color:#bcd6cf;line-height:1.4}
+  .vit .lab b{color:var(--ink);display:block;font-family:'Space Grotesk';font-weight:600;font-size:15px;margin-bottom:3px}
+  .vit .read{font-family:'Space Mono';font-weight:700;font-size:15px;white-space:nowrap}
+  .vit .read.go{color:var(--vital)}.vit .read.no{color:var(--pulse)}.vit .read.warn{color:var(--amber)}
+
+  /* JOURNEY MAP */
+  .legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:22px 0 2px}
+  .legend span{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:#bcd6cf}
+  .legend i{width:22px;height:5px;border-radius:3px}
+  .tourbar{display:flex;gap:12px;align-items:center;justify-content:center;margin:18px 0 6px;flex-wrap:wrap}
+  .tbtn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:'Space Grotesk';font-weight:700;font-size:13px;
+    background:var(--vital);color:#04100c;border:none;border-radius:100px;transition:.2s}
+  .tbtn.off{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .cap{min-height:24px;text-align:center;color:var(--vital);font-weight:600;font-size:15px;transition:.3s;opacity:0;padding:0 10px}
+  .cap.show{opacity:1}
+  .stage{margin:14px 0 8px;border:1px solid var(--line);border-radius:24px;padding:8px;overflow:hidden;background:
+    radial-gradient(70% 80% at 24% 0%,rgba(46,230,166,.06),transparent 60%),
+    radial-gradient(60% 80% at 96% 100%,rgba(79,209,255,.06),transparent 60%),var(--bg2)}
+  .scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border-radius:18px}
+  svg.map{display:block;width:100%;min-width:880px;height:auto}
+  .swipe{display:none;text-align:center;color:var(--muted);font-size:12px;padding:5px 0 8px;font-weight:600;font-family:'Space Mono'}
+  @media(max-width:900px){.swipe{display:block}}
+  .node{cursor:pointer}
+  text{font-family:'Inter',sans-serif}
+
+  /* TIMELINE */
+  .tl{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:30px}
+  @media(max-width:880px){.tl{grid-template-columns:1fr 1fr}}@media(max-width:520px){.tl{grid-template-columns:1fr}}
+  .ti{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 16px;position:relative;overflow:hidden}
+  .ti .bar{position:absolute;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--vital),transparent);transform:scaleX(0);transform-origin:left;animation:fillb 1.6s var(--ease) infinite}
+  .ti:nth-child(2) .bar{animation-delay:.25s}.ti:nth-child(3) .bar{animation-delay:.5s}.ti:nth-child(4) .bar{animation-delay:.75s}.ti:nth-child(5) .bar{animation-delay:1s}.ti:nth-child(6) .bar{animation-delay:1.25s}
+  @keyframes fillb{0%{transform:scaleX(0)}40%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:.25}}
+  .ti .step{font-family:'Space Mono';font-size:11px;color:var(--sky);letter-spacing:.06em}
+  .ti .ico{font-size:23px;margin-top:6px}
+  .ti b{display:block;font-family:'Space Grotesk';font-weight:700;font-size:14px;margin:8px 0 6px;letter-spacing:-.01em}
+  .ti p{font-size:13px;color:#aec6c0;line-height:1.45}
+
+  /* DEEP DIVE */
+  .dd{display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;margin-top:18px;scroll-margin-top:90px;transition:.4s}
+  .dd:hover{border-color:rgba(46,230,166,.45)}.dd.flash{box-shadow:0 0 0 3px rgba(46,230,166,.25);border-color:var(--vital)}
+  .dd .num{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-family:'Space Mono';font-weight:700;font-size:18px;color:#04100c}
+  .dd h3{font-family:'Space Grotesk';font-weight:700;font-size:clamp(19px,2.6vw,25px);line-height:1.1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;letter-spacing:-.02em}
+  .dd h3 .ic{font-size:24px}
+  .dd .plain{color:#d6e8e3;font-size:16px;line-height:1.62;margin:14px 0 16px}.dd .plain b{color:var(--vital)}
+  .hood{border-top:1px dashed var(--line);padding-top:16px}
+  .hood .h{font-family:'Space Mono';font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .hood ul{list-style:none;display:grid;gap:8px}
+  .hood li{font-size:13.8px;color:#a6c2bc;padding-left:18px;position:relative;line-height:1.5}
+  .hood li::before{content:"+";position:absolute;left:0;color:var(--vital);font-weight:700}
+  .hood code{background:rgba(46,230,166,.1);color:var(--vital);padding:1px 6px;border-radius:5px;font-size:12.5px;font-family:'Space Mono'}
+  .flowstrip{height:6px;border-radius:4px;margin-top:16px;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+  .flowstrip i{position:absolute;top:0;height:100%;width:30%;border-radius:4px;background:linear-gradient(90deg,transparent,var(--c,var(--vital)),transparent);animation:slide 2.2s linear infinite}
+  @keyframes slide{from{left:-30%}to{left:100%}}
+
+  /* SCAM SHIELD */
+  .shield{background:linear-gradient(150deg,rgba(255,84,112,.1),rgba(255,84,112,.02));border:1px solid rgba(255,84,112,.3);border-radius:24px;padding:36px;margin-top:26px}
+  .shield .sec-tag{color:var(--pulse)}
+  .shield .sec-title em{color:var(--pulse)}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+  @media(max-width:760px){.checks{grid-template-columns:1fr}}
+  .check{display:flex;gap:13px;align-items:flex-start;background:rgba(7,16,15,.5);border:1px solid rgba(255,84,112,.22);border-radius:14px;padding:17px 18px;transition:.2s}
+  .check:hover{border-color:rgba(255,84,112,.55)}
+  .check .x{width:24px;height:24px;flex:none;border-radius:7px;background:rgba(255,84,112,.16);color:var(--pulse);display:grid;place-items:center;font-weight:700;font-family:'Space Mono';font-size:14px}
+  .check .t{font-size:14px;color:#e7d4d8;line-height:1.46}.check .t b{color:#fff;font-family:'Space Grotesk';font-weight:600}
+  .green{display:flex;gap:13px;align-items:center;margin-top:22px;background:rgba(46,230,166,.07);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .green .v{width:26px;height:26px;flex:none;border-radius:8px;background:rgba(46,230,166,.16);color:var(--vital);display:grid;place-items:center;font-weight:700;font-family:'Space Mono'}
+  .green p{font-size:14.5px;color:#d6e8e3;line-height:1.5}.green p b{color:var(--vital)}
+
+  /* RESOURCES */
+  .res{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+  @media(max-width:760px){.res{grid-template-columns:1fr}}
+  .rcard{display:block;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;transition:.25s}
+  .rcard:hover{border-color:var(--vital);transform:translateY(-2px)}
+  .rcard .k{font-family:'Space Mono';font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--sky)}
+  .rcard h4{font-family:'Space Grotesk';font-weight:700;font-size:18px;margin:9px 0 7px;letter-spacing:-.01em}
+  .rcard p{color:#aec6c0;font-size:14px;line-height:1.5}
+  .rcard .go{display:inline-block;margin-top:12px;font-family:'Space Mono';font-size:13px;color:var(--vital)}
+
+  /* AI SCOUT */
+  .aiwrap{display:grid;grid-template-columns:360px 1fr;gap:44px;align-items:center;margin-top:30px}
+  @media(max-width:860px){.aiwrap{grid-template-columns:1fr;justify-items:center}}
+  .phone{width:340px;max-width:100%;background:#08130f;border:1px solid var(--line);border-radius:38px;padding:11px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .phone .scr{background:#061310;border-radius:28px;overflow:hidden;height:582px;display:flex;flex-direction:column;position:relative}
+  .sbar{display:flex;align-items:center;justify-content:space-between;padding:11px 20px 7px;font-family:'Space Mono';font-size:12px;color:#9fc1b9}
+  .sbar .dots{display:flex;gap:4px;align-items:center}.sbar .dots i{width:5px;height:5px;border-radius:50%;background:#9fc1b9;display:inline-block}
+  .sbar .bat{width:20px;height:10px;border:1.4px solid #9fc1b9;border-radius:3px;position:relative;display:inline-block}
+  .sbar .bat::after{content:"";position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:11px;background:var(--vital);border-radius:1px}
+  .tgtop{background:#0c1f1a;padding:12px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .tgav{width:38px;height:38px;border-radius:50%;background:var(--vital);display:grid;place-items:center;font-size:18px;flex:none;color:#04100c}
+  .tgtop .nm{font-family:'Space Grotesk';font-weight:700;font-size:14.5px}.tgtop .on{font-size:12px;color:var(--vital);font-family:'Space Mono'}
+  .tgbody{flex:1;overflow:hidden;padding:16px 14px;display:flex;flex-direction:column;gap:9px}
+  .msg{max-width:84%;padding:10px 13px;border-radius:15px;font-size:13.5px;line-height:1.42;opacity:0;transform:translateY(8px);animation:msgin .35s var(--ease) forwards}
+  @keyframes msgin{to{opacity:1;transform:none}}
+  .msg.them{align-self:flex-start;background:#142a24;border-bottom-left-radius:5px;color:#dcefe9}
+  .msg.them b{color:var(--vital)}
+  .msg.me{align-self:flex-end;background:var(--vital);color:#04100c;border-bottom-right-radius:5px;font-weight:600}
+  .typing{align-self:flex-start;background:#142a24;border-radius:15px;border-bottom-left-radius:5px;padding:13px 15px;display:flex;gap:5px}
+  .typing i{width:7px;height:7px;border-radius:50%;background:#5f8a7e;animation:bb 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes bb{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+  .aicap{max-width:460px}
+  .aicap h3{font-family:'Space Grotesk';font-weight:700;font-size:clamp(22px,3.2vw,30px);line-height:1.08;letter-spacing:-.02em}
+  .aicap h3 b{color:var(--vital)}
+  .aicap p{color:#bcd6cf;font-size:16px;line-height:1.6;margin-top:14px}
+  .aicap .mini{display:flex;gap:9px;margin-top:18px;flex-wrap:wrap}
+  .aicap .mini span{font-family:'Space Mono';font-size:12.5px;font-weight:700;padding:8px 13px;border:1px solid var(--line);border-radius:100px;color:#bcd6cf}
+
+  .arch{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+  @media(max-width:880px){.arch{grid-template-columns:1fr 1fr}}@media(max-width:480px){.arch{grid-template-columns:1fr}}
+  .acard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+  .acard .ic{font-size:24px}
+  .acard .k{font-family:'Space Mono';font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--sky);margin-top:10px}
+  .acard h4{font-family:'Space Grotesk';font-weight:700;font-size:16px;margin:5px 0 8px;letter-spacing:-.01em}
+  .acard p{color:#aec6c0;font-size:13.5px;line-height:1.5}
+  .acard code{background:rgba(46,230,166,.1);color:var(--vital);padding:1px 5px;border-radius:5px;font-size:12px;font-family:'Space Mono'}
+  .aiflow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:26px;justify-content:center}
+  .aiflow .f{font-family:'Space Mono';font-size:12.5px;color:#cfe6e0;background:rgba(46,230,166,.06);border:1px solid var(--line);border-radius:100px;padding:9px 15px}
+  .aiflow .ar{color:var(--vital);font-weight:700}
+  .gate{display:flex;gap:13px;align-items:center;margin-top:26px;background:rgba(79,209,255,.06);border:1px solid rgba(79,209,255,.25);border-radius:16px;padding:18px 20px}
+  .gate .v{width:28px;height:28px;flex:none;border-radius:8px;background:rgba(79,209,255,.16);color:var(--sky);display:grid;place-items:center;font-family:'Space Mono';font-weight:700}
+  .gate p{font-size:14.5px;color:#cfe6e0;line-height:1.55}.gate p b{color:var(--sky)}
+
+  footer{border-top:1px solid var(--line);padding:48px 0 42px;background:var(--bg2);text-align:center}
+  footer .brand{justify-content:center;font-size:22px}
+  footer p{color:var(--muted);margin-top:14px;font-size:14px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6}
+  footer .cp{margin-top:24px;color:var(--muted);font-size:12px;font-family:'Space Mono'}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.1s!important}
+    h1 .ln span{transform:none}.lead,.hero-cta{opacity:1}.ecg path{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div><div class="cur"></div><div class="ring"></div>
+
+<header id="hd"><div class="wrap nav">
+  <a href="#top" class="brand"><span class="cross"></span>Ethiopia <b>→ Germany</b></a>
+  <nav class="menu"><a href="#truth">The truth</a><a href="#map">The path</a><a href="#steps">Steps</a><a href="#detail">In detail</a><a href="#scout">AI scout</a><a href="#shield">Stay safe</a><a href="#start">Start</a></nav>
+</div></header>
+
+<section class="hero" id="top">
+  <div class="hero-bg"></div><canvas id="field"></canvas>
+  <svg class="ecg" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <line class="base" x1="0" y1="150" x2="1440" y2="150"/>
+    <path d="M0,150 L260,150 L290,150 L305,120 L320,150 L470,150 L495,150 L515,40 L535,210 L555,150 L720,150 L745,150 L760,118 L775,150 L930,150 L955,150 L975,40 L995,210 L1015,150 L1180,150 L1205,150 L1220,120 L1235,150 L1440,150"/>
+    <circle class="blip" cx="0" cy="150"/>
+  </svg>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>For nurses · the legal, fee-free pathway</span>
+    <h1><span class="ln"><span>Your skills</span></span><span class="ln"><span class="stroke">are needed</span></span><span class="ln"><span>in <span class="fill">Germany</span></span></span></h1>
+    <p class="lead">Germany is short of nurses, and a clear legal door is open to you. This page walks the whole journey — recognition, language, visa, arrival — in plain steps, and shows you the one rule that keeps you safe: a real employer never charges you to be hired. Play the path below and read each step in your own time.</p>
+    <div class="hero-cta"><a href="#map" class="btn">See the full path →</a><a href="#shield" class="btn ghost">How to avoid scams</a></div>
+  </div>
+</section>
+
+<!-- TRUTH -->
+<section class="sec wrap" id="truth">
+  <div class="reveal">
+    <div class="sec-tag">/ Read this first</div>
+    <h2 class="sec-title">One rule protects <em>everything</em></h2>
+    <p class="sec-desc">Ethiopia is on the WHO list of countries whose health systems must be protected, so agencies and hospitals are not allowed to actively recruit nurses there. That sounds like a wall — but it is not. It only stops them from chasing you. It never stops you from applying yourself.</p>
+  </div>
+  <div class="truth reveal">
+    <div class="vpanel">
+      <div class="k">The thing to remember</div>
+      <h3>You may apply <b>directly</b>, on your own. And you <b>never pay</b> to get a job.</h3>
+      <p>Because you reach out first — through a hospital's careers page or an official German channel — a German employer is fully allowed to hire you. The recruitment fee, the language course, the relocation: a fair employer covers these. If anyone asks you for money to "guarantee" a job, that is the scam, not the system.</p>
+    </div>
+    <div class="vitals">
+      <div class="vit"><div class="lab"><b>Can an agency recruit you in Ethiopia?</b>Active recruitment by private agencies is restricted</div><div class="read no">NO</div></div>
+      <div class="vit"><div class="lab"><b>Can you apply to a German hospital yourself?</b>Your right to migrate for work stays fully open</div><div class="read go">YES</div></div>
+      <div class="vit"><div class="lab"><b>Should you ever pay a recruitment fee?</b>Fair employers pay the costs, not the nurse</div><div class="read no">NEVER</div></div>
+      <div class="vit"><div class="lab"><b>Does German need to be perfect first?</b>Usually B1–B2, and it can be supported on the way</div><div class="read warn">B1–B2</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="sec wrap" id="map">
+  <div class="reveal">
+    <div class="sec-tag">/ The whole journey on one monitor</div>
+    <h2 class="sec-title">From Addis Ababa to <em>the ward</em></h2>
+    <p class="sec-desc">The pulse travels along your path. Hover a stage to focus it, or press Play to walk through the journey step by step. Tap a stage to jump to its full explanation below.</p>
+    <div class="legend">
+      <span><i style="background:var(--vital)"></i>You · the active steps</span>
+      <span><i style="background:var(--sky)"></i>Paperwork · authorities</span>
+      <span><i style="background:var(--amber)"></i>Decision points</span>
+    </div>
+    <div class="tourbar"><button class="tbtn" id="tour">▶ Play the journey</button></div>
+    <div class="cap" id="cap"></div>
+    <div class="stage">
+      <div class="scroller">
+        <svg class="map" viewBox="0 0 1160 360" id="svgmap" aria-label="The nursing pathway from Ethiopia to Germany">
+          <defs>
+            <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="path" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#2ee6a6"/><stop offset="1" stop-color="#4fd1ff"/>
+            </linearGradient>
+          </defs>
+          <path id="route" d="" fill="none" stroke="url(#path)" stroke-width="3" stroke-opacity=".4"/>
+          <g id="dots"></g>
+          <g id="nodes"></g>
+        </svg>
+      </div>
+      <div class="swipe">← swipe to see the whole path →</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="sec wrap" id="steps">
+  <div class="reveal">
+    <div class="sec-tag">/ At a glance</div>
+    <h2 class="sec-title">Six steps, <em>start to finish</em></h2>
+    <div class="tl">
+      <div class="ti"><div class="bar"></div><div class="step">STEP 01</div><div class="ico">🎓</div><b>Your diploma</b><p>You already hold a nursing qualification — that is your foundation.</p></div>
+      <div class="ti"><div class="bar"></div><div class="step">STEP 02</div><div class="ico">🗣️</div><b>German B1–B2</b><p>Learn German to a working level; courses can help fund this.</p></div>
+      <div class="ti"><div class="bar"></div><div class="step">STEP 03</div><div class="ico">📋</div><b>Recognition</b><p>Germany checks your diploma against its own standard (Anerkennung).</p></div>
+      <div class="ti"><div class="bar"></div><div class="step">STEP 04</div><div class="ico">🛂</div><b>Visa</b><p>With a job offer, you apply for a work or recognition visa.</p></div>
+      <div class="ti"><div class="bar"></div><div class="step">STEP 05</div><div class="ico">✈️</div><b>Arrive</b><p>You move to Germany and start with your employer's support.</p></div>
+      <div class="ti"><div class="bar"></div><div class="step">STEP 06</div><div class="ico">🩺</div><b>Full nurse</b><p>Pass the final check and work as a fully recognised nurse.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE -->
+<section class="sec wrap" id="detail">
+  <div class="reveal">
+    <div class="sec-tag">/ Each step, explained simply</div>
+    <h2 class="sec-title">What actually <em>happens</em></h2>
+    <p class="sec-desc">Plain words first, then the official basis underneath — the names and paragraphs you will see on German forms, so nothing feels strange when you meet it.</p>
+  </div>
+  <div id="ddwrap"></div>
+</section>
+
+<!-- AI SCOUT -->
+<section class="sec wrap" id="scout">
+  <div class="reveal">
+    <div class="sec-tag">/ You don't have to search alone</div>
+    <h2 class="sec-title">An AI scout that <em>hunts the jobs for you</em></h2>
+    <p class="sec-desc">Searching official portals and hospital pages every day is exhausting. So a small assistant does it for you and messages you on Telegram — like texting a friend. It only ever surfaces real, direct, fee-free openings, and it warns you the moment something looks like a scam.</p>
+  </div>
+  <div class="aiwrap reveal">
+    <div class="phone"><div class="scr">
+      <div class="sbar"><span>9:41</span><span class="dots"><i></i><i></i><i></i> &nbsp;📶 &nbsp;<span class="bat"></span></span></div>
+      <div class="tgtop"><div class="tgav">✚</div><div><div class="nm">PathwayBot · your scout</div><div class="on">online</div></div></div>
+      <div class="tgbody" id="tgbody"></div>
+    </div></div>
+    <div class="aicap">
+      <h3>You type one sentence. It does the <b>digging</b>.</h3>
+      <p>No dashboards, no forms. Tell it what you want in plain English, and it searches the official German sources, reads each listing, throws out anything that charges a fee, and sends you only the openings you can apply to yourself. Then it keeps watching, every day, and pings you when something new fits.</p>
+      <div class="mini"><span>🔎 Finds openings</span><span>🛡️ Filters scams</span><span>📲 Pings you on Telegram</span><span>🗓️ Watches daily</span></div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="arch">
+      <div class="acard"><div class="ic">📲</div><div class="k">How you reach it</div><h4>Telegram</h4><p>The assistant lives in a Telegram bot. You message it like any chat — text or voice, in English — no app to learn.</p></div>
+      <div class="acard"><div class="ic">🤖</div><div class="k">The worker</div><h4>Hermes agent</h4><p>A self-hosted agent (Hermes, Nous Research) on a <code>DigitalOcean</code> server breaks your request into steps and runs the search and ranking.</p></div>
+      <div class="acard"><div class="ic">🧠</div><div class="k">The brain</div><h4>Qwen 3.x</h4><p>An open model (<code>Qwen 3.x</code>) served via <code>vLLM</code> reads each listing, checks it against the safety rules, and writes the plain-English summary. Private and low-cost.</p></div>
+      <div class="acard"><div class="ic">🔎</div><div class="k">Where it looks</div><h4>Official sources only</h4><p>Government portals and hospital career pages — not random brokers. So what reaches you is real, direct, and fee-free.</p></div>
+    </div>
+    <div class="aiflow">
+      <span class="f">You ask</span><span class="ar">→</span>
+      <span class="f">Hermes plans</span><span class="ar">→</span>
+      <span class="f">Searches portals</span><span class="ar">→</span>
+      <span class="f">Qwen filters &amp; ranks</span><span class="ar">→</span>
+      <span class="f">Safe matches in Telegram</span>
+    </div>
+    <div class="gate"><div class="v">!</div><p><b>You stay in control.</b> It runs on a private server, so your messages aren't sold. It only suggests openings — it never applies, pays, or shares your documents without your explicit "yes". And anything that asks you for money is flagged and dropped before it ever reaches you.</p></div>
+  </div>
+</section>
+
+<!-- SCAM SHIELD -->
+<section class="sec wrap" id="shield">
+  <div class="shield reveal">
+    <div class="sec-tag">/ Protect yourself</div>
+    <h2 class="sec-title">Spot the <em>scam</em> in seconds</h2>
+    <p class="sec-desc" style="color:#e7d4d8">Demand for nurses brings people who prey on hope. Every sign below means walk away. A real, ethical offer breaks none of these.</p>
+    <div class="checks">
+      <div class="check"><div class="x">✕</div><div class="t"><b>Upfront fees.</b> Anyone asking you to pay for a "guaranteed job", a slot, or processing is a scam. You do not pay to be hired.</div></div>
+      <div class="check"><div class="x">✕</div><div class="t"><b>"We can bypass the WHO list."</b> Nobody can, and nobody needs to — you apply directly, legally, for free.</div></div>
+      <div class="check"><div class="x">✕</div><div class="t"><b>Vague contract.</b> No named employer, no city, no salary, no working hours? Do not sign.</div></div>
+      <div class="check"><div class="x">✕</div><div class="t"><b>Pressure to decide today.</b> Real processes take months. Urgency is a manipulation tactic.</div></div>
+      <div class="check"><div class="x">✕</div><div class="t"><b>Pay-it-back penalties.</b> A fair repayment clause is small and transparent; a "penalty" that traps you is not.</div></div>
+      <div class="check"><div class="x">✕</div><div class="t"><b>Only chat apps, no official email.</b> A real employer or agency has a verifiable company, address, and seal.</div></div>
+    </div>
+    <div class="green"><div class="v">✓</div><p><b>The safe sign:</b> the employer covers recruitment costs, names itself clearly, and — if an agency is involved — holds the German "Fair Recruitment Care Germany" (Faire Anwerbung Pflege) quality seal.</p></div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="sec wrap" id="start">
+  <div class="reveal">
+    <div class="sec-tag">/ Where to begin — official and free</div>
+    <h2 class="sec-title">Your <em>first move</em></h2>
+    <p class="sec-desc">Start with the government portals. They are free, in English, and exist to guide exactly this journey. Begin by checking how your diploma is recognised.</p>
+    <div class="res">
+      <a class="rcard" href="https://www.anerkennung-in-deutschland.de/en/" target="_blank" rel="noopener">
+        <div class="k">Step 03 · Recognition</div><h4>Recognition in Germany</h4>
+        <p>The official portal to check your nursing qualification and find the authority that handles your case.</p>
+        <span class="go">anerkennung-in-deutschland.de →</span>
+      </a>
+      <a class="rcard" href="https://www.make-it-in-germany.com/en/" target="_blank" rel="noopener">
+        <div class="k">Visa · jobs · life</div><h4>Make it in Germany</h4>
+        <p>The federal government's guide for skilled workers: visas, job search, German courses, and moving.</p>
+        <span class="go">make-it-in-germany.com →</span>
+      </a>
+      <a class="rcard" href="https://www.bundesgesundheitsministerium.de/en/topics/care/nurses-from-abroad.html" target="_blank" rel="noopener">
+        <div class="k">Care · official</div><h4>Nurses from abroad</h4>
+        <p>The Federal Ministry of Health's overview for international nurses choosing Germany.</p>
+        <span class="go">Ministry of Health →</span>
+      </a>
+      <a class="rcard" href="https://www.arbeitsagentur.de/en" target="_blank" rel="noopener">
+        <div class="k">Government recruitment</div><h4>Federal Employment Agency</h4>
+        <p>The only body allowed to run government-to-government placement from protected countries. Free of charge.</p>
+        <span class="go">arbeitsagentur.de →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="display:inline-flex"><span class="cross"></span>Ethiopia <b>→ Germany</b></div>
+    <p>Made to explain the path honestly. This is a friendly guide, not legal advice — always confirm details with the official German authorities linked above before you act or pay anything.</p>
+    <div class="cp">A pulse, not a promise · keep your money, keep your rights</div>
+  </div>
+</footer>
+
+<script>
+/* cursor */
+const cur=document.querySelector('.cur'),ring=document.querySelector('.ring');
+if(matchMedia('(hover:hover)').matches){
+  let rx=0,ry=0,mx=0,my=0;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+  (function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+  addEventListener('mouseover',e=>{if(e.target.closest('a,button,.node,.dd,.chip,.check,.rcard'))ring.classList.add('grow');else ring.classList.remove('grow')});
+}
+/* header */
+addEventListener('scroll',()=>document.getElementById('hd').classList.toggle('s',scrollY>30));
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* particle field */
+const cv=document.getElementById('field'),cx=cv.getContext('2d');let W,H,ps=[];
+function rz(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;ps=[];const n=Math.min(70,Math.floor(W/22));
+  for(let i=0;i<n;i++)ps.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,a:Math.random()*.5+.15})}
+rz();addEventListener('resize',rz);
+(function pl(){cx.clearRect(0,0,W,H);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+  cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle='rgba(46,230,166,'+p.a+')';cx.fill()});requestAnimationFrame(pl)})();
+
+/* ---- JOURNEY MAP ---- */
+const C={vital:'#2ee6a6',sky:'#4fd1ff',amber:'#ffc24b'};
+const NODES=[
+  {id:'you',  x:90,  y:180, c:C.vital, ic:'🇪🇹', t:'You, in Ethiopia', s:'A qualified nurse', dd:'d1'},
+  {id:'lang', x:290, y:90,  c:C.vital, ic:'🗣️', t:'Learn German', s:'B1 → B2',          dd:'d2'},
+  {id:'rec',  x:480, y:200, c:C.sky,   ic:'📋', t:'Recognition', s:'Anerkennung',       dd:'d3'},
+  {id:'who',  x:580, y:70,  c:C.amber, ic:'🌍', t:'The WHO rule', s:'You apply direct',  dd:'d4'},
+  {id:'visa', x:720, y:200, c:C.sky,   ic:'🛂', t:'Visa', s:'§16d / §18a',              dd:'d5'},
+  {id:'fly',  x:910, y:110, c:C.vital, ic:'✈️', t:'Arrive', s:'Move to Germany',        dd:'d6'},
+  {id:'work', x:1080,y:190, c:C.vital, ic:'🩺', t:'Full nurse', s:'Recognised & paid',  dd:'d7'},
+];
+const LINK=[['you','lang'],['lang','rec'],['rec','who'],['who','visa'],['rec','visa'],['visa','fly'],['fly','work']];
+const ng=document.getElementById('nodes'),dg=document.getElementById('dots'),route=document.getElementById('route');
+const Nmap={};NODES.forEach(n=>Nmap[n.id]=n);
+function el(t,a){const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e}
+const E=[];
+LINK.forEach(([a,b])=>{const A=Nmap[a],B=Nmap[b];
+  const p=el('path',{d:`M${A.x},${A.y} C${(A.x+B.x)/2},${A.y} ${(A.x+B.x)/2},${B.y} ${B.x},${B.y}`,fill:'none',stroke:'rgba(46,230,166,.3)','stroke-width':2});
+  dg.appendChild(p);
+  const dot=el('circle',{r:3.4,fill:C.vital,filter:'url(#glow)'});dg.appendChild(dot);
+  const len=p.getTotalLength();const sp={p,dot,len,off:Math.random()*len,from:a,to:b};
+  E.push(sp)});
+// build a single visible route through the main spine
+const spine=['you','lang','rec','visa','fly','work'];
+let rd='';spine.forEach((id,i)=>{const n=Nmap[id];if(i===0)rd=`M${n.x},${n.y}`;else{const pr=Nmap[spine[i-1]];rd+=` C${(pr.x+n.x)/2},${pr.y} ${(pr.x+n.x)/2},${n.y} ${n.x},${n.y}`}});
+route.setAttribute('d',rd);
+
+const Ngr={};
+NODES.forEach(n=>{const g=el('g',{class:'node'});g.setAttribute('transform',`translate(${n.x},${n.y})`);
+  g.appendChild(el('circle',{r:25,fill:'#0d1c19',stroke:n.c,'stroke-width':2}));
+  const ic=el('text',{'text-anchor':'middle',y:7,'font-size':20});ic.textContent=n.ic;g.appendChild(ic);
+  const t=el('text',{'text-anchor':'middle',y:46,'font-size':15,'font-weight':700,fill:'#eafaf6'});t.textContent=n.t;g.appendChild(t);
+  const s=el('text',{'text-anchor':'middle',y:64,'font-size':12,fill:'#7fa49c','font-family':'Space Mono'});s.textContent=n.s;g.appendChild(s);
+  g.style.cursor='pointer';
+  g.addEventListener('click',()=>flash(n.dd));
+  g.addEventListener('mouseenter',()=>{if(!touring)hl([n.id])});
+  g.addEventListener('mouseleave',()=>{if(!touring)hl(null)});
+  ng.appendChild(g);Ngr[n.id]=g});
+
+function hl(ids){E.forEach(e=>{const on=!ids||ids.includes(e.from)||ids.includes(e.to);
+    e.p.style.strokeOpacity=ids?(on?.7:.06):.3;e.dot.style.opacity=ids?(on?1:.12):1});
+  NODES.forEach(n=>{Ngr[n.id].style.opacity=ids?(ids.includes(n.id)?1:.32):1;Ngr[n.id].style.transition='opacity .3s'})}
+
+(function anim(){E.forEach(e=>{e.off=(e.off+1.1)%e.len;const pt=e.p.getPointAtLength(e.off);e.dot.setAttribute('cx',pt.x);e.dot.setAttribute('cy',pt.y)});requestAnimationFrame(anim)})();
+
+/* TOUR */
+const STEPS=[
+  {ids:['you'],t:'1 · You start as a qualified nurse in Ethiopia. Everything begins with the diploma you already hold.'},
+  {ids:['you','lang'],t:'2 · You learn German to B1, then B2. This is the single biggest lever you control.'},
+  {ids:['lang','rec'],t:'3 · Germany compares your training to its own standard — this is "Anerkennung", recognition.'},
+  {ids:['rec','who'],t:'4 · Because Ethiopia is protected, no agency may chase you — but you may apply directly, for free.'},
+  {ids:['who','visa','rec'],t:'5 · With a job offer, you apply for a visa: §16d to finish recognition, or §18a once recognised.'},
+  {ids:['visa','fly'],t:'6 · Visa granted, you move to Germany — a fair employer helps with the costs and the landing.'},
+  {ids:['fly','work'],t:'7 · You pass the final check and work as a fully recognised, fully paid nurse.'},
+];
+let touring=false,ti=0,timer=null;const cap=document.getElementById('cap'),tbtn=document.getElementById('tour');
+function step(){const s=STEPS[ti];hl(s.ids);cap.textContent=s.t;cap.classList.add('show');ti=(ti+1)%STEPS.length;timer=setTimeout(step,3000)}
+tbtn.onclick=()=>{if(touring){touring=false;clearTimeout(timer);hl(null);cap.classList.remove('show');tbtn.textContent='▶ Play the journey';tbtn.classList.remove('off')}
+  else{touring=true;ti=0;step();tbtn.textContent='⏸ Stop';tbtn.classList.add('off');document.getElementById('map').scrollIntoView({behavior:'smooth',block:'start'})}};
+
+/* DEEP DIVE CONTENT */
+const DD=[
+  {id:'d1',n:'01',ic:'🎓',h:'The diploma you already have',c:C.vital,
+   plain:'Your nursing qualification from Ethiopia is the start of everything. You do not need to "start over" — Germany works <b>from</b> what you already earned, and fills only the gaps between your training and theirs.',
+   hood:['Keep certified copies and official translations of your diploma, transcripts and work references','Germany has a labelled shortage of nurses, so qualified applicants are genuinely wanted','Your goal is to turn your existing qualification into a German-recognised one']},
+  {id:'d2',n:'02',ic:'🗣️',h:'German to a working level',c:C.vital,
+   plain:'Language is the part you control most. You usually need <b>B1</b> to begin and <b>B2</b> for full registration as a nurse. Strong German speeds up every other step and protects you in interviews.',
+   hood:['Goethe-Institut and telc certificates are widely accepted proof','Some employers and programmes fund or reimburse language courses — ask before paying','A B2 medical-German course (Fachsprachprüfung) is often the final language hurdle']},
+  {id:'d3',n:'03',ic:'📋',h:'Recognition — "Anerkennung"',c:C.sky,
+   plain:'A German authority compares your training to the German nursing standard. If it matches, you are recognised. If there are gaps, you get a <b>"deficit notice"</b> and complete an adaptation course or exam to close them.',
+   hood:['Start free at the official portal <code>anerkennung-in-deutschland.de</code>','The competent body depends on the German federal state where you will work','Outcome is either full recognition, or a defined path (course / knowledge test) to it']},
+  {id:'d4',n:'04',ic:'🌍',h:'The WHO rule — why direct matters',c:C.amber,
+   plain:'Ethiopia is on the WHO list of countries whose health workers are protected. So German agencies and hospitals <b>may not actively recruit you there</b>. But the rule has a clear door: it places <b>no limit on you applying yourself</b>. Reach out first, and a German employer can legally hire you.',
+   hood:['Active recruitment by private agencies/employers from listed countries is restricted','Individual, self-initiated applications are explicitly allowed','From protected countries, only the German Federal Employment Agency may run official placement','This is why a free, direct application is your strongest and safest route']},
+  {id:'d5',n:'05',ic:'🛂',h:'The visa',c:C.sky,
+   plain:'With a job offer or a recognition plan, you apply at the German embassy. The route depends on where you are in recognition: <b>§16d</b> if you still need to finish it in Germany, <b>§18a</b> once your qualification is already recognised.',
+   hood:['<code>§16d AufenthG</code> — come to complete recognition (deficit notice + employer + plan)','<code>§18a / §18b AufenthG</code> — work once your qualification is recognised','<code>§16a</code> — if you instead enter full German vocational training (Ausbildung)','The Federal Office for Foreign Affairs runs a faster process for care professions']},
+  {id:'d6',n:'06',ic:'✈️',h:'Arrival & landing',c:C.vital,
+   plain:'You move to Germany and begin with your employer. A fair employer helps you land: housing, registration, and an integration contact. Your first months may be as an assistant nurse while you finish recognition — then you step up.',
+   hood:['Expect help with the first flat, city registration (Anmeldung) and bank setup','Many internationally-trained nurses start as Pflegehilfskraft, then become full Pflegefachkraft','Keep every document and contract copy; never hand over your passport to a "broker"']},
+  {id:'d7',n:'07',ic:'🩺',h:'Fully recognised nurse',c:C.vital,
+   plain:'You pass the final knowledge test or finish the adaptation course, and you are a <b>fully recognised, fully paid German nurse</b> — same status, same pay scale, same protections as a German colleague. From here, your career is yours.',
+   hood:['Recognition = equal pay scale and full professional rights','You can change employer and region once recognised','Permanent residence becomes possible after a qualifying period of work']},
+];
+const dw=document.getElementById('ddwrap');
+DD.forEach(d=>{const s=document.createElement('div');s.className='dd reveal';s.id=d.id;
+  s.innerHTML=`<div class="num" style="background:${d.c}">${d.n}</div><div><h3><span class="ic">${d.ic}</span>${d.h}</h3><p class="plain">${d.plain}</p><div class="flowstrip" style="--c:${d.c}"><i></i></div><div class="hood"><div class="h">The official basis</div><ul>${d.hood.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`;
+  dw.appendChild(s);io.observe(s)});
+function flash(id){const c=document.getElementById(id);if(!c)return;c.scrollIntoView({behavior:'smooth',block:'center'});c.classList.add('flash');setTimeout(()=>c.classList.remove('flash'),1400)}
+
+/* ---- AI SCOUT: animated Telegram chat ---- */
+const CONV=[
+  {s:'me',t:'I\u2019m a nurse in Addis Ababa. Find me real nursing jobs in Germany \u2014 no agencies, no fees. \uD83D\uDE4F'},
+  {s:'them',typ:1300,t:'On it. Searching official German portals and hospital career pages for direct, fee-free openings\u2026'},
+  {s:'them',typ:1500,t:'Found <b>3 that fit</b>. All let you apply yourself, none charge a fee. Want the details?'},
+  {s:'me',t:'Yes please \uD83D\uDE4C'},
+  {s:'them',typ:1400,t:'<b>1 \u00B7 University Hospital Freiburg</b> \u2014 ICU nurse. \u00A716d recognition route, German B1 to start, relocation help. Apply directly \u2197'},
+  {s:'them',typ:1200,t:'I\u2019ll keep watching every day and ping you the moment a new one fits \u2014 and warn you if anything ever asks for money. \uD83D\uDEE1\uFE0F'},
+];
+const tb=document.getElementById('tgbody');
+function tgRun(){tb.innerHTML='';let d=400;
+  CONV.forEach(m=>{
+    if(m.typ){setTimeout(()=>{const t=document.createElement('div');t.className='typing';t.id='typing';t.innerHTML='<i></i><i></i><i></i>';tb.appendChild(t);tb.scrollTop=tb.scrollHeight},d);d+=m.typ}
+    setTimeout(()=>{const tp=document.getElementById('typing');if(tp)tp.remove();const b=document.createElement('div');b.className='msg '+m.s;b.innerHTML=m.t;tb.appendChild(b);tb.scrollTop=tb.scrollHeight},d);
+    d+=950;
+  });
+  setTimeout(tgRun,d+3600);
+}
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){tgRun();o.disconnect()}},{threshold:.4}).observe(tb);
+</script>
+</body>
+</html>
