@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redevco · Autonomous BAS — Reference Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#070b0a;--bg2:#0b1110;--ink:#eef3f1;--muted:#7d8c87;
+    --teal:#00D7BD;--tealDeep:#0C544E;--tealMid:#00A49A;
+    --orange:#FF7900;--cyan:#38e1ff;--violet:#b08bff;--red:#F20C36;--amber:#FFC33C;
+    --card:#0e1413;--line:rgba(0,215,189,.16);--r:18px;--ease:cubic-bezier(.16,1,.3,1)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Manrope',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--teal);color:#001512}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+  .grain{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .cur,.ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;mix-blend-mode:difference}
+  .cur{width:7px;height:7px;background:var(--teal);transform:translate(-50%,-50%)}
+  .ring{width:38px;height:38px;border:1.5px solid var(--teal);transform:translate(-50%,-50%);transition:width .25s,height .25s}
+  .ring.grow{width:64px;height:64px}
+  @media (hover:none){.cur,.ring{display:none}body{cursor:auto}}
+  @media (hover:hover){body{cursor:none}a,button,input,.node,.chip,.tbtn,.fbtn{cursor:none}}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:9000;transition:.4s var(--ease)}
+  header.s{background:rgba(7,11,10,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{font-family:'Unbounded';font-weight:900;font-size:20px;display:flex;align-items:center;gap:11px;letter-spacing:-.01em}
+  .brand .lg{font-family:Arial,sans-serif;font-weight:900;color:var(--teal);text-transform:lowercase}
+  .brand .spin{width:18px;height:18px;border:3px solid var(--teal);border-radius:50%;border-top-color:transparent;animation:spin 3.5s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .brand small{font-family:'Manrope';font-weight:700;font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+  .menu{display:flex;gap:24px}
+  .menu a{font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);transition:.3s}
+  .menu a:hover{color:var(--teal)}
+  @media(max-width:920px){.menu{display:none}}
+
+  .hero{min-height:100svh;display:flex;align-items:center;padding-top:80px;position:relative;overflow:hidden}
+  #dust{position:absolute;inset:0;z-index:0;opacity:.85}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:
+    radial-gradient(55% 55% at 82% 12%,rgba(255,121,0,.13),transparent 60%),
+    radial-gradient(60% 60% at 8% 90%,rgba(0,215,189,.15),transparent 60%),
+    radial-gradient(50% 50% at 55% 60%,rgba(56,225,255,.07),transparent 60%),var(--bg)}
+  .grid-bg{position:absolute;inset:0;z-index:0;opacity:.35;
+    background-image:linear-gradient(rgba(0,215,189,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,215,189,.05) 1px,transparent 1px);
+    background-size:46px 46px;mask-image:radial-gradient(70% 70% at 50% 40%,#000,transparent)}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'Unbounded';font-weight:600;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--teal);border:1px solid var(--line);padding:8px 16px;border-radius:100px;background:rgba(0,215,189,.04)}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  h1{font-family:'Unbounded';font-weight:900;line-height:.93;letter-spacing:-.02em;text-transform:uppercase;font-size:clamp(38px,8vw,104px);margin:22px 0 18px}
+  h1 .ln{display:block;overflow:hidden}
+  h1 .ln span{display:block;transform:translateY(106%);animation:rise .9s var(--ease) forwards}
+  h1 .ln:nth-child(2) span{animation-delay:.12s}h1 .ln:nth-child(3) span{animation-delay:.24s}
+  @keyframes rise{to{transform:translateY(0)}}
+  .stroke{-webkit-text-stroke:2px var(--teal);color:transparent}.fill{color:var(--teal)}
+  .lead{max-width:620px;font-size:clamp(16px,2vw,19px);color:#c3ccc8;line-height:1.6;opacity:0;animation:fade .8s .5s var(--ease) forwards}
+  @keyframes fade{to{opacity:1}}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;opacity:0;animation:fade .8s .65s var(--ease) forwards}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;font-family:'Unbounded';font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;background:var(--teal);color:#001512;border:none;border-radius:100px;transition:.2s}
+  .btn:hover{box-shadow:0 14px 40px rgba(0,215,189,.28)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--teal)}
+  .herometa{display:flex;gap:26px;flex-wrap:wrap;margin-top:42px;opacity:0;animation:fade .8s .8s var(--ease) forwards}
+  .herometa div{border-left:2px solid var(--line);padding-left:14px}
+  .herometa b{font-family:'Unbounded';font-weight:900;font-size:22px;color:var(--teal);display:block;line-height:1}
+  .herometa span{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+
+  section{position:relative;z-index:2}
+  .sec{padding:90px 0}
+  .sec-tag{font-family:'Unbounded';font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--orange)}
+  .sec-title{font-family:'Unbounded';font-weight:900;font-size:clamp(30px,5.2vw,60px);line-height:1;text-transform:uppercase;letter-spacing:-.02em;margin:12px 0 14px}
+  .sec-title em{font-style:normal;color:var(--teal)}
+  .sec-desc{max-width:680px;color:#c3ccc8;font-size:16px;line-height:1.6}
+  .reveal{opacity:0;transform:translateY(38px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* MAP */
+  .legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:24px 0 2px}
+  .legend span{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:700;color:#c3ccc8}
+  .legend i{width:24px;height:5px;border-radius:3px}
+  .tourbar{display:flex;gap:12px;align-items:center;justify-content:center;margin:18px 0 6px;flex-wrap:wrap}
+  .tbtn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:'Unbounded';font-weight:800;font-size:13px;text-transform:uppercase;
+    background:var(--teal);color:#001512;border:none;border-radius:100px;transition:.2s}
+  .tbtn.off{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+  .cap{min-height:24px;text-align:center;color:var(--teal);font-weight:700;font-size:15px;transition:.3s;opacity:0;padding:0 12px}
+  .cap.show{opacity:1}
+  .stage{margin:14px 0 8px;border:1px solid var(--line);border-radius:24px;padding:8px;overflow:hidden;background:
+    radial-gradient(70% 80% at 24% 0%,rgba(0,215,189,.06),transparent 60%),
+    radial-gradient(60% 80% at 96% 100%,rgba(56,225,255,.06),transparent 60%),var(--bg2)}
+  .scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;border-radius:18px}
+  svg.map{display:block;width:100%;min-width:980px;height:auto}
+  .swipe{display:none;text-align:center;color:var(--muted);font-size:12px;padding:5px 0 8px;font-weight:600}
+  @media(max-width:980px){.swipe{display:block}}
+  .node{cursor:pointer}.node rect.box{transition:filter .25s}
+  .node:hover rect.box{filter:brightness(1.35)}
+  text{font-family:'Manrope',sans-serif}
+
+  /* FORGE terminal */
+  .forge-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:stretch;margin-top:30px}
+  @media(max-width:900px){.forge-wrap{grid-template-columns:1fr}}
+  .term{background:#060a09;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5);display:flex;flex-direction:column;min-height:430px}
+  .term-top{display:flex;align-items:center;gap:8px;padding:13px 16px;background:#0b1211;border-bottom:1px solid rgba(255,255,255,.05)}
+  .term-top .dotr{width:11px;height:11px;border-radius:50%}
+  .term-top .nm{margin-left:10px;font-family:'JetBrains Mono';font-size:12.5px;color:#9fb1ab;font-weight:700}
+  .term-top .live{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.1em}
+  .term-top .live i{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:pulse 1.4s infinite}
+  .term-body{flex:1;padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.62;overflow:hidden}
+  .ln2{white-space:pre-wrap;word-break:break-word;opacity:0;transform:translateY(4px);animation:lnin .25s var(--ease) forwards}
+  @keyframes lnin{to{opacity:1;transform:none}}
+  .t-intel{color:var(--orange)}.t-qwen{color:var(--violet)}.t-herm{color:var(--teal)}
+  .t-forge{color:var(--cyan)}.t-monkey{color:var(--amber)}.t-ok{color:#5fe0a8}.t-dim{color:#6c7d77}.t-code{color:#cfe9e3}
+  .cursorblink::after{content:'▋';color:var(--teal);animation:blink 1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .forge-side{display:flex;flex-direction:column;gap:14px}
+  .fstep{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px;position:relative;overflow:hidden;transition:.3s}
+  .fstep.act{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,215,189,.18)}
+  .fstep .k{font-family:'Unbounded';font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px}
+  .fstep .k b{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;color:#001512;background:var(--teal);font-family:'Unbounded'}
+  .fstep h4{font-family:'Unbounded';font-weight:800;font-size:15px;margin:9px 0 5px}
+  .fstep p{font-size:13px;color:#bcc7c2;line-height:1.5}
+  .fbtns{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .fbtn{padding:10px 16px;font-family:'Unbounded';font-weight:800;font-size:12px;text-transform:uppercase;border-radius:100px;border:1.5px solid var(--line);background:transparent;color:var(--ink);transition:.18s}
+  .fbtn.on{background:var(--teal);color:#001512;border-color:var(--teal)}
+  .fbtn:hover{border-color:var(--teal)}
+
+  /* timeline loop */
+  .tl{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:30px}
+  @media(max-width:880px){.tl{grid-template-columns:1fr 1fr}}@media(max-width:520px){.tl{grid-template-columns:1fr}}
+  .ti{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 16px;position:relative;overflow:hidden}
+  .ti .bar{position:absolute;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--teal),transparent);transform:scaleX(0);transform-origin:left;animation:fillb 1.8s var(--ease) infinite}
+  .ti:nth-child(2) .bar{animation-delay:.3s}.ti:nth-child(3) .bar{animation-delay:.6s}.ti:nth-child(4) .bar{animation-delay:.9s}.ti:nth-child(5) .bar{animation-delay:1.2s}.ti:nth-child(6) .bar{animation-delay:1.5s}
+  @keyframes fillb{0%{transform:scaleX(0)}45%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:.25}}
+  .ti .ico{font-size:24px}.ti b{display:block;font-family:'Unbounded';font-weight:800;font-size:12.5px;text-transform:uppercase;margin:10px 0 6px}.ti p{font-size:12.5px;color:#bcc7c2;line-height:1.45}
+
+  /* deep dive */
+  .dd{display:grid;grid-template-columns:48px 1fr;gap:20px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;margin-top:18px;scroll-margin-top:90px;transition:.4s}
+  .dd:hover{border-color:rgba(0,215,189,.42)}
+  .dd .num{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-family:'Unbounded';font-weight:900;font-size:20px;color:#001512}
+  .dd h3{font-family:'Unbounded';font-weight:800;font-size:clamp(18px,2.5vw,24px);text-transform:uppercase;line-height:1.05;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .dd h3 .ic{font-size:24px}
+  .dd .plain{color:#d6ded9;font-size:15.5px;line-height:1.6;margin:13px 0 16px}.dd .plain b{color:var(--teal)}
+  .hood{border-top:1px dashed var(--line);padding-top:15px}
+  .hood .h{font-family:'Unbounded';font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .hood ul{list-style:none;display:grid;gap:8px}
+  .hood li{font-size:13px;color:#a9b5b0;padding-left:18px;position:relative;line-height:1.45}
+  .hood li::before{content:"▸";position:absolute;left:0;color:var(--teal)}
+  .hood code{background:rgba(0,215,189,.1);color:var(--teal);padding:1px 6px;border-radius:5px;font-size:12px;font-family:'JetBrains Mono'}
+  .flowstrip{height:6px;border-radius:4px;margin-top:16px;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+  .flowstrip i{position:absolute;top:0;height:100%;width:30%;border-radius:4px;background:linear-gradient(90deg,transparent,var(--c,var(--teal)),transparent);animation:slide 2.2s linear infinite}
+  @keyframes slide{from{left:-30%}to{left:100%}}
+
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr 1fr}}@media(max-width:520px){.cards{grid-template-columns:1fr}}
+  .mc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .mc .ic{font-size:24px}.mc .v{font-family:'Unbounded';font-weight:900;font-size:24px;color:var(--teal);line-height:1;margin-top:12px}
+  .mc h4{font-family:'Unbounded';font-weight:800;font-size:14px;text-transform:uppercase;margin:8px 0 6px}.mc p{color:#bcc7c2;font-size:13px;line-height:1.5}
+
+  .calls{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+  @media(max-width:860px){.calls{grid-template-columns:1fr}}
+  .call{border-radius:18px;padding:26px;border:1px solid var(--line)}
+  .call.g{background:linear-gradient(135deg,rgba(0,215,189,.12),rgba(0,215,189,.03))}
+  .call.b{background:linear-gradient(135deg,rgba(56,225,255,.12),rgba(56,225,255,.03))}
+  .call.o{background:linear-gradient(135deg,rgba(255,121,0,.12),rgba(255,121,0,.03))}
+  .call.r{background:linear-gradient(135deg,rgba(242,12,54,.12),rgba(242,12,54,.03))}
+  .call .big{font-family:'Unbounded';font-weight:900;font-size:clamp(20px,3.4vw,30px);line-height:1.04}
+  .call.g .big{color:var(--teal)}.call.b .big{color:var(--cyan)}.call.o .big{color:var(--orange)}.call.r .big{color:var(--red)}
+  .call h4{font-family:'Unbounded';font-weight:800;text-transform:uppercase;font-size:14px;margin:12px 0 8px}.call p{color:#c3ccc8;font-size:13.5px;line-height:1.55}
+
+  footer{border-top:1px solid var(--line);padding:50px 0 40px;background:var(--bg2);text-align:center}
+  footer .brand{justify-content:center;font-size:24px}
+  footer p{color:var(--muted);margin-top:14px;font-size:14px}
+  footer .cp{margin-top:24px;color:var(--muted);font-size:12.5px}
+  .disc{max-width:760px;margin:18px auto 0;color:#6c7d77;font-size:11.5px;line-height:1.55}
+</style>
+</head>
+<body>
+<div class="grain"></div><div class="cur"></div><div class="ring"></div>
+
+<header id="hd"><div class="wrap nav">
+  <a href="#top" class="brand"><span class="spin"></span><span class="lg">colt</span><small>· Autonomous BAS</small></a>
+  <nav class="menu"><a href="#map">Architecture</a><a href="#forge">The Forge</a><a href="#loop">24/7 Loop</a><a href="#deep">Deep Dive</a><a href="#safe">Guardrails</a></nav>
+</div></header>
+
+<section class="hero" id="top">
+  <div class="hero-bg"></div><div class="grid-bg"></div><canvas id="dust"></canvas>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>Reference Architecture · Redevco · Colt + S4Biz</span>
+    <h1><span class="ln"><span>Autonomous</span></span><span class="ln"><span class="stroke">Breach &amp;</span></span><span class="ln"><span>Attack <span class="fill">Sim.</span></span></span></h1>
+    <p class="lead">A self-updating internal-hacker digital twin. It watches for fresh zero-days and dark-net exploits, has <b style="color:var(--violet)">QWEN&nbsp;3.6</b> reason about what threatens Redevco, then <b style="color:var(--teal)">Hermes</b> writes them as brand-new <b style="color:var(--amber)">Infection Monkey</b> add-ons and proves your defences — continuously, safely, on your own hardware.</p>
+    <div class="hero-cta"><a href="#forge" class="btn">See the forge →</a><a href="#map" class="btn ghost">Explore the map</a></div>
+    <div class="herometa">
+      <div><b>24/7</b><span>Continuous validation</span></div>
+      <div><b>&lt; minutes</b><span>0-day → tested add-on</span></div>
+      <div><b>100%</b><span>On-prem / EU cloud</span></div>
+      <div><b>MITRE</b><span>ATT&amp;CK-mapped</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="sec wrap" id="map">
+  <div class="reveal">
+    <div class="sec-tag">/ The whole machine on one screen</div>
+    <h2 class="sec-title">How it all <em>connects</em></h2>
+    <p class="sec-desc">Dots travelling the lines are live data flows. Hover a block (or press “Tour”) to light up just its paths. Everything inside the dashed box runs inside Redevco — no estate data ever leaves.</p>
+    <div class="legend">
+      <span><i style="background:var(--orange)"></i>Threat &amp; 0-day intel</span>
+      <span><i style="background:var(--violet)"></i>AI reasoning (QWEN 3.6)</span>
+      <span><i style="background:var(--teal)"></i>Author &amp; execute</span>
+      <span><i style="background:var(--cyan)"></i>Estate &amp; detection</span>
+    </div>
+    <div class="tourbar"><button class="tbtn" id="tour">▶ Tour the architecture</button></div>
+    <div class="cap" id="cap"></div>
+    <div class="stage">
+      <div class="swipe">↔ swipe to explore the full map</div>
+      <div class="scroller">
+        <svg class="map" viewBox="0 0 1200 780" id="svgmap" aria-label="Redevco autonomous BAS reference architecture">
+          <defs>
+            <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="zone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(0,215,189,.05)"/><stop offset="1" stop-color="rgba(0,215,189,0)"/></linearGradient>
+          </defs>
+          <rect id="trustbox" x="300" y="40" width="820" height="700" rx="26" fill="url(#zone)" stroke="var(--teal)" stroke-opacity=".28" stroke-width="1.4" stroke-dasharray="7 8"/>
+          <text x="318" y="68" font-size="12" font-weight="800" fill="#5bbfb2" font-family="Unbounded" letter-spacing="1.5">REDEVCO TRUST BOUNDARY · ON-PREM / EU CLOUD</text>
+          <g id="edges"></g><g id="nodes"></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORGE -->
+<section class="sec wrap" id="forge">
+  <div class="reveal">
+    <div class="sec-tag">/ The part nobody else has</div>
+    <h2 class="sec-title">Zero-day in. <em>New attack add-on</em> out.</h2>
+    <p class="sec-desc">A real adversary weaponises a fresh exploit within hours. So does this. Watch a live cycle: a new vulnerability surfaces, QWEN&nbsp;3.6 decides if it threatens Redevco, then Hermes authors a brand-new Infection Monkey add-on, sandbox-tests it, and queues it for the next authorised run — all without a human writing a line of code.</p>
+  </div>
+  <div class="forge-wrap reveal">
+    <div class="term">
+      <div class="term-top">
+        <span class="dotr" style="background:#ff5f57"></span><span class="dotr" style="background:#febc2e"></span><span class="dotr" style="background:#28c840"></span>
+        <span class="nm">redevco-bas · add-on-forge.log</span>
+        <span class="live"><i></i>live</span>
+      </div>
+      <div class="term-body" id="term"></div>
+    </div>
+    <div class="forge-side">
+      <div class="fbtns" id="fbtns"></div>
+      <div class="fstep" data-st="0"><div class="k"><b>1</b>Ingest</div><h4>Fresh exploit spotted</h4><p>Zero-day feeds, CISA KEV and curated dark-net chatter surface a new candidate matching Redevco's tech stack.</p></div>
+      <div class="fstep" data-st="1"><div class="k"><b>2</b>Reason · QWEN 3.6</div><h4>Is this our problem?</h4><p>QWEN scores relevance against the live estate twin and maps the technique to MITRE ATT&amp;CK.</p></div>
+      <div class="fstep" data-st="2"><div class="k"><b>3</b>Author · Hermes</div><h4>Write the add-on</h4><p>Hermes generates a safe, non-destructive Infection Monkey exploiter plugin as code — fingerprint &amp; validate, never weaponise.</p></div>
+      <div class="fstep" data-st="3"><div class="k"><b>4</b>Forge · gate</div><h4>Lint · sandbox · approve</h4><p>The add-on is linted, unit-tested in the lab, and held for a human sign-off before it can touch production.</p></div>
+      <div class="fstep" data-st="4"><div class="k"><b>5</b>Run · Monkey</div><h4>Prove the defence</h4><p>Infection Monkey runs it against the in-scope estate; detections land in Sentinel; gaps become prioritised fixes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOP -->
+<section class="sec wrap" id="loop">
+  <div class="reveal">
+    <div class="sec-tag">/ It never sleeps</div>
+    <h2 class="sec-title">The continuous <em>cycle</em></h2>
+    <p class="sec-desc">Six stages, running around the clock. Each pass makes the digital twin smarter and Redevco's defences more proven.</p>
+    <div class="tl">
+      <div class="ti reveal"><span class="bar"></span><div class="ico">📡</div><b>1 · Ingest</b><p>0-day feeds, KEV, vendor &amp; BSI advisories, dark-net intel.</p></div>
+      <div class="ti reveal"><span class="bar"></span><div class="ico">🧠</div><b>2 · Reason</b><p>QWEN 3.6 scores relevance to the Redevco estate &amp; plans.</p></div>
+      <div class="ti reveal"><span class="bar"></span><div class="ico">🛠️</div><b>3 · Author</b><p>Hermes writes new Monkey add-ons &amp; refreshes scenarios.</p></div>
+      <div class="ti reveal"><span class="bar"></span><div class="ico">🐒</div><b>4 · Execute</b><p>Infection Monkey runs safely across in-scope segments.</p></div>
+      <div class="ti reveal"><span class="bar"></span><div class="ico">🛡️</div><b>5 · Evaluate</b><p>Defender / Sentinel results → prevented, detected or missed.</p></div>
+      <div class="ti reveal"><span class="bar"></span><div class="ico">♻️</div><b>6 · Learn</b><p>Twin updates; gaps become fixes; next cycle scheduled.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEEP DIVE -->
+<section class="sec wrap" id="deep">
+  <div class="reveal">
+    <div class="sec-tag">/ Under the hood — for the engineer</div>
+    <h2 class="sec-title">Every block, <em>explained</em></h2>
+  </div>
+  <div id="ddwrap"></div>
+</section>
+
+<!-- VALUE -->
+<section class="sec wrap" id="value">
+  <div class="reveal">
+    <div class="sec-tag">/ Why it changes the game</div>
+    <h2 class="sec-title">What Redevco <em>gets</em></h2>
+    <div class="cards">
+      <div class="mc reveal"><div class="ic">⏱️</div><div class="v">24/7/365</div><h4>Always-on</h4><p>The blind window between annual pen tests disappears.</p></div>
+      <div class="mc reveal"><div class="ic">⚡</div><div class="v">Minutes</div><h4>0-day to coverage</h4><p>New exploits become tested add-ons as fast as attackers adopt them.</p></div>
+      <div class="mc reveal"><div class="ic">🔒</div><div class="v">Sovereign</div><h4>Stays inside</h4><p>QWEN 3.6 &amp; Hermes run on Redevco hardware or EU cloud — no data leaves.</p></div>
+      <div class="mc reveal"><div class="ic">📊</div><div class="v">Board-ready</div><h4>Proof on tap</h4><p>MITRE heat-maps &amp; trends for GDPR, NIS2, DORA, ISO 27001 &amp; investors.</p></div>
+    </div>
+    <div class="calls">
+      <div class="call g reveal"><div class="big">Your model, not a rented one</div><h4>Cost &amp; control</h4><p>Hermes drives your own QWEN 3.6 instead of paying a cloud AI per request — and the twin that holds a map of your weaknesses never leaves your walls.</p></div>
+      <div class="call r reveal"><div class="big">The timecard lesson</div><h4>Why this exists</h4><p>Redevco's exposed time-tracking portal leaked internal systems for weeks — inside exactly the blind window an annual test can't see. Continuous BAS catches recurrence on the very next cycle.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFE -->
+<section class="sec wrap" id="safe">
+  <div class="reveal">
+    <div class="sec-tag">/ Safe by design</div>
+    <h2 class="sec-title">Autonomy <em>with the brakes on</em></h2>
+    <div class="calls">
+      <div class="call b reveal"><div class="big">Human owns production</div><h4>Nothing live without a “yes”</h4><p>Routine intel→sandbox cycles are autonomous, but no AI-authored add-on reaches production without an authorised engineer's sign-off and a maintenance window.</p></div>
+      <div class="call o reveal"><div class="big">Awareness, not weapons</div><h4>No live malware, ever</h4><p>Dark-net intel informs safe simulations only. The forge generates fingerprint-and-validate probes — it never downloads, stores or runs live malware against production.</p></div>
+    </div>
+    <div class="cards">
+      <div class="mc reveal"><div class="ic">🎯</div><h4>Hard scope</h4><p>Models can only target in-scope subnets; SaaS &amp; partner nets are blocked at the orchestration layer.</p></div>
+      <div class="mc reveal"><div class="ic">🧪</div><h4>Sandbox-first</h4><p>Every generated add-on passes lab safety checks before it can target anything.</p></div>
+      <div class="mc reveal"><div class="ic">🛑</div><h4>Kill switch</h4><p>“Kill All Agents” stays available; every decision &amp; add-on is logged for audit.</p></div>
+      <div class="mc reveal"><div class="ic">🔐</div><h4>Secrets isolated</h4><p>Credentials sit apart from the models, in a separate container.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div class="brand"><span class="spin"></span><span class="lg">colt</span></div>
+  <p>Autonomous Breach &amp; Attack Simulation · Infection Monkey + QWEN 3.6 + Hermes · for Redevco</p>
+  <p class="disc">Reference architecture and advisory material prepared by Colt Technology Services — Cyber Advisory, in partnership with S4Biz (Stars4Business). Infection Monkey is third-party GPLv3 software (Akamai); QWEN and Hermes are third-party models under their own licences. All BAS activity is the customer's responsibility and must be properly authorised. The forge depicted here generates safe, non-destructive validation probes — it does not produce or distribute working exploit code.</p>
+  <div class="cp">© 2026 · Colt + S4Biz · Redevco engagement · Confidential</div>
+</div></footer>
+
+<script>
+/* cursor */
+if(matchMedia('(hover:hover)').matches){const cur=document.querySelector('.cur'),ring=document.querySelector('.ring');let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+  (function l(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(l)})();
+  addEventListener('mouseover',e=>{if(e.target.closest('a,button,input,.node,.chip,.tbtn,.fbtn'))ring.classList.add('grow')});
+  addEventListener('mouseout',e=>{if(e.target.closest('a,button,input,.node,.chip,.tbtn,.fbtn'))ring.classList.remove('grow')});}
+const hd=document.getElementById('hd');addEventListener('scroll',()=>hd.classList.toggle('s',scrollY>40));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* dust */
+const cv=document.getElementById('dust'),ctx=cv.getContext('2d');let W,H,ps=[];
+function sz(){W=cv.width=innerWidth;H=cv.height=cv.parentElement.offsetHeight}sz();addEventListener('resize',sz);
+function sp(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.2+.4,vx:Math.random()*.4-.2,vy:-Math.random()*.5-.1,a:Math.random()*.5+.1,c:Math.random()>.8?'255,121,0':'0,215,189'}}
+for(let i=0;i<78;i++)ps.push(sp());
+(function dr(){ctx.clearRect(0,0,W,H);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a-=.0016;if(p.a<=0||p.y<-10){Object.assign(p,sp());p.y=H+5}ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba('+p.c+','+p.a+')';ctx.fill()});requestAnimationFrame(dr)})();
+
+/* MAP */
+const C={teal:'#00D7BD',orange:'#FF7900',cyan:'#38e1ff',violet:'#b08bff',red:'#F20C36',amber:'#FFC33C'};
+const NODES=[
+  {id:'zero',x:150,y:120,ico:'📡',t:'0-DAY FEEDS',s:'NVD · CVE · KEV',c:C.orange,n:'1',dd:'d1'},
+  {id:'dark',x:150,y:300,ico:'🕳️',t:'DARK-NET INTEL',s:'exploit chatter',c:C.red,n:'1',dd:'d1'},
+  {id:'twin',x:150,y:480,ico:'🗺️',t:'ESTATE TWIN',s:'Redevco assets',c:C.cyan,n:'6',dd:'d6'},
+  {id:'qwen',x:480,y:200,ico:'🧠',t:'QWEN 3.6',s:'reason · plan · map',c:C.violet,n:'2',dd:'d2',big:true},
+  {id:'herm',x:480,y:430,ico:'⚙️',t:'HERMES',s:'author · tool-use',c:C.teal,n:'3',dd:'d3',big:true},
+  {id:'forge',x:480,y:640,ico:'🛠️',t:'ADD-ON FORGE',s:'lint · sandbox · gate',c:C.cyan,n:'3',dd:'d3'},
+  {id:'monkey',x:810,y:330,ico:'🐒',t:'INFECTION MONKEY',s:'safe exploitation',c:C.amber,n:'4',dd:'d4',big:true},
+  {id:'estate',x:1060,y:200,ico:'🏢',t:'REDEVCO ESTATE',s:'n8n·timecard·3CX',c:C.cyan,n:'4',dd:'d4'},
+  {id:'siem',x:1060,y:470,ico:'🛡️',t:'SIEM / DEFENDER',s:'detections',c:C.cyan,n:'5',dd:'d5'},
+  {id:'eval',x:810,y:640,ico:'📊',t:'EVALUATE & LEARN',s:'gap → remediate',c:C.orange,n:'5',dd:'d5'},
+];
+const EDGES=[
+  {a:'zero',b:'qwen',c:C.orange},{a:'dark',b:'qwen',c:C.red},{a:'twin',b:'qwen',c:C.cyan},
+  {a:'qwen',b:'herm',c:C.violet},{a:'herm',b:'forge',c:C.teal},
+  {a:'forge',b:'monkey',c:C.teal,bow:60},{a:'monkey',b:'estate',c:C.amber},
+  {a:'monkey',b:'siem',c:C.cyan},{a:'estate',b:'siem',c:C.cyan,bow:-30},
+  {a:'siem',b:'eval',c:C.cyan},{a:'eval',b:'twin',c:C.orange,bow:120},{a:'eval',b:'qwen',c:C.orange,bow:-160},
+];
+const NS='http://www.w3.org/2000/svg',byId=Object.fromEntries(NODES.map(n=>[n.id,n]));
+const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const pathD=(a,b,bow)=>{const mx=(a.x+b.x)/2,my=(a.y+b.y)/2-(bow||0);return 'M '+a.x+' '+a.y+' Q '+mx+' '+my+' '+b.x+' '+b.y};
+const eg=document.getElementById('edges'),ng=document.getElementById('nodes');
+const E=[],Ngr={};
+EDGES.forEach((e,i)=>{const a=byId[e.a],b=byId[e.b],d=pathD(a,b,e.bow);
+  const p=el('path',{d:d,fill:'none',stroke:e.c,'stroke-width':2,'stroke-opacity':.2,'stroke-dasharray':'2 9','stroke-linecap':'round'});eg.appendChild(p);
+  const dots=[];for(let k=0;k<3;k++){const dot=el('circle',{r:4.4,fill:e.c,filter:'url(#glow)'});
+    const m=el('animateMotion',{dur:(3.6+i*.1)+'s',repeatCount:'indefinite',begin:(-(k*1.2))+'s',path:d,calcMode:'linear'});
+    dot.appendChild(m);eg.appendChild(dot);dots.push(dot)}
+  E.push({path:p,dots:dots,from:e.a,to:e.b})});
+NODES.forEach(n=>{const w=n.big?188:162,h=n.big?96:86,x=n.x-w/2,y=n.y-h/2;
+  const g=el('g',{class:'node'});
+  g.appendChild(el('rect',{x:x-1,y:y-1,width:w+2,height:h+2,rx:18,fill:'none',stroke:n.c,'stroke-opacity':.5,'stroke-width':1.5}));
+  const box=el('rect',{class:'box',x:x,y:y,width:w,height:h,rx:17,fill:n.big?'#101a18':'#0e1413',stroke:n.c,'stroke-opacity':.35,'stroke-width':1.2});g.appendChild(box);
+  const ic=el('text',{x:n.x,y:y+34,'text-anchor':'middle','font-size':n.big?32:26});ic.textContent=n.ico;g.appendChild(ic);
+  const t=el('text',{x:n.x,y:y+(n.big?64:58),'text-anchor':'middle','font-size':13.5,'font-weight':800,fill:'#eef3f1','font-family':'Unbounded'});t.textContent=n.t;g.appendChild(t);
+  const s=el('text',{x:n.x,y:y+(n.big?82:75),'text-anchor':'middle','font-size':10.5,'font-weight':600,fill:'#8fa39d'});s.textContent=n.s;g.appendChild(s);
+  const bx=x+15;g.appendChild(el('circle',{cx:bx,cy:y,r:13,fill:n.c,filter:'url(#glow)'}));
+  const num=el('text',{x:bx,y:y+5,'text-anchor':'middle','font-size':13,'font-weight':900,fill:'#001512','font-family':'Unbounded'});num.textContent=n.n;g.appendChild(num);
+  g.addEventListener('click',()=>flash(n.dd));
+  g.addEventListener('mouseenter',()=>{if(!touring)hl([n.id])});
+  g.addEventListener('mouseleave',()=>{if(!touring)hl(null)});
+  ng.appendChild(g);Ngr[n.id]=g});
+function hl(ids){E.forEach(e=>{const on=!ids||ids.includes(e.from)||ids.includes(e.to);
+    e.path.style.strokeOpacity=ids?(on?.65:.04):.2;e.dots.forEach(d=>d.style.opacity=ids?(on?1:.08):1)});
+  NODES.forEach(n=>{Ngr[n.id].style.opacity=ids?(ids.includes(n.id)?1:.3):1;Ngr[n.id].style.transition='opacity .3s'})}
+
+/* TOUR */
+const STEPS=[
+  {ids:['zero','dark','qwen'],t:'1 · Fresh zero-days and dark-net exploit chatter stream in — matched to Redevco’s tech stack.'},
+  {ids:['twin','qwen'],t:'2 · QWEN 3.6 scores each threat against the live estate twin and maps it to MITRE ATT&CK.'},
+  {ids:['qwen','herm','forge'],t:'3 · Hermes authors a new Infection Monkey add-on; the forge lints, sandbox-tests and gates it.'},
+  {ids:['forge','monkey','estate'],t:'4 · After sign-off, Infection Monkey runs the add-on safely against the in-scope estate.'},
+  {ids:['monkey','siem','eval'],t:'5 · Defender / Sentinel detections feed the evaluation — prevented, detected or missed.'},
+  {ids:['eval','twin','qwen'],t:'6 · Gaps become prioritised fixes; the twin learns; the next cycle begins. 24/7.'},
+];
+let touring=false,ti=0,timer=null;const cap=document.getElementById('cap'),tbtn=document.getElementById('tour');
+function step(){const s=STEPS[ti];hl(s.ids);cap.innerHTML=s.t;cap.classList.add('show');ti=(ti+1)%STEPS.length;timer=setTimeout(step,2800)}
+tbtn.onclick=()=>{if(touring){touring=false;clearTimeout(timer);hl(null);cap.classList.remove('show');tbtn.textContent='▶ Tour the architecture';tbtn.classList.remove('off')}
+  else{touring=true;ti=0;step();tbtn.textContent='⏸ Stop tour';tbtn.classList.add('off');document.getElementById('map').scrollIntoView({behavior:'smooth',block:'start'})}};
+
+/* DEEP DIVE */
+const DD=[
+  {id:'d1',n:'1',ic:'📡',h:'Threat & zero-day ingestion',plain:'The pipeline watches for fresh danger: <b>zero-day feeds, CVE/NVD, CISA KEV</b>, vendor and BSI/CERT-Bund advisories, plus curated <b>dark-net</b> exploit chatter — all filtered against Redevco’s actual technology stack (n8n, 3CX, WordPress/PHP, Microsoft 365, edge appliances).',hood:['Normalises every source into structured “technique candidates”','Dark-net monitoring is awareness-only — no live malware is ever fetched or run','Lawful, ideally via a reputable threat-intel provider; reviewed by Redevco legal','Internal findings (timecard, n8n, Roebuck) seed the relevance model'],c:C.orange},
+  {id:'d2',n:'2',ic:'🧠',h:'QWEN 3.6 — the strategist',plain:'QWEN 3.6 is the reasoning brain. It reads each candidate, decides <b>whether it threatens Redevco</b>, plans the attack path, and writes the test plan with its <b>MITRE ATT&CK</b> mapping. It runs as <b>your</b> model — on local GPUs or in Redevco’s EU cloud.',hood:['Long-context, multilingual reasoning suits intel triage','Scores relevance against the estate twin (assets, segments, findings)','Outputs a structured plan Hermes can act on — not free text','Served via <code>vLLM</code> / <code>Ollama</code> on Redevco hardware or EU GPU instance'],c:C.violet},
+  {id:'d3',n:'3',ic:'🛠️',h:'Hermes + the Add-on Forge',plain:'Hermes is the operator: a tool-use fine-tune that turns QWEN’s plan into a <b>brand-new Infection Monkey plugin</b> — as code. The forge then <b>lints, unit-tests it in the sandbox</b>, and holds it for human sign-off. Add-ons are <b>fingerprint-and-validate</b> probes, never weaponised payloads.',hood:['Generates exploiter/collector/payload plugins for Monkey v2.3+','Calls the Monkey Island API to register and queue add-ons','Safe-mode enforced: non-destructive, sandbox-gated by default','Crash-prone / data-destructive techniques disallowed'],c:C.teal},
+  {id:'d4',n:'4',ic:'🐒',h:'Infection Monkey — safe engine',plain:'Infection Monkey safely exploits, propagates, steals credentials and moves laterally across the <b>in-scope Redevco estate</b> — exactly like a real attacker, but non-destructively. It validates the very findings from the external assessment: the n8n hub, the timecard portal, the Roebuck estate, 3CX and mail.',hood:['Open-source adversary emulation (Akamai/Guardicore), GPLv3','Avoids crash-prone exploits (e.g. EternalBlue) by design','Every action mapped to MITRE ATT&CK for standard reporting','“Kill All Agents” kill-switch always available'],c:C.amber},
+  {id:'d5',n:'5',ic:'🛡️',h:'Detection, evaluation & learning',plain:'Results land where the SOC works — <b>Microsoft Sentinel / Defender</b>. Each technique is scored <b>prevented, detected or missed</b>; “detect-only” on a critical technique is itself a finding. Gaps become prioritised, owner-assigned remediation, and the cycle’s learnings update the twin.',hood:['Forwards Monkey activity context to Sentinel for confirmation','Validates analytic rules per ATT&CK technique exercised','Tracks MTTD / MTTR trend per cycle','Board, infra and SOC each get a fit-for-purpose report'],c:C.cyan},
+  {id:'d6',n:'6',ic:'🗺️',h:'The estate digital twin',plain:'The twin is a living model of an internal attacker’s view of Redevco: assets, segments, identities and known weaknesses, fused with an evolving technique library. Each cycle it asks: <b>given the latest exploits, what would an adversary try next — and would our controls stop it?</b> Then it proves the answer.',hood:['Updated every cycle with what worked and what was blocked','Treated as a sensitive asset — it holds a map of weaknesses','Stays on-prem / in-tenant; never sent to a third-party AI','Feeds QWEN’s relevance scoring on the next pass'],c:C.cyan},
+];
+const dw=document.getElementById('ddwrap');
+DD.forEach(d=>{const s=document.createElement('div');s.className='dd reveal';s.id=d.id;
+  s.innerHTML='<div class="num" style="background:'+d.c+'">'+d.n+'</div><div><h3><span class="ic">'+d.ic+'</span>'+d.h+'</h3><p class="plain">'+d.plain+'</p><div class="flowstrip" style="--c:'+d.c+'"><i></i></div><div class="hood"><div class="h">⚙ Under the hood</div><ul>'+d.hood.map(x=>'<li>'+x+'</li>').join('')+'</ul></div></div>';
+  dw.appendChild(s);io.observe(s)});
+function flash(id){const c=document.getElementById(id);if(!c)return;c.scrollIntoView({behavior:'smooth',block:'center'});c.style.transition='box-shadow .4s';c.style.boxShadow='0 0 0 3px rgba(0,215,189,.3)';setTimeout(()=>c.style.boxShadow='',1400)}
+
+/* FORGE TERMINAL */
+const SCEN=[
+  {key:'n8n', label:'n8n hub (C1)', lines:[
+    ['t-intel','[intel] new candidate  CVE-2026-4471  ·  n8n workflow-automation  ·  CVSS 9.6  ·  KEV'],
+    ['t-intel','[intel] source: NVD + dark-net PoC chatter  ·  unauth workflow execution'],
+    ['t-qwen','[qwen 3.6] match → Redevco asset  n8n-roebuck  (finding C1, US PaaS)'],
+    ['t-qwen','[qwen 3.6] relevance: HIGH  ·  blast radius: stored creds → mail/finance'],
+    ['t-qwen','[qwen 3.6] plan: emulate unauth exec → credential access   T1190 → T1552'],
+    ['t-herm','[hermes] authoring Infection Monkey exploiter add-on…'],
+    ['t-code','  class N8nUnauthExecProbe(Exploiter):'],
+    ['t-code','    mitre   = ["T1190","T1552"]'],
+    ['t-code','    safe    = True   # non-destructive, sandbox-gated'],
+    ['t-code','    steps   = [fingerprint, benign_probe, report]   # no payload'],
+    ['t-forge','[forge] lint ✓   unit-test (sandbox) ✓   secrets-scan ✓'],
+    ['t-forge','[forge] human approval ⧗  awaiting authorised engineer'],
+    ['t-ok','[monkey] queued for next authorised run  →  validates C1 control'],
+  ]},
+  {key:'3cx', label:'3CX VoIP (H1)', lines:[
+    ['t-intel','[intel] new candidate  CVE-2026-1180  ·  3CX management console  ·  CVSS 8.8'],
+    ['t-intel','[intel] source: vendor advisory + KEV  ·  exposed admin plane'],
+    ['t-qwen','[qwen 3.6] match → Redevco asset  roebuck.3cx  (finding H1, consumer cloud)'],
+    ['t-qwen','[qwen 3.6] relevance: HIGH  ·  risk: toll fraud / lateral movement'],
+    ['t-qwen','[qwen 3.6] plan: probe admin exposure + supply-chain emulation   T1133 → T1199'],
+    ['t-herm','[hermes] authoring Infection Monkey add-on…'],
+    ['t-code','  class PbxAdminExposureProbe(Exploiter):'],
+    ['t-code','    mitre = ["T1133","T1199"]'],
+    ['t-code','    safe  = True   # detect-only, no auth attempts'],
+    ['t-code','    steps = [reach_check, banner, report]'],
+    ['t-forge','[forge] lint ✓   sandbox ✓   scope allow-list ✓'],
+    ['t-forge','[forge] human approval ⧗  awaiting authorised engineer'],
+    ['t-ok','[monkey] queued  →  validates H1 admin-plane gating'],
+  ]},
+  {key:'web', label:'EOL web (C3)', lines:[
+    ['t-intel','[intel] new candidate  CVE-2026-0099  ·  legacy PHP/CMS  ·  CVSS 9.1  ·  exploited ITW'],
+    ['t-intel','[intel] source: KEV + emerging-threat tracker'],
+    ['t-qwen','[qwen 3.6] match → Redevco asset  commented.uk  (finding C3, Roebuck estate)'],
+    ['t-qwen','[qwen 3.6] relevance: HIGH  ·  co-located with mail → pivot risk'],
+    ['t-qwen','[qwen 3.6] plan: web-app exploit emulation behind WAF check   T1190'],
+    ['t-herm','[hermes] authoring Infection Monkey add-on…'],
+    ['t-code','  class WebAppExploitProbe(Exploiter):'],
+    ['t-code','    mitre = ["T1190","T1210"]'],
+    ['t-code','    safe  = True   # validate WAF blocks; no live exploit'],
+    ['t-code','    steps = [fingerprint, waf_probe, report]'],
+    ['t-forge','[forge] lint ✓   sandbox ✓   destructive-check blocked ✓'],
+    ['t-forge','[forge] human approval ⧗  awaiting authorised engineer'],
+    ['t-ok','[monkey] queued  →  validates C3 WAF / virtual-patch'],
+  ]},
+];
+const term=document.getElementById('term'),fbtns=document.getElementById('fbtns'),fsteps=[...document.querySelectorAll('.fstep')];
+let curScen=0,playTok=0;
+function actStep(i){fsteps.forEach(s=>s.classList.toggle('act',+s.dataset.st===i))}
+function lineToStep(cls){return cls==='t-intel'?0:cls==='t-qwen'?1:cls==='t-herm'||cls==='t-code'?2:cls==='t-forge'?3:4}
+function renderBtns(){fbtns.innerHTML=SCEN.map((s,i)=>'<button class="fbtn '+(i===curScen?'on':'')+'" data-i="'+i+'">'+s.label+'</button>').join('');
+  fbtns.querySelectorAll('.fbtn').forEach(btn=>btn.onclick=()=>{curScen=+btn.dataset.i;renderBtns();play()})}
+function play(){const tok=++playTok;term.innerHTML='';actStep(-1);const L=SCEN[curScen].lines;let i=0;
+  (function nxt(){if(tok!==playTok)return;if(i>=L.length){const cur=document.createElement('div');cur.className='ln2 cursorblink t-dim';cur.textContent='> ';term.appendChild(cur);
+      setTimeout(()=>{if(tok===playTok){curScen=(curScen+1)%SCEN.length;renderBtns();play()}},3400);return;}
+    const [cls,txt]=L[i];const d=document.createElement('div');d.className='ln2 '+cls;d.textContent=txt;term.appendChild(d);
+    actStep(lineToStep(cls));term.scrollTop=term.scrollHeight;i++;
+    const delay=cls==='t-code'?260:cls==='t-qwen'?560:cls==='t-intel'?620:520;setTimeout(nxt,delay)})()}
+renderBtns();
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){play();o.disconnect()}},{threshold:.3}).observe(term);
+</script>
+</body>
+</html>
