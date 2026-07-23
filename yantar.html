@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ЯНТАРЬ">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>ЯНТАРЬ — Евгений Вайнштейн</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#0b0a09;--resin:#15110c;--resin2:#1c1710;--card:#141009;
+  --amber:#ffb300;--amber-hi:#ffd166;--amber-lo:#8a5e00;--oxide:#e2521f;--ice:#7fd8ff;
+  --ink:#efe7d8;--dust:#a09789;--ash:#6b635a;
+  --line:rgba(255,179,0,.15);--line2:rgba(255,179,0,.07);
+  --d:'Unbounded',sans-serif;--b:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace;
+  --r:18px;--ease:cubic-bezier(.22,1,.36,1);
+  --topbar:54px;--tabbar:66px;
+  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:var(--void);color:var(--ink);font-family:var(--b);line-height:1.6;
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+  overflow-x:clip;min-height:100vh;overscroll-behavior-y:none;
+}
+::selection{background:var(--amber);color:#000}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+
+/* ---------- фон ---------- */
+#bgfx{position:fixed;inset:0;z-index:0;pointer-events:none}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(62% 40% at 12% 4%,rgba(255,179,0,.15),transparent 62%),
+  radial-gradient(58% 38% at 92% 30%,rgba(226,82,31,.10),transparent 60%),
+  radial-gradient(70% 44% at 50% 100%,rgba(127,216,255,.05),transparent 62%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.3;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 .82 0 0 0 0 .45 0 0 0 .1 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>")}
+
+/* ---------- заставка ---------- */
+#boot{position:fixed;inset:0;z-index:200;background:#050505;display:flex;align-items:center;justify-content:center;
+  padding:calc(var(--sat) + 24px) 22px calc(var(--sab) + 24px);transition:opacity .45s,visibility .45s}
+#boot.off{opacity:0;visibility:hidden}
+.bootbox{width:100%;max-width:420px;font-family:var(--m);font-size:12px;line-height:1.95;color:var(--amber)}
+.bootbox .dim{color:var(--ash)}
+.bootbar{height:3px;background:rgba(255,179,0,.15);margin-top:14px;border-radius:2px;overflow:hidden}
+.bootbar i{display:block;height:100%;width:0;background:var(--amber);transition:width .2s linear}
+
+/* ---------- верхняя панель ---------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:60;height:calc(var(--topbar) + var(--sat));
+  padding:var(--sat) max(16px,var(--sal)) 0 max(16px,var(--sal));
+  display:flex;align-items:center;gap:12px;
+  background:rgba(11,10,9,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line2);
+}
+.mark{width:26px;height:26px;flex:0 0 auto;display:grid;place-items:center}
+.mark i{width:13px;height:13px;background:var(--amber);transform:rotate(45deg);box-shadow:0 0 14px rgba(255,179,0,.55)}
+.tb-t{font-family:var(--d);font-weight:700;font-size:13px;letter-spacing:.02em;text-transform:uppercase;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tb-r{font-family:var(--m);font-size:9.5px;letter-spacing:.2em;color:var(--ash);text-transform:uppercase;flex:0 0 auto}
+
+/* ---------- экраны ---------- */
+#app{position:relative;z-index:5;padding-top:calc(var(--topbar) + var(--sat));
+  padding-bottom:calc(var(--tabbar) + var(--sab) + 22px);
+  padding-left:max(16px,var(--sal));padding-right:max(16px,var(--sar));
+  max-width:760px;margin:0 auto}
+.screen{display:none}
+.screen.on{display:block;animation:sw .38s var(--ease)}
+@keyframes sw{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---------- типографика ---------- */
+.eyebrow{font-family:var(--m);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--amber);
+  display:flex;align-items:center;gap:9px;margin:22px 0 12px}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--amber);flex:0 0 auto}
+.h1{font-family:var(--d);font-weight:900;font-size:clamp(30px,9vw,52px);line-height:.96;letter-spacing:-.03em;text-transform:uppercase}
+.h1 em{font-style:normal;color:var(--amber);text-shadow:0 0 34px rgba(255,179,0,.4)}
+.h2{font-family:var(--d);font-weight:700;font-size:19px;line-height:1.2;letter-spacing:-.01em;text-transform:uppercase;margin:34px 0 6px}
+.h2 s{text-decoration:none;font-family:var(--m);font-size:11px;letter-spacing:.2em;color:var(--amber-lo);display:block;margin-bottom:9px;font-weight:400}
+.p{color:var(--dust);font-size:15px;margin-top:12px}
+.p b{color:var(--ink);font-weight:600}
+.lede{font-size:16px;color:var(--dust);margin-top:16px}
+.lede b{color:var(--ink);font-weight:600}
+
+/* ---------- чипы ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.chip{font-family:var(--m);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dust);
+  border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:rgba(21,17,12,.6)}
+.chip s{text-decoration:none;color:var(--amber-lo);margin-right:6px}
+
+/* ---------- карточки ---------- */
+.cards{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+@media(min-width:560px){.cards{grid-template-columns:1fr 1fr}}
+.card{border:1px solid var(--line2);background:var(--card);border-radius:var(--r);padding:18px;position:relative;overflow:hidden}
+.card .tag{font-family:var(--m);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber-lo);display:block;margin-bottom:9px}
+.card h4{font-family:var(--d);font-weight:700;font-size:13.5px;text-transform:uppercase;letter-spacing:.01em;margin-bottom:7px}
+.card p{font-size:14px;color:var(--dust)}
+.card.stop{border-color:rgba(226,82,31,.32)}
+.card.stop .tag{color:var(--oxide)}
+
+/* ---------- спецификация ---------- */
+.spec{border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:var(--resin);margin-top:16px}
+.sr{padding:14px 16px;border-bottom:1px solid var(--line2)}
+.sr:last-child{border-bottom:0}
+.sr .k{font-family:var(--m);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-bottom:5px}
+.sr .v{font-size:14.5px}
+.sr .v em{font-style:normal;color:var(--amber)}
+
+/* ---------- статистика ---------- */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.st{border:1px solid var(--line2);background:var(--card);border-radius:var(--r);padding:16px}
+.st .n{font-family:var(--d);font-weight:900;font-size:30px;line-height:1;color:var(--amber);letter-spacing:-.02em}
+.st .l{margin-top:7px;font-family:var(--m);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+
+/* ---------- логотипы ---------- */
+.logos{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.lg{font-family:var(--d);font-weight:700;font-size:11px;letter-spacing:.03em;text-transform:uppercase;color:var(--dust);
+  border:1px solid var(--line2);border-radius:999px;padding:9px 13px}
+
+/* ---------- таймлайн ---------- */
+.tl{border-left:1px solid var(--line);margin:18px 0 0 5px;padding-left:18px}
+.ti{position:relative;padding-bottom:20px}
+.ti:last-child{padding-bottom:0}
+.ti::before{content:'';position:absolute;left:-23px;top:6px;width:7px;height:7px;background:var(--amber);transform:rotate(45deg)}
+.ti .w{font-family:var(--m);font-size:10px;letter-spacing:.16em;color:var(--amber-lo);text-transform:uppercase}
+.ti .t{font-family:var(--d);font-weight:700;font-size:13px;text-transform:uppercase;margin:5px 0 5px}
+.ti .n{font-size:14px;color:var(--dust)}
+
+/* ---------- цитата ---------- */
+.pull{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 0;margin:24px 0}
+.pull p{font-family:var(--d);font-weight:600;font-size:clamp(18px,5.4vw,26px);line-height:1.26;letter-spacing:-.01em}
+.pull p em{font-style:normal;color:var(--amber)}
+.pull .by{margin-top:11px;font-family:var(--m);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+
+/* ---------- пресса ---------- */
+.press{border:1px solid var(--line2);border-left:3px solid var(--oxide);background:var(--card);
+  border-radius:var(--r);padding:18px;margin-top:18px}
+.press.amb{border-left-color:var(--amber)}
+.press .s{font-family:var(--m);font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--oxide)}
+.press.amb .s{color:var(--amber-lo)}
+.press .q{font-family:var(--d);font-weight:600;font-size:15px;line-height:1.4;margin:11px 0}
+.press .m{font-family:var(--m);font-size:11px;color:var(--ash)}
+.press .m a{color:var(--amber);border-bottom:1px solid var(--amber-lo)}
+
+/* ---------- флаги ---------- */
+.flags{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+@media(min-width:560px){.flags{grid-template-columns:1fr 1fr}}
+.fl{border:1px solid var(--line2);background:var(--card);border-radius:var(--r);padding:18px}
+.fl h4{font-family:var(--d);font-weight:900;font-size:13px;text-transform:uppercase;margin-bottom:11px}
+.fl.go h4{color:var(--amber)}
+.fl.no h4{color:var(--oxide)}
+.fl ul{list-style:none}
+.fl li{position:relative;padding:7px 0 7px 21px;font-size:14px;color:var(--dust);border-bottom:1px solid var(--line2)}
+.fl li:last-child{border-bottom:0}
+.fl.go li::before{content:'+';position:absolute;left:0;color:var(--amber);font-family:var(--m);font-weight:600}
+.fl.no li::before{content:'×';position:absolute;left:0;color:var(--oxide);font-family:var(--m);font-weight:600}
+
+/* ---------- матч ---------- */
+.f{margin-bottom:18px}
+.f>label{display:block;font-family:var(--m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);margin-bottom:9px}
+.f .val{float:right;color:var(--amber);letter-spacing:.06em}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,179,0,.16);
+  border-radius:3px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--amber);border:0;box-shadow:0 0 14px rgba(255,179,0,.5)}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--amber);border:0}
+input[type=range]:focus-visible{outline:2px solid var(--amber);outline-offset:6px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{font-family:var(--m);font-size:11px;border:1px solid var(--line);border-radius:999px;color:var(--dust);
+  padding:11px 14px;min-height:44px;transition:.18s var(--ease)}
+.opt.sel{background:var(--amber);border-color:var(--amber);color:#0b0a09;font-weight:600}
+.opt:active{transform:scale(.96)}
+
+.term{border:1px solid var(--line2);background:#070605;border-radius:var(--r);padding:18px;margin-top:8px;position:relative;overflow:hidden}
+.term::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.45;
+  background:repeating-linear-gradient(180deg,rgba(255,179,0,.05) 0 1px,transparent 1px 3px)}
+.tlines{font-family:var(--m);font-size:11.5px;line-height:1.85;color:var(--amber);position:relative;z-index:2}
+.tlines .dim{color:var(--ash)}
+.tlines .ok{color:var(--amber-hi)}
+.tlines .bad{color:var(--oxide)}
+.tlines .warn{color:var(--ice)}
+.score{font-family:var(--d);font-weight:900;font-size:54px;line-height:1;letter-spacing:-.04em;color:var(--amber);
+  text-shadow:0 0 34px rgba(255,179,0,.4);margin:12px 0 0;position:relative;z-index:2}
+.sbar{height:5px;background:rgba(255,179,0,.14);border-radius:3px;margin:12px 0 14px;overflow:hidden;position:relative;z-index:2}
+.sbar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--oxide),var(--amber),var(--amber-hi));transition:width .6s var(--ease)}
+.verdict{font-size:14px;color:var(--ink);position:relative;z-index:2;padding-top:14px;border-top:1px dashed var(--line)}
+.disc{margin-top:12px;font-family:var(--m);font-size:10px;line-height:1.7;color:var(--ash);position:relative;z-index:2}
+
+/* ---------- гео ---------- */
+.geo{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.gc{border:1px solid var(--line2);background:var(--card);border-radius:var(--r);padding:15px}
+.gc .c{font-family:var(--d);font-weight:700;font-size:13px;text-transform:uppercase}
+.gc .s{font-family:var(--m);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber-lo);margin-top:6px}
+.gc .d{font-size:13px;color:var(--dust);margin-top:6px}
+
+/* ---------- ссылки ---------- */
+.links{display:flex;flex-direction:column;gap:8px;margin-top:20px}
+.lnk{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 18px;font-family:var(--m);font-size:12px;letter-spacing:.1em;text-transform:uppercase;transition:.2s var(--ease)}
+.lnk s{text-decoration:none;color:var(--amber-lo);flex:0 0 auto}
+.lnk:active{background:var(--amber);color:#0b0a09;border-color:var(--amber)}
+.lnk:active s{color:#0b0a09}
+.foot{margin-top:26px;padding-top:18px;border-top:1px solid var(--line2);
+  font-family:var(--m);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);line-height:2}
+
+/* ---------- нижние вкладки ---------- */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  height:calc(var(--tabbar) + var(--sab));padding-bottom:var(--sab);
+  display:grid;grid-template-columns:repeat(5,1fr);
+  background:rgba(11,10,9,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--line2);
+}
+.tb{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  font-family:var(--m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash);
+  transition:color .2s var(--ease);position:relative;height:var(--tabbar)}
+.tb svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tb.on{color:var(--amber)}
+.tb.on::after{content:'';position:absolute;top:0;left:24%;right:24%;height:2px;background:var(--amber);box-shadow:0 0 12px var(--amber)}
+.tb:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<canvas id="bgfx" aria-hidden="true"></canvas>
+<div class="grain"></div>
+
+<div id="boot"><div class="bootbox"><div id="blog"></div><div class="bootbar"><i id="bbar"></i></div></div></div>
+
+<header class="topbar">
+  <span class="mark"><i></i></span>
+  <span class="tb-t" id="tbt">Профиль</span>
+  <span class="tb-r">rev 45.0</span>
+</header>
+
+<main id="app">
+
+<!-- ============ 1 · ПРОФИЛЬ ============ -->
+<section class="screen on" id="scr1">
+  <p class="eyebrow">Личное досье · Рига → Тель-Авив → Франкфурт</p>
+  <h1 class="h1">Евгений<br><em>Вайнштейн</em></h1>
+  <p class="lede">
+    <b>Principal Architect</b> — облака, кибербезопасность, ИИ, телеком. Предприниматель, 7 компаний. Отец двоих сыновей.
+  </p>
+  <p class="p">
+    Я всю жизнь строю системы: из идеи — архитектура, из архитектуры — работающий продукт.
+    Это досье написано по тем же правилам. <b>Здесь нет витрины</b> — есть спецификация:
+    кто я, во что верю, что предлагаю и чего не приму.
+  </p>
+
+  <div class="chips">
+    <span class="chip"><s>ВОЗРАСТ</s>45</span>
+    <span class="chip"><s>РОСТ</s>178 см</span>
+    <span class="chip"><s>СТАТУС</s>Разведён</span>
+    <span class="chip"><s>БАЗА</s>DE / IL</span>
+    <span class="chip"><s>ЦЕЛЬ</s>Семья</span>
+  </div>
+
+  <h2 class="h2"><s>01 · База</s>Основные параметры</h2>
+  <div class="spec">
+    <div class="sr"><div class="k">Имя</div><div class="v">Евгений Вайнштейн · <em>Jev Vainsteins</em></div></div>
+    <div class="sr"><div class="k">Возраст · рост</div><div class="v">45 лет · 178 см</div></div>
+    <div class="sr"><div class="k">Дети</div><div class="v">Двое сыновей — 24 и 10 лет. <em>Оба живут отдельно, со мной не проживают.</em></div></div>
+    <div class="sr"><div class="k">Проживание</div><div class="v">Между Германией и Израилем. При серьёзных отношениях готов рассматривать переезд.</div></div>
+    <div class="sr"><div class="k">Языки</div><div class="v">Русский, английский, иврит — свободно. Немецкий — C1.</div></div>
+    <div class="sr"><div class="k">Привычки</div><div class="v">Не курю. Алкоголь редко. Слежу за здоровьем и формой.</div></div>
+    <div class="sr"><div class="k">Корни</div><div class="v">Семья из Риги. Папа в Израиле, часть родни в Германии. Братьев и сестёр нет.</div></div>
+  </div>
+
+  <h2 class="h2"><s>02 · Личность</s>Кто я без резюме</h2>
+  <p class="p">Самостоятельный, образованный, целеустремлённый, прямой и надёжный. Человек действия.</p>
+  <div class="cards">
+    <div class="card"><span class="tag">Метод</span><h4>Идея → план → результат</h4><p>Беру сложное, превращаю в понятное и строю с нуля, пока не заработает.</p></div>
+    <div class="card"><span class="tag">Позиция</span><h4>Ответственность</h4><p>Не люблю разговоры без результата и ожидание, что кто-то другой всё решит.</p></div>
+    <div class="card"><span class="tag">Опора</span><h4>Поддержка</h4><p>Умею поддержать близкого, взять ответственность за семью и вытащить в сложной ситуации.</p></div>
+    <div class="card"><span class="tag">Формат</span><h4>Партнёрство</h4><p>Союз двух взрослых людей, а не система обслуживания одного другим.</p></div>
+  </div>
+
+  <div class="pull"><p>Мне нужна <em>партнёрша</em>, а не зрительница.</p><div class="by">Из личного текста</div></div>
+
+  <p class="p">
+    Я готов работать, зарабатывать, защищать семью и решать сложные вопросы. Но не хочу видеть
+    рядом человека, который в трудный момент садится в стороне с попкорном. Сегодня сильнее один,
+    завтра другой — в настоящей семье поддерживают, а не оценивают отношения по уровню комфорта.
+  </p>
+</section>
+
+<!-- ============ 2 · РАБОТА ============ -->
+<section class="screen" id="scr2">
+  <p class="eyebrow">Профессия · itzen.ai</p>
+  <h1 class="h1">Чем я<br><em>занимаюсь</em></h1>
+  <p class="lede">Руководитель, предприниматель, программист. IT, телеком, искусственный интеллект и кибербезопасность.</p>
+
+  <div class="stats">
+    <div class="st"><div class="n" data-to="7">0</div><div class="l">Основано компаний</div></div>
+    <div class="st"><div class="n" data-to="8" data-suf="+">0</div><div class="l">Языков программирования</div></div>
+    <div class="st"><div class="n" data-to="25" data-suf="+">0</div><div class="l">Лет в индустрии</div></div>
+    <div class="st"><div class="n" data-to="4">0</div><div class="l">Разговорных языка</div></div>
+  </div>
+
+  <p class="p">
+    Прошёл ведущие международные технологические компании и вырос из инженера в архитектора
+    и директора программ. Могу с нуля собрать продукт, сервис или стартап: идея, архитектура,
+    инфраструктура, софт, команда, запуск.
+  </p>
+
+  <div class="logos">
+    <span class="lg">Amazon</span><span class="lg">Huawei</span><span class="lg">Canonical</span>
+    <span class="lg">Red Hat</span><span class="lg">NetApp</span><span class="lg">D-Link</span>
+  </div>
+
+  <h2 class="h2"><s>Траектория</s>Что за этим стоит</h2>
+  <div class="tl">
+    <div class="ti"><div class="w">2016 → сейчас</div><div class="t">Stars4Business OÜ · директор, архитектор</div><div class="n">Цифровая и облачная трансформация, кибербезопасность, ISMS по ISO/IEC 27001, GDPR.</div></div>
+    <div class="ti"><div class="w">Финансовый сектор</div><div class="t">Банковские платформы и приватные облака</div><div class="n">Платформа цифровых активов для частного банка в Германии. Два приватных облака для третьего банка Европы. Консолидация ЦОД, миграция мейнфреймов.</div></div>
+    <div class="ti"><div class="w">Инфраструктура</div><div class="t">Облака и открытый код</div><div class="n">AWS · Azure · GCP · Red Hat (OpenShift, Ansible) · Canonical (MaaS, Juju, Kubernetes) · Terraform · VMware.</div></div>
+    <div class="ti"><div class="w">Сегодня</div><div class="t">ИИ и безопасность</div><div class="n">Архитектура ИИ-систем, приватные модели, инфраструктура вывода, secure by design.</div></div>
+  </div>
+
+  <div class="press">
+    <div class="s">Пресса · The Bell · 29.01.2023</div>
+    <p class="q">В обзоре шести виз для айтишников The Bell пригласил меня рассказать про немецкую Blue Card — как эксперта и волонтёра по релокации в Германию.</p>
+    <p class="m"><a href="https://thebell.io/gde-zhdut-rossiyskikh-aytishnikov-otchety-tesla-i-microsoft-i-kak-iskat-metadannye" target="_blank" rel="noopener">Читать материал →</a></p>
+  </div>
+
+  <div class="links">
+    <a class="lnk" href="https://www.itzen.ai" target="_blank" rel="noopener"><s>WEB</s>itzen.ai</a>
+    <a class="lnk" href="https://www.linkedin.com/in/feranicus" target="_blank" rel="noopener"><s>IN</s>linkedin.com/in/feranicus</a>
+  </div>
+</section>
+
+<!-- ============ 3 · ЦЕННОСТИ ============ -->
+<section class="screen" id="scr3">
+  <p class="eyebrow">Основа · конфуцианские семейные ценности</p>
+  <h1 class="h1">На чём<br><em>стою</em></h1>
+  <p class="lede">Это не эстетика, а рабочая система координат. По ней принимаются решения.</p>
+
+  <div class="cards" id="vals"></div>
+
+  <div class="pull"><p>Скромность — это <em>внутреннее достоинство</em>, а не отсутствие амбиций.</p><div class="by">Определение по умолчанию</div></div>
+
+  <p class="p">
+    Отсутствие потребности постоянно демонстрировать себя, собирать лайки и строить жизнь вокруг
+    чужого одобрения. Мне не важны цвет кожи, национальность, происхождение или конфессия —
+    важно, чтобы человек был по-настоящему хорошим: добрым, честным, разумным, надёжным
+    и способным любить.
+  </p>
+  <p class="p">
+    По политическим и экономическим взглядам я человек правых и либертарианских убеждений:
+    личная свобода, частная собственность, свободный рынок, персональная ответственность.
+    Об этом честнее сказать сразу, чем выяснять через полгода.
+  </p>
+
+  <h2 class="h2"><s>Вне работы</s>Спорт, дорога, люди</h2>
+  <div class="cards">
+    <div class="card"><span class="tag">Спорт</span><h4>Падел и кикбоксинг</h4><p>Регулярно. Плюс длинные прогулки и походы — без этого голова работает хуже.</p></div>
+    <div class="card"><span class="tag">Дорога</span><h4>Путешествия и природа</h4><p>Новая страна, горы, хайкинг. Люблю животных и хорошие рестораны.</p></div>
+    <div class="card"><span class="tag">Разговор</span><h4>Технологии, история, философия</h4><p>Ценю людей с собственным мнением и настоящей глубиной.</p></div>
+    <div class="card"><span class="tag">Отдача</span><h4>Коучинг</h4><p>Много лет помогаю найти работу в Германии, пройти интервью, построить карьеру и переехать.</p></div>
+  </div>
+
+  <p class="p">
+    Мне нравится видеть реальный результат: человек находит работу, переезжает, начинает новую
+    жизнь и становится самостоятельнее. Знания имеют ценность, когда ими можно улучшать
+    не только собственную жизнь.
+  </p>
+
+  <div class="press amb">
+    <div class="s">Семья · Рига → Израиль</div>
+    <p class="q">Моя мама, Эсфирь Вайнштейн, с 1992 по 2010 год была известным в Израиле экстрасенсом. К сожалению, её уже нет с нами.</p>
+    <p class="m">Я вырос между инженерным расчётом и верой в то, что человека нужно чувствовать. Обе стороны во мне остались.</p>
+  </div>
+</section>
+
+<!-- ============ 4 · ЗАПРОС ============ -->
+<section class="screen" id="scr4">
+  <p class="eyebrow">Запрос · серьёзные отношения, брак, семья</p>
+  <h1 class="h1">Кого<br><em>я ищу</em></h1>
+  <p class="lede">Не бесконечные знакомства, не поверхностные романы и не связь без понятного будущего.</p>
+
+  <div class="spec">
+    <div class="sr"><div class="k">Возраст</div><div class="v">Примерно <em>29–43</em></div></div>
+    <div class="sr"><div class="k">Рост</div><div class="v">Желательно от <em>168 см</em></div></div>
+    <div class="sr"><div class="k">Дети</div><div class="v">Предпочтительно без детей. Если есть — только взрослые и самостоятельные. Роль отчима для несовершеннолетних не рассматриваю.</div></div>
+    <div class="sr"><div class="k">Общие дети</div><div class="v">Открыт. При взаимном желании — <em>да</em>.</div></div>
+    <div class="sr"><div class="k">Английский</div><div class="v">Как минимум <em>хороший разговорный</em>. Мы живём между странами и работаем в международной среде.</div></div>
+    <div class="sr"><div class="k">Внешность</div><div class="v">Для меня <em>одинаково важны и начинка, и обёртка</em>. Естественная красота: стройная, ухоженная, женственная — без культа внешности.</div></div>
+    <div class="sr"><div class="k">Соцсети</div><div class="v">Спокойное, функциональное отношение. Семья — это не контент. Мне ближе приватность, отчасти <em>off the grid</em>.</div></div>
+    <div class="sr"><div class="k">Работа</div><div class="v">Своя профессия, желательно с возможностью работать онлайн — это даёт свободу выбирать страну.</div></div>
+  </div>
+
+  <div class="pull"><p>Не лягушка и не Шарлиз Терон. <em>Божественная середина</em> — вот это прямо моё.</p><div class="by">Про внешность — честно</div></div>
+
+  <p class="p">
+    Меня раздражают обе крайности. «Внешность неважна, главное душа» — лукавство: влечение либо
+    есть, либо его нет, и взрослые люди это знают. «Я красивая, этого достаточно» — тоже мимо:
+    с красивой витриной и пустотой внутри жить невозможно. Мне нужны обе части сразу — интересный
+    человек, на которого при этом хочется смотреть. Ухоженность и форма — это не тщеславие,
+    а уважение к себе и ко мне. И работает в обе стороны: я тоже держу форму.
+  </p>
+
+  <h2 class="h2"><s>Границы</s>Не обсуждается</h2>
+  <p class="p">Почти всё выше — предпочтения, и почти всё можно обсудить. Эти три пункта — нет.</p>
+
+  <div class="cards">
+    <div class="card stop"><span class="tag">Стоп 01</span><h4>Нарциссизм и эгоизм</h4><p>Человек, у которого в центре мира стоит он сам, семью не построит. Всё будет измеряться тем, кто больше вложил и кому сегодня уделили мало внимания.</p></div>
+    <div class="card stop"><span class="tag">Стоп 02</span><h4>Жизнь без работы</h4><p>Своя профессия обязательна. Не ради денег — ради того, чтобы у человека была собственная жизнь и собственная опора.</p></div>
+    <div class="card stop"><span class="tag">Стоп 03</span><h4>Без английского</h4><p>Минимум — хороший разговорный. Иначе партнёрша окажется в изоляции, а я — переводчиком на постоянной ставке.</p></div>
+  </div>
+
+  <div class="pull"><p>Нарциссу нужна <em>публика</em>. Мне нужна семья.</p><div class="by">Стоп 01 · развёрнуто</div></div>
+
+  <p class="p">
+    Нарциссизм и эгоцентризм несовместимы с семьёй по устройству, а не по характеру. Такой человек
+    не спрашивает «как нам будет лучше» — он спрашивает «что я с этого получу». Любой конфликт
+    становится спектаклем, любая ошибка партнёра — поводом для наказания, любая его удача —
+    поводом для обиды. С этим можно недолго встречаться. Жить — нельзя.
+  </p>
+  <p class="p">
+    <b>Про работу — тоже прямо.</b> Я много раз видел один и тот же сценарий: женщина перестаёт
+    работать, круг общения сужается до квартиры, энергии остаётся столько же, а приложить её
+    некуда — и вся она уходит на мужчину. Начинается контроль, придирки, «ты поздно», «ты не так
+    посмотрел». Это не про плохой характер, это про пустоту, которую нечем заполнить. Мне нужна
+    женщина со своей профессией и своим смыслом дня — чтобы у нас обоих была жизнь, из которой
+    мы возвращаемся друг к другу.
+  </p>
+  <p class="p">
+    Речь не о карьере любой ценой и не о равенстве зарплат. Декрет, пауза, учёба, смена
+    профессии, переезд — нормально и обсуждаемо. Ненормально — позиция «я не работаю
+    и не собираюсь, обеспечивай».
+  </p>
+
+  <h2 class="h2"><s>Фильтр</s>Да и нет</h2>
+  <div class="flags">
+    <div class="fl go"><h4>Что ценю</h4><ul>
+      <li>Доброта и честность</li><li>Интеллект и желание развиваться</li><li>Своя профессия и своё дело</li>
+      <li>Хороший английский</li><li>Женственность и скромность</li><li>Ухоженность без культа внешности</li>
+      <li>Верность</li><li>Эмоциональная зрелость</li><li>Ответственность и трудолюбие</li>
+      <li>Чувство юмора</li><li>Умение открыто разговаривать</li><li>Уважение к семье и старшим</li>
+      <li>Спокойствие в сложной ситуации</li><li>Желание создавать настоящую семью</li></ul></div>
+    <div class="fl no"><h4>Что не приму</h4><ul>
+      <li>Нарциссизм и эгоцентризм</li><li>«Я не работаю и не буду»</li><li>Ложь и измены</li>
+      <li>Манипуляции и эмоциональный шантаж</li><li>Потребительское отношение</li><li>Постоянная драма и придирки</li>
+      <li>Зависимость от чужого внимания</li><li>Финансовая безответственность</li><li>«Мужчина должен всё»</li>
+      <li>Исчезновение при первых трудностях</li><li>Культ социальных сетей</li><li>Жизнь вокруг внешности</li>
+      <li>Запущенность и «мне и так сойдёт»</li><li>Радикально левые взгляды</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 5 · МАТЧ ============ -->
+<section class="screen" id="scr5">
+  <p class="eyebrow">Инструмент · расчёт в вашем браузере</p>
+  <h1 class="h1">Проверка<br><em>совместимости</em></h1>
+  <p class="lede">Раз уж это спецификация — вот линтер. Три пункта из раздела «Границы» работают как жёсткий стоп.</p>
+
+  <div class="f">
+    <label for="age">Возраст <span class="val" id="ageV">34</span></label>
+    <input type="range" id="age" min="22" max="58" value="34">
+  </div>
+  <div class="f">
+    <label for="hgt">Рост, см <span class="val" id="hgtV">170</span></label>
+    <input type="range" id="hgt" min="150" max="192" value="170">
+  </div>
+  <div class="f" data-key="kids"><label>Дети</label><div class="opts">
+    <button class="opt sel" data-v="none">Нет</button>
+    <button class="opt" data-v="adult">Взрослые</button>
+    <button class="opt" data-v="minor">Несовершеннолетние</button></div></div>
+  <div class="f" data-key="goal"><label>Что ищете</label><div class="opts">
+    <button class="opt sel" data-v="family">Семью и брак</button>
+    <button class="opt" data-v="maybe">Посмотрим</button>
+    <button class="opt" data-v="casual">Без обязательств</button></div></div>
+  <div class="f" data-key="work"><label>Работа</label><div class="opts">
+    <button class="opt sel" data-v="remote">Профессия, онлайн</button>
+    <button class="opt" data-v="office">Профессия, офис</button>
+    <button class="opt" data-v="pause">Пауза: декрет, учёба</button>
+    <button class="opt" data-v="none">Не работаю принципиально</button></div></div>
+  <div class="f" data-key="eng"><label>Английский</label><div class="opts">
+    <button class="opt sel" data-v="fluent">Свободно</button>
+    <button class="opt" data-v="good">Хорошо</button>
+    <button class="opt" data-v="basic">Базовый</button>
+    <button class="opt" data-v="none">Не владею</button></div></div>
+  <div class="f" data-key="soc"><label>Социальные сети</label><div class="opts">
+    <button class="opt sel" data-v="low">Почти не пользуюсь</button>
+    <button class="opt" data-v="mid">Умеренно</button>
+    <button class="opt" data-v="high">Живу там</button></div></div>
+  <div class="f" data-key="move"><label>Готовность к переезду</label><div class="opts">
+    <button class="opt sel" data-v="yes">Да</button>
+    <button class="opt" data-v="maybe">Возможно</button>
+    <button class="opt" data-v="no">Нет</button></div></div>
+  <div class="f" data-key="smoke"><label>Курение</label><div class="opts">
+    <button class="opt sel" data-v="no">Не курю</button>
+    <button class="opt" data-v="some">Иногда</button>
+    <button class="opt" data-v="yes">Курю</button></div></div>
+
+  <div class="term">
+    <div class="tlines"><div class="dim">$ ./match --spec jev.v45</div><div id="lines"></div></div>
+    <div class="score" id="score">—</div>
+    <div class="sbar"><i id="sbar"></i></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="disc">Модуль ничего не знает о том, как вы смеётесь, о чём думаете ночью и как ведёте себя, когда всё пошло не по плану. Именно это и решает.</div>
+  </div>
+
+  <h2 class="h2"><s>Будущее</s>Где мы можем жить</h2>
+  <div class="geo">
+    <div class="gc"><div class="c">Германия</div><div class="s">База</div><div class="d">Работа, родня, инфраструктура.</div></div>
+    <div class="gc"><div class="c">Израиль</div><div class="s">Дом</div><div class="d">Отец, семья, тепло.</div></div>
+    <div class="gc"><div class="c">Латвия</div><div class="s">Корни</div><div class="d">Рига — откуда всё началось.</div></div>
+    <div class="gc"><div class="c">Европа</div><div class="s">Открыто</div><div class="d">Любая безопасная развитая страна.</div></div>
+  </div>
+  <p class="p">
+    Решение о стране — совместное: работа обоих, дети, безопасность, климат, качество жизни.
+    Идеально, когда у партнёрши тоже есть профессия, совместимая с переездами.
+  </p>
+
+  <h2 class="h2"><s>Финал</s>Если дочитали — напишите</h2>
+  <p class="p">
+    Не нужно соответствовать таблице. Нужно быть взрослым честным человеком, который хочет
+    строить, а не только смотреть. Остальное обсудим вживую — за прогулкой, а не в переписке.
+    Рекомендации от друзей и коллег, которые знают меня много лет, готов предоставить.
+  </p>
+  <div class="links">
+    <a class="lnk" href="https://www.itzen.ai" target="_blank" rel="noopener"><s>WEB</s>itzen.ai</a>
+    <a class="lnk" href="https://www.linkedin.com/in/feranicus" target="_blank" rel="noopener"><s>IN</s>linkedin.com/in/feranicus</a>
+    <a class="lnk" href="https://thebell.io/gde-zhdut-rossiyskikh-aytishnikov-otchety-tesla-i-microsoft-i-kak-iskat-metadannye" target="_blank" rel="noopener"><s>PRESS</s>The Bell · 2023</a>
+  </div>
+  <div class="foot">Евгений Вайнштейн · личное досье · ревизия 45.0<br>Рига → Тель-Авив → Франкфурт</div>
+</section>
+
+</main>
+
+<nav class="tabbar">
+  <button class="tb on" data-s="1"><svg viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z"/></svg>Профиль</button>
+  <button class="tb" data-s="2"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/></svg>Работа</button>
+  <button class="tb" data-s="3"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Ценности</button>
+  <button class="tb" data-s="4"><svg viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>Запрос</button>
+  <button class="tb" data-s="5"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Матч</button>
+</nav>
+
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- заставка ---------- */
+var BL = [
+  ['dim','загрузка личного досье…'],
+  ['amb','корни: Рига, Латвия'],
+  ['amb','узлы: Германия · Израиль'],
+  ['amb','стек: облака · кибербез · ИИ'],
+  ['ice','фильтр витрины: включён'],
+  ['amb','готово. это не резюме. это человек.']
+];
+var boot = document.getElementById('boot'), blog = document.getElementById('blog'), bbar = document.getElementById('bbar');
+function killBoot(){ if(boot){ boot.classList.add('off'); setTimeout(function(){ if(boot.parentNode) boot.parentNode.removeChild(boot); }, 500); boot = null; } }
+if(RM){ bbar.style.width='100%'; setTimeout(killBoot, 200); }
+else{
+  var bi=0;
+  (function s(){
+    if(bi>=BL.length){ setTimeout(killBoot, 400); return; }
+    var l=BL[bi], c = l[0]==='dim' ? 'var(--ash)' : (l[0]==='ice' ? 'var(--ice)' : 'var(--amber)');
+    var d=document.createElement('div');
+    d.innerHTML='<span class="dim">['+String(bi+1).padStart(2,'0')+']</span> <span style="color:'+c+'">'+l[1]+'</span>';
+    blog.appendChild(d); bi++;
+    bbar.style.width=(bi/BL.length*100)+'%';
+    setTimeout(s, 250);
+  })();
+}
+setTimeout(killBoot, 3600);
+if(boot) boot.addEventListener('click', killBoot);
+
+/* ---------- ценности ---------- */
+var VALS=[['Семья','Уважение к семье и старшим'],['Верность','Без неё остальное не считается'],
+['Слово','Умение держать обещание'],['Труд','Трудолюбие как норма, а не подвиг'],
+['Развитие','Образование и постоянный рост'],['Уважение','Между мужчиной и женщиной'],
+['Дисциплина','Самоконтроль вместо настроения'],['Скромность','Достоинство без демонстрации'],
+['Забота','О близких — в первую очередь'],['Стойкость','Поддержка и в тяжёлые времена']];
+var vg=document.getElementById('vals');
+vg.innerHTML=VALS.map(function(v,i){
+  return '<div class="card"><span class="tag">'+String(i+1).padStart(2,'0')+'</span><h4>'+v[0]+'</h4><p>'+v[1]+'</p></div>';
+}).join('');
+
+/* ---------- вкладки ---------- */
+var TITLES={1:'Профиль',2:'Работа',3:'Ценности',4:'Запрос',5:'Матч'};
+var cur=1, tbs=document.querySelectorAll('.tb'), scrs=document.querySelectorAll('.screen'), tbt=document.getElementById('tbt');
+var pos={1:0,2:0,3:0,4:0,5:0};
+function go(n){
+  if(n<1||n>5||n===cur) return;
+  pos[cur]=window.pageYOffset||document.documentElement.scrollTop;
+  cur=n;
+  Array.prototype.forEach.call(scrs,function(s,i){ s.classList.toggle('on', i===n-1); });
+  Array.prototype.forEach.call(tbs,function(b,i){ b.classList.toggle('on', i===n-1); });
+  tbt.textContent=TITLES[n];
+  window.scrollTo(0, pos[n]||0);
+  if(navigator.vibrate) try{ navigator.vibrate(8); }catch(e){}
+  countUp();
+}
+Array.prototype.forEach.call(tbs,function(b){
+  b.addEventListener('click',function(){ go(parseInt(b.getAttribute('data-s'),10)); });
+});
+
+/* свайп между вкладками */
+var tx=0,ty=0,tracking=false;
+document.addEventListener('touchstart',function(e){
+  if(e.touches.length!==1) return;
+  if(e.target.closest && e.target.closest('input[type=range]')){ tracking=false; return; }
+  tx=e.touches[0].clientX; ty=e.touches[0].clientY; tracking=true;
+},{passive:true});
+document.addEventListener('touchend',function(e){
+  if(!tracking) return; tracking=false;
+  var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)*1.8) go(cur + (dx<0?1:-1));
+},{passive:true});
+
+/* ---------- счётчики ---------- */
+var done={};
+function countUp(){
+  Array.prototype.forEach.call(document.querySelectorAll('.screen.on .st .n'),function(el){
+    if(el.getAttribute('data-done')) return;
+    el.setAttribute('data-done','1');
+    var to=parseInt(el.getAttribute('data-to'),10)||0, suf=el.getAttribute('data-suf')||'';
+    if(RM){ el.textContent=to+suf; return; }
+    var t0=null;
+    function f(t){
+      if(t0===null) t0=t;
+      var p=Math.min((t-t0)/900,1), e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*e)+(p===1?suf:'');
+      if(p<1) requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+  });
+}
+
+/* ---------- янтарный фон ---------- */
+var cv=document.getElementById('bgfx');
+if(cv && !RM){
+  var ctx=cv.getContext('2d'), W=0,H=0,P=[],raf=null,live=true;
+  function size(){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    W=window.innerWidth; H=window.innerHeight;
+    cv.width=W*dpr; cv.height=H*dpr; cv.style.width=W+'px'; cv.style.height=H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.max(18,Math.min(46,Math.round(W*H/26000)));
+    P=[];
+    for(var i=0;i<n;i++) P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.9+.5,
+      vx:(Math.random()-.5)*.1,vy:-(Math.random()*.15+.03),a:Math.random()*.5+.15,p:Math.random()*6.28});
+  }
+  function draw(){
+    if(!live){ raf=null; return; }
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){
+      var a=P[i];
+      for(var j=i+1;j<P.length;j++){
+        var b=P[j],dx=a.x-b.x,dy=a.y-b.y,d=dx*dx+dy*dy;
+        if(d<13000){ ctx.strokeStyle='rgba(255,179,0,'+(.08*(1-d/13000))+')'; ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }
+    }
+    for(var k=0;k<P.length;k++){
+      var p=P[k]; p.p+=.011; p.x+=p.vx+Math.sin(p.p)*.1; p.y+=p.vy;
+      if(p.y<-12){ p.y=H+12; p.x=Math.random()*W; }
+      if(p.x<-12) p.x=W+12; if(p.x>W+12) p.x=-12;
+      var g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*7);
+      g.addColorStop(0,'rgba(255,209,102,'+p.a+')'); g.addColorStop(1,'rgba(255,179,0,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*7,0,6.2832); ctx.fill();
+    }
+    raf=requestAnimationFrame(draw);
+  }
+  size(); draw();
+  var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(size,200); });
+  document.addEventListener('visibilitychange',function(){ live=!document.hidden; if(live&&!raf) raf=requestAnimationFrame(draw); });
+}
+
+/* ---------- матч ---------- */
+var S={age:34,hgt:170,kids:'none',goal:'family',work:'remote',eng:'fluent',soc:'low',move:'yes',smoke:'no'};
+Array.prototype.forEach.call(document.querySelectorAll('.f[data-key]'),function(f){
+  var key=f.getAttribute('data-key');
+  Array.prototype.forEach.call(f.querySelectorAll('.opt'),function(btn){
+    btn.addEventListener('click',function(){
+      Array.prototype.forEach.call(f.querySelectorAll('.opt'),function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel'); S[key]=btn.getAttribute('data-v');
+      if(navigator.vibrate) try{ navigator.vibrate(6); }catch(e){}
+      render();
+    });
+  });
+});
+['age','hgt'].forEach(function(id){
+  var el=document.getElementById(id), out=document.getElementById(id+'V');
+  el.addEventListener('input',function(){ S[id]=parseInt(el.value,10); out.textContent=el.value; render(); });
+});
+
+function evaluate(){
+  var R=[],sc=0,mx=0,hard=null;
+
+  mx+=14;
+  if(S.age>=29&&S.age<=43){ sc+=14; R.push(['ok','возраст','в диапазоне 29–43']); }
+  else if(S.age>=26&&S.age<=46){ sc+=9; R.push(['warn','возраст','рядом с диапазоном — обсуждаемо']); }
+  else { sc+=4; R.push(['warn','возраст','вне предпочтений, но не стоп']); }
+
+  mx+=8;
+  if(S.hgt>=168){ sc+=8; R.push(['ok','рост','168 см и выше']); }
+  else if(S.hgt>=163){ sc+=5; R.push(['warn','рост','чуть ниже предпочтения']); }
+  else { sc+=2; R.push(['warn','рост','ниже предпочтения — не критично']); }
+
+  mx+=18;
+  if(S.kids==='none'){ sc+=18; R.push(['ok','дети','нет — совпадает']); }
+  else if(S.kids==='adult'){ sc+=16; R.push(['ok','дети','взрослые — подходит']); }
+  else { R.push(['bad','дети','несовершеннолетние — не рассматривается']); hard='kids'; }
+
+  mx+=22;
+  if(S.goal==='family'){ sc+=22; R.push(['ok','цель','семья и брак — полное совпадение']); }
+  else if(S.goal==='maybe'){ sc+=10; R.push(['warn','цель','«посмотрим» — стоит обсудить прямо']); }
+  else { R.push(['bad','цель','без обязательств — расходимся']); hard='goal'; }
+
+  mx+=16;
+  if(S.work==='remote'){ sc+=16; R.push(['ok','работа','профессия онлайн — идеально']); }
+  else if(S.work==='office'){ sc+=13; R.push(['ok','работа','своя профессия — принимается']); }
+  else if(S.work==='pause'){ sc+=11; R.push(['ok','работа','временная пауза — нормально']); }
+  else { R.push(['bad','работа','отказ работать в принципе — неприемлемо']); hard='work'; }
+
+  mx+=20;
+  if(S.eng==='fluent'){ sc+=20; R.push(['ok','английский','свободно — совпадает']); }
+  else if(S.eng==='good'){ sc+=18; R.push(['ok','английский','хороший уровень — достаточно']); }
+  else if(S.eng==='basic'){ sc+=3; R.push(['warn','английский','базовый — ниже требуемого']); }
+  else { R.push(['bad','английский','без языка — неприемлемо']); hard='eng'; }
+
+  mx+=10;
+  if(S.soc==='low'){ sc+=10; R.push(['ok','соцсети','приватность — совпадение']); }
+  else if(S.soc==='mid'){ sc+=7; R.push(['ok','соцсети','умеренно — нормально']); }
+  else { sc+=1; R.push(['warn','соцсети','жизнь напоказ — расхождение']); }
+
+  mx+=10;
+  if(S.move==='yes'){ sc+=10; R.push(['ok','мобильность','готовность к переезду']); }
+  else if(S.move==='maybe'){ sc+=7; R.push(['ok','мобильность','обсуждаемо']); }
+  else { sc+=2; R.push(['warn','мобильность','привязка к месту — усложняет']); }
+
+  mx+=4;
+  if(S.smoke==='no'){ sc+=4; R.push(['ok','привычки','не курит — совпадает']); }
+  else if(S.smoke==='some'){ sc+=2; R.push(['warn','привычки','иногда — не идеально']); }
+  else { R.push(['warn','привычки','курение — расхождение']); }
+
+  var pct = hard ? Math.min(28, Math.round(sc/mx*100)) : Math.round(sc/mx*100);
+  return {rows:R,pct:pct,hard:hard};
+}
+
+var linesEl=document.getElementById('lines'), scoreEl=document.getElementById('score'),
+    barEl=document.getElementById('sbar'), verdEl=document.getElementById('verdict');
+
+function render(){
+  var r=evaluate();
+  linesEl.innerHTML=r.rows.map(function(x){
+    var m = x[0]==='ok' ? '[ ok ]' : (x[0]==='bad' ? '[fail]' : '[chk ]');
+    return '<div><span class="'+x[0]+'">'+m+'</span> <span class="dim">'+x[1]+':</span> '+x[2]+'</div>';
+  }).join('');
+  scoreEl.textContent=r.pct+'%';
+  barEl.style.width=r.pct+'%';
+  var v;
+  if(r.hard==='kids') v='Здесь мы честно расходимся. Я не хочу заново входить в роль отчима и брать воспитание несовершеннолетних детей — это не про их качества, а про мой осознанный выбор.';
+  else if(r.hard==='goal') v='Тоже честно: я ищу семью, а не формат «без обязательств». Лучше выяснить это в первую минуту, чем через полгода.';
+  else if(r.hard==='work') v='Мой единственный пункт без исключений. Дело не в деньгах — мне нужен человек со своей жизнью и своим смыслом дня. Когда его нет, вся энергия уходит на партнёра: контроль, придирки, претензии. Пауза на декрет, учёбу или переезд — совсем другое дело.';
+  else if(r.hard==='eng') v='Без английского не получится: мы живём между странами. Партнёрша окажется в изоляции, а я — постоянным переводчиком. Если язык в процессе — напишите, это решаемо за год работы.';
+  else if(r.pct>=85) v='Совпадение по всем ключевым осям. Дальше решают вещи, которые не поместились ни в один слайдер: голос, юмор, взгляд и поведение, когда трудно. Напишите — узнаем.';
+  else if(r.pct>=65) v='Хорошая основа. Есть пара пунктов для откровенного разговора — и это нормально: взрослые люди договариваются, а не подгоняют друг друга под таблицу.';
+  else v='По формальным параметрам расходимся во многом. Но параметры — рамка, а не приговор: если вам близко написанное выше, цифры я готов пересчитать.';
+  verdEl.textContent=v;
+}
+render();
+countUp();
+
+})();
+</script>
+</body>
+</html>
